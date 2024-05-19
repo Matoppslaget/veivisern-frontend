@@ -2,7 +2,3 @@
 @tailwind components;
 @tailwind utilities;
 
-.myClass {
-  background-color: red;
-  color: black;
-}
