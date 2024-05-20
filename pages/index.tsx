@@ -96,12 +96,8 @@ const Home = () => {
         <div className="flex-grow p-6">
           <div className="flex flex-col space-y-4">
             <ChatHistory chatLog={chatLog} />
-            {
-              isStreaming && <StreamMessage keyIndex={chatLog.length} messageStream={messageStream} />
-            }
-            {
-              isLoading && <TypingAnimation keyIndex={chatLog.length} />
-            }
+            <StreamMessage isStreaming={isStreaming} keyIndex={chatLog.length} messageStream={messageStream} />
+            <TypingAnimation isLoading={isLoading} keyIndex={chatLog.length} />
           </div>
         </div>
         <form onSubmit={handleSubmit} className="flex-none p-6">

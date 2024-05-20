@@ -1,9 +1,11 @@
 
 interface TypingAnimationProps {
+    isLoading: boolean;
     keyIndex: number;
 }
 
-const TypingAnimation: React.FC<TypingAnimationProps> = ({ keyIndex }) => {
+const TypingAnimation: React.FC<TypingAnimationProps> = ({ isLoading, keyIndex }) => {
+    if (!isLoading) return null;
     return (
         <div key={keyIndex} className="flex justify-start">
             <div className="bg-blue-400 rounded-lg p-4 text-white max-w-sm">
