@@ -1,5 +1,8 @@
 import { useState, useEffect } from 'react';
-import TypingAnimation from "../components/TypingAnimation.jsx";
+import TypingAnimation from "../components/chat_components/TypingAnimation";
+import Header from '@/components/page_components/Header';
+import ChatHistory from '@/components/chat_components/ChatHistory';
+import StreamMessage from '@/components/chat_components/StreamMessage';
 
 class Message {
   type: string;
@@ -25,9 +28,27 @@ const Home = () => {
     setInputValue('');
   }
 
-  const sendMessage = (_: string) => {
+  const sendMessage = (message: string) => {
     var accumulatedString = ""
     setIsLoading(true);
+
+    // fetch('http://localhost:8000/up-evaluation', {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    //   body: JSON.stringify({ question: message }),
+    // })
+    //   .then((response) => response.json())
+    //   .then((data) => {
+    //     console.log(data);
+    //     // Handle the response data here
+    //   })
+    //   .catch((error) => {
+    //     console.error('Error:', error);
+    //     // Handle the error here
+    //   });
+
     const sse = new EventSource('http://localhost:8000/stream', {
       withCredentials: true,
     });
@@ -71,36 +92,15 @@ const Home = () => {
   return (
     <div className="container mx-auto">
       <div className="flex flex-col h-screen bg-stone-50">
-        <h1 className="bg-gradient-to-r from-blue-400 to-green-700 text-transparent bg-clip-text text-center py-3 font-bold text-7xl">UP-ORAKEL</h1>
+        <Header />
         <div className="flex-grow p-6">
           <div className="flex flex-col space-y-4">
+            <ChatHistory chatLog={chatLog} />
             {
-              chatLog.map((message, index) => (
-                <div key={index} className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'
-                  }`}>
-                  <div className={`${message.type === 'user' ? 'bg-green-600' : 'bg-blue-400'
-                    } rounded-lg p-4 text-white max-w-sm`}>
-                    {message.message}
-                  </div>
-                </div>
-              ))
+              isStreaming && <StreamMessage keyIndex={chatLog.length} messageStream={messageStream} />
             }
             {
-              isStreaming &&
-              <div key={chatLog.length} className="flex justify-start">
-
-                <div className=" bg-blue-400 rounded-lg p-4 text-white max-w-sm">
-                  {messageStream}
-                </div>
-              </div>
-            }
-            {
-              isLoading &&
-              <div key={chatLog.length} className="flex justify-start">
-                <div className=" bg-blue-400 rounded-lg p-4 text-white max-w-sm">
-                  <TypingAnimation />
-                </div>
-              </div>
+              isLoading && <TypingAnimation keyIndex={chatLog.length} />
             }
           </div>
         </div>
