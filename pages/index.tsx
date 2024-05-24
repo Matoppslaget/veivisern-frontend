@@ -3,15 +3,9 @@ import TypingAnimation from "../components/chat_components/TypingAnimation";
 import Header from '@/components/page_components/Header';
 import ChatHistory from '@/components/chat_components/ChatHistory';
 import StreamMessage from '@/components/chat_components/StreamMessage';
+import { KassalappProduct } from '../types/Kassalapp';
+import { Message } from '../types/Chat';
 
-class Message {
-  type: string;
-  message: string;
-  constructor(type: string, message: string) {
-    this.type = type;
-    this.message = message;
-  }
-}
 
 const Home = () => {
   const [messageStream, setMessageStream] = useState<string>('');
@@ -21,73 +15,64 @@ const Home = () => {
   const [isStreaming, setIsStreaming] = useState<boolean>(false);
 
 
-  const handleSubmit = (event: any) => {
+  const handleSubmit = async (event: any) => {
     event.preventDefault();
     setChatLog((prevChatLog) => [...prevChatLog, new Message("user", inputValue)])
-    sendMessage(inputValue);
+    const products = await fetchKassalappProducts(inputValue);
+    // Handle the response data here
+    console.log(products);
+    products.forEach(async (product) => {
+      const evaluatedProduct = await fetchUpEvaluation(product);
+      const evaluatedProductMessage = new Message("product", evaluatedProduct.name + " " + evaluatedProduct.up_answer)
+      setChatLog((prevChatLog) => [...prevChatLog, evaluatedProductMessage])
+
+      // Render the evaluated product here
+      console.log(evaluatedProduct);
+    });
+
     setInputValue('');
   }
 
-  const sendMessage = (message: string) => {
-    var accumulatedString = ""
+  async function fetchKassalappProducts(message: string): Promise<KassalappProduct[]> {
     setIsLoading(true);
 
-    // fetch('http://localhost:8000/up-evaluation', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify({ question: message }),
-    // })
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     console.log(data);
-    //     // Handle the response data here
-    //   })
-    //   .catch((error) => {
-    //     console.error('Error:', error);
-    //     // Handle the error here
-    //   });
-
-    const sse = new EventSource('http://localhost:8000/stream', {
-      withCredentials: true,
-    });
-
-    const closeConnection = () => {
-      setChatLog((prevChatLog) => [...prevChatLog, new Message("bot", accumulatedString)]);
-      setMessageStream('');
-      setIsStreaming(false);
-      sse.close();
-    }
-
-    const getRealtimeData = (data: string) => {
-      console.log(data);
-      if (!isStreaming) {
-        setIsLoading(false);
-        setIsStreaming(true);
-      }
-      accumulatedString += data;
-      setMessageStream((prevMessage) => prevMessage + data);
-
-    };
-
-    sse.onopen = () => console.log('Connection opened!');
-    sse.onmessage = (e) => {
-      getRealtimeData(e.data);
-    };
-
-    sse.addEventListener('terminate', async (e) => {
-      console.log('Connection terminated:', e);
-      closeConnection();
-    });
-
-    sse.onerror = (e) => {
-      closeConnection();
-      if (sse.readyState === EventSource.CLOSED) {
-        console.log('Connection closed');
-      }
-    };
+    return fetch('http://localhost:8000/find_products', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ product: message }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        return data;
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+        // Handle the error from the first endpoint here
+      })
   }
+
+  async function fetchUpEvaluation(product: KassalappProduct): Promise<KassalappProduct> {
+    console.log(JSON.stringify(product));
+    return fetch('http://localhost:8000/evaluate_product', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(product),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setIsLoading(false)
+        return data;
+        // Handle the response data from the second endpoint here
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+        // Handle the error from the second endpoint here
+      })
+  };
 
   return (
     <div className="container mx-auto">
