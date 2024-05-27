@@ -19,6 +19,11 @@ interface KassalappCategory {
   name: string;
 }
 
+interface Ingredient {
+  name: string;
+  nova_group?: number;
+}
+
 interface KassalappProduct {
   id: number;
   name: string;
@@ -37,7 +42,7 @@ interface KassalappProduct {
   labels?: any[] | null;
   created_at?: string | null;
   updated_at?: string | null;
-  nova_ingredients: Record<string, any>
+  nova_ingredients: Ingredient[];
   processed_class: ProcessedClass | ProcessedClass.NOT_SET;
   up_answer?: string | "";
 }

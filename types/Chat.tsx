@@ -1,10 +1,9 @@
-class Message {
+import { KassalappProduct } from "./Kassalapp";
+
+interface Message {
   type: string;
   message: string;
-  constructor(type: string, message: string) {
-    this.type = type;
-    this.message = message;
-  }
+  product?: KassalappProduct;
 }
 
-export { Message };
+export type { Message };

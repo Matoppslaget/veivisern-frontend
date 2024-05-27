@@ -1,21 +1,19 @@
 import React from 'react';
-
-interface ChatMessage {
-    type: string;
-    message: string;
-}
+import ProductDetails from './ProductDetails';
+import { Message } from '../../types/Chat';
 
 interface ChatHistoryProps {
-    chatLog: ChatMessage[];
+    chatLog: Message[];
 }
 
 const ChatHistory: React.FC<ChatHistoryProps> = ({ chatLog }) => {
     return (
         <>
             {chatLog.map((message, index) => (
-                <div key={index} className={`flex 'justify-end'`}>
-                    <div className={`${message.type === 'user' ? 'bg-green-600 text-white' : 'border border-gray-500'} rounded-lg p-4  max-w-sm`}>
-                        {message.message}
+                <div key={index} className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'}`}>
+                    <div className={`${message.type === 'user' ? 'bg-green-600 text-white' : ''} rounded-lg p-4  max-w-sm`}>
+                        {message.type === 'product' && message.product && <ProductDetails product={message.product} />}
+                        {message.type === 'user' && message.message}
                     </div>
                 </div>
             ))}

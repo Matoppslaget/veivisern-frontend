@@ -17,17 +17,14 @@ const Home = () => {
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
-    setChatLog((prevChatLog) => [...prevChatLog, new Message("user", inputValue)])
+    setChatLog((prevChatLog) => [...prevChatLog, { type: "user", message: inputValue }])
     const products = await fetchKassalappProducts(inputValue);
     // Handle the response data here
     console.log(products);
     products.forEach(async (product) => {
       const evaluatedProduct = await fetchUpEvaluation(product);
-      const evaluatedProductMessage = new Message("product", evaluatedProduct.name + " " + evaluatedProduct.up_answer)
+      const evaluatedProductMessage = { type: "product", message: "This is a product", product: evaluatedProduct };
       setChatLog((prevChatLog) => [...prevChatLog, evaluatedProductMessage])
-
-      // Render the evaluated product here
-      console.log(evaluatedProduct);
     });
 
     setInputValue('');
