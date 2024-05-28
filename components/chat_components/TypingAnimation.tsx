@@ -2,19 +2,17 @@
 interface TypingAnimationProps {
     isLoading: boolean;
     keyIndex: number;
+    noProducts: number;
 }
 
-const TypingAnimation: React.FC<TypingAnimationProps> = ({ isLoading, keyIndex }) => {
+const TypingAnimation: React.FC<TypingAnimationProps> = ({ isLoading, keyIndex, noProducts }) => {
     if (!isLoading) return null;
     return (
-        <div key={keyIndex} className="flex justify-start">
-            <div className="border border-gray-500 rounded-lg p-4 text-white max-w-sm">
-                <div className="flex items-center space-x-2">
-                    <div className="w-4 h-4 rounded-full bg-blue-400 bg-gradient-to-r from-blue-600 to-blue-800 animate-pulse"></div>
-                    <div className="w-4 h-4 rounded-full bg-blue-400 bg-gradient-to-r from-blue-600 to-blue-800 animate-pulse delay-75"></div>
-                    <div className="w-4 h-4 rounded-full bg-blue-400 bg-gradient-to-r from-blue-600 to-blue-800 animate-pulse delay-150"></div>
-                </div>
-            </div>
+        <div className='justify-end'>
+            <span className='sr-only'>Henter {noProducts} produkter</span>
+            <div className='h-8 w-8 animate-bounce [animation-delay:-0.3s]'></div>
+            <div className='h-8 w-8 animate-bounce [animation-delay:-0.15s]'></div>
+            <div className='h-8 w-8 animate-bounce'></div>
         </div>
     );
 };
