@@ -14,21 +14,37 @@ const Home = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isStreaming, setIsStreaming] = useState<boolean>(false);
 
-
   const handleSubmit = async (event: any) => {
     event.preventDefault();
-    setChatLog((prevChatLog) => [...prevChatLog, { type: "user", message: inputValue }])
-    const products = await fetchKassalappProducts(inputValue);
-    // Handle the response data here
-    console.log(products);
-    products.forEach(async (product) => {
-      const evaluatedProduct = await fetchUpEvaluation(product);
-      const evaluatedProductMessage = { type: "product", message: "This is a product", product: evaluatedProduct };
-      setChatLog((prevChatLog) => [...prevChatLog, evaluatedProductMessage])
-    });
-    setIsLoading(false)
-    setInputValue('');
-  }
+    setChatLog((prevChatLog) => [...prevChatLog, { type: "user", message: inputValue }]);
+    const products: KassalappProduct[] = await fetchKassalappProducts(inputValue);
+    if (products && products.length > 0) {
+      Promise.all(products.map(async (product) => {
+        try {
+          const evaluatedProduct: KassalappProduct = await fetchUpEvaluation(product).then(
+            (evaluatedProduct) => evaluatedProduct as KassalappProduct
+          );
+          const evaluatedProductMessage = { type: "product", message: "This is a product", product: evaluatedProduct };
+          setChatLog(prevChatLog => [...prevChatLog, evaluatedProductMessage]);
+        } catch (error: any) { // Change the type annotation to 'any'
+          console.error("Failed to evaluate product:", error);
+          // Optionally handle errors, e.g., by returning a special error object or message
+          return { type: "error", message: error.message, product };
+        }
+      }))
+        .then(results => {
+          // Optionally handle all results here, e.g., logging completion
+          console.log("All products have been processed.", results);
+        })
+        .catch(error => {
+          // Handle any errors that might propagate
+          console.error("An error occurred during product evaluations:", error);
+        });
+
+      setIsLoading(false);
+      setInputValue('');
+    }
+  };
 
   async function fetchKassalappProducts(message: string): Promise<KassalappProduct[]> {
     setIsLoading(true);
@@ -40,36 +56,33 @@ const Home = () => {
       },
       body: JSON.stringify({ product: message }),
     })
-      .then((response) => response.json())
-      .then((data) => {
-        return data;
+      .then((response) => {
+        return response.json() as Promise<KassalappProduct[]>;
       })
       .catch((error) => {
         console.error('Error:', error);
-        // Handle the error from the first endpoint here
-      })
-  }
+        return [];
+      });
+
+  };
 
   async function fetchUpEvaluation(product: KassalappProduct): Promise<KassalappProduct> {
-    console.log(JSON.stringify(product));
-    return fetch('http://localhost:8000/evaluate_product', {
+    const response = await fetch('http://localhost:8000/evaluate_product', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(product),
-    })
-      .then((response) => response.json())
-      .then((data) => {
+    });
 
-        return data;
-        // Handle the response data from the second endpoint here
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-        // Handle the error from the second endpoint here
-      })
+    if (!response.ok) {
+      throw new Error("Failed to fetch product evaluation");
+    }
+
+    const data: KassalappProduct = await response.json();
+    return data;
   };
+
 
   return (
     <div className="container mx-auto">
