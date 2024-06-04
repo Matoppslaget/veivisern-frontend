@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import TypingAnimation from "../components/chat_components/TypingAnimation";
 import Header from '@/components/page_components/Header';
 import ChatHistory from '@/components/chat_components/ChatHistory';
-import StreamMessage from '@/components/chat_components/StreamMessage';
 import { KassalappProduct } from '../types/Kassalapp';
 import { Message } from '../types/Chat';
 
@@ -12,9 +11,10 @@ const Home = () => {
   const [inputValue, setInputValue] = useState('');
   const [chatLog, setChatLog] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [isStreaming, setIsStreaming] = useState<boolean>(false);
+  const [isFetchingUPEval, setIsFetchingUPEval] = useState<boolean>(false);
 
   const handleSubmit = async (event: any) => {
+    setInputValue('');
     event.preventDefault();
     setChatLog((prevChatLog) => [...prevChatLog, { type: "user", message: inputValue }]);
     const products: KassalappProduct[] = await fetchKassalappProducts(inputValue);
@@ -40,9 +40,7 @@ const Home = () => {
           // Handle any errors that might propagate
           console.error("An error occurred during product evaluations:", error);
         });
-
       setIsLoading(false);
-      setInputValue('');
     }
   };
 
@@ -91,7 +89,6 @@ const Home = () => {
         <div className="flex-grow p-10">
           <div className="flex-col">
             <ChatHistory chatLog={chatLog} />
-            <StreamMessage isStreaming={isStreaming} keyIndex={chatLog.length} messageStream={messageStream} />
             <TypingAnimation isLoading={isLoading} keyIndex={chatLog.length} noProducts={3} />
           </div>
         </div>
