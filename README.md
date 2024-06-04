@@ -38,30 +38,3 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
-
-## TODO
-
- 1.
-    https://tailwindcss.com/docs/animation#pulse :
-
-    Add the animate-pulse utility to make an element gently fade in and out — useful for things like skeleton loaders.
-
-    <div class="border border-blue-300 shadow rounded-md p-4 max-w-sm w-full mx-auto">
-    <div class="animate-pulse flex space-x-4">
-        <div class="rounded-full bg-slate-700 h-10 w-10"></div>
-        <div class="flex-1 space-y-6 py-1">
-        <div class="h-2 bg-slate-700 rounded"></div>
-        <div class="space-y-3">
-            <div class="grid grid-cols-3 gap-4">
-            <div class="h-2 bg-slate-700 rounded col-span-2"></div>
-            <div class="h-2 bg-slate-700 rounded col-span-1"></div>
-            </div>
-            <div class="h-2 bg-slate-700 rounded"></div>
-        </div>
-        </div>
-    </div>
-    </div>
-
- 2.
-    Make window grow when writing many messages ​
-
