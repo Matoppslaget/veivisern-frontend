@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import TypingAnimation from "../components/chat_components/TypingAnimation";
+import SearchingAnimation from "../components/chat_components/SearchingAnimation";
 import Header from '@/components/page_components/Header';
 import ChatHistory from '@/components/chat_components/ChatHistory';
 import { KassalappProduct } from '../types/Kassalapp';
@@ -7,46 +7,43 @@ import { Message } from '../types/Chat';
 
 
 const Home = () => {
-  const [messageStream, setMessageStream] = useState<string>('');
   const [inputValue, setInputValue] = useState('');
   const [chatLog, setChatLog] = useState<Message[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [isFetchingUPEval, setIsFetchingUPEval] = useState<boolean>(false);
+  const [isSearching, setIsSearching] = useState<boolean>(false);
+  const [isProductsToEval, setIsProductsToEval] = useState<boolean>(false);
+
+  useEffect(() => {
+  }, [isProductsToEval]);
 
   const handleSubmit = async (event: any) => {
     setInputValue('');
+    setIsSearching(true);
     event.preventDefault();
     setChatLog((prevChatLog) => [...prevChatLog, { type: "user", message: inputValue }]);
     const products: KassalappProduct[] = await fetchKassalappProducts(inputValue);
+    setIsProductsToEval(() => true);
     if (products && products.length > 0) {
+      setIsSearching(() => false);
+      const productSceletonMessages: Message[] = products.map(product => ({ type: "product", message: "", product: product, evaluated: false }))
+      setChatLog(prevChatLog => [...prevChatLog, ...productSceletonMessages]);
       Promise.all(products.map(async (product) => {
         try {
-          const evaluatedProduct: KassalappProduct = await fetchUpEvaluation(product).then(
-            (evaluatedProduct) => evaluatedProduct as KassalappProduct
-          );
-          const evaluatedProductMessage = { type: "product", message: "This is a product", product: evaluatedProduct };
-          setChatLog(prevChatLog => [...prevChatLog, evaluatedProductMessage]);
-        } catch (error: any) { // Change the type annotation to 'any'
+          const evaluatedProduct: KassalappProduct = await fetchUpEvaluation(product);
+          const evaluatedProductMessage = { type: "product", message: "", product: evaluatedProduct, evaluated: true };
+          // TODO: Fix this, it should replace the productSceletonMessage with the evaluatedProductMessage
+          // Dont shuffle the html elements as they finish evaluating
+          setChatLog(prevChatLog => [...prevChatLog.filter(m => m.product?.id !== evaluatedProduct.id), evaluatedProductMessage]);
+        } catch (error: any) {
           console.error("Failed to evaluate product:", error);
-          // Optionally handle errors, e.g., by returning a special error object or message
-          return { type: "error", message: error.message, product };
+          const errorMessage = { type: "error", message: error.message, product };
+          setChatLog(prevChatLog => [...prevChatLog, errorMessage]);
         }
-      }))
-        .then(results => {
-          // Optionally handle all results here, e.g., logging completion
-          console.log("All products have been processed.", results);
-        })
-        .catch(error => {
-          // Handle any errors that might propagate
-          console.error("An error occurred during product evaluations:", error);
-        });
-      setIsLoading(false);
+        // TODO: Fix this, it should replace the productSceletonMessage with the evaluatedProductMessage
+      })).then(() => setIsProductsToEval(() => false));
     }
   };
 
   async function fetchKassalappProducts(message: string): Promise<KassalappProduct[]> {
-    setIsLoading(true);
-
     return fetch('http://localhost:8000/find_products', {
       method: 'POST',
       headers: {
@@ -72,11 +69,9 @@ const Home = () => {
       },
       body: JSON.stringify(product),
     });
-
     if (!response.ok) {
       throw new Error("Failed to fetch product evaluation");
     }
-
     const data: KassalappProduct = await response.json();
     return data;
   };
@@ -84,12 +79,13 @@ const Home = () => {
 
   return (
     <div className="container mx-auto">
-      <div className="flex flex-col h-screen bg-stone-50">
+      <div className="flex flex-col h-auto bg-stone-50">
         <Header />
+        {isSearching && <SearchingAnimation spinnerText='Søker etter produkter..' />}
+        {isProductsToEval && <SearchingAnimation spinnerText='Evaluerer produkter..' />}
         <div className="flex-grow p-10">
           <div className="flex-col">
             <ChatHistory chatLog={chatLog} />
-            <TypingAnimation isLoading={isLoading} keyIndex={chatLog.length} noProducts={3} />
           </div>
         </div>
         <form onSubmit={handleSubmit} className="flex-none p-10">
