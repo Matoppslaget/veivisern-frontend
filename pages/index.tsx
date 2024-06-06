@@ -79,7 +79,7 @@ const Home = () => {
 
   return (
     <div className="container mx-auto">
-      <div className="flex flex-col h-auto bg-stone-50">
+      <div className="flex flex-col h-screen overflow-y-auto bg-stone-50">
         <Header />
         {isSearching && <SearchingAnimation spinnerText='Søker etter produkter..' />}
         {isProductsToEval && <SearchingAnimation spinnerText='Evaluerer produkter..' />}
