@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import SearchingAnimation from "../components/chat_components/SearchingAnimation";
-import Header from '@/components/page_components/Header';
 import ChatHistory from '@/components/chat_components/ChatHistory';
 import { KassalappProduct } from '../types/Kassalapp';
 import { Message } from '../types/Chat';
@@ -8,43 +7,78 @@ import Navbar from '@/components/page_components/NavBar';
 import SendButton from '@/components/page_components/SendButton';
 
 
+/**
+ * The Home component is the main component of the application.
+ * It renders the navbar, chat history, input field and send button.
+ * It also handles the submission of the input field and fetches products and evaluations from the backend.
+ */
 const Home = () => {
+  // State variables
+
+  // The input value from the user
   const [inputValue, setInputValue] = useState('');
+  // The counter for unique keys of chat messages
+  const [renderKeyCounter, setRenderKeyCounter] = useState<number>(1000000);
+  // The log of all chat messages
   const [chatLog, setChatLog] = useState<Message[]>([]);
+  // The flag indicating if the application is currently searching for products
   const [isSearching, setIsSearching] = useState<boolean>(false);
+  // The flag indicating if the application is currently evaluating products
   const [isProductsToEval, setIsProductsToEval] = useState<boolean>(false);
 
+  // Effect hook that runs when isProductsToEval changes
   useEffect(() => {
+    // Currently empty
   }, [isProductsToEval]);
 
+  /**
+   * Handle the form submission
+   * @param event - The submit event
+   */
   const handleSubmit = async (event: any) => {
+    // Reset the input value
     setInputValue('');
+    // Set the searching flag to true
     setIsSearching(true);
+    // Prevent the default form submission
     event.preventDefault();
-    setChatLog((prevChatLog) => [...prevChatLog, { type: "user", message: inputValue }]);
+    // Add the user message to the chat log
+    setChatLog((prevChatLog) => [...prevChatLog, { renderKey: renderKeyCounter, type: "user", message: inputValue }]);
+    // Fetch products from the backend and evaluate them
     const products: KassalappProduct[] = await fetchKassalappProducts(inputValue);
+    // Set the productsToEval flag to true
     setIsProductsToEval(() => true);
+    // If there are products, evaluate them and update the chat log
     if (products && products.length > 0) {
       setIsSearching(() => true);
-      const productSceletonMessages: Message[] = products.map(product => ({ type: "product", message: "", product: product, evaluated: false }))
+      // Create product skeleton messages
+      const productSceletonMessages: Message[] = products.map(product => ({ renderKey: renderKeyCounter + product.id, type: "product", message: "", product: product, evaluated: false }))
       setChatLog(prevChatLog => [...prevChatLog, ...productSceletonMessages]);
+      // Evaluate the products and update the chat log
       Promise.all(products.map(async (product) => {
         try {
           const evaluatedProduct: KassalappProduct = await fetchUpEvaluation(product);
-          const evaluatedProductMessage = { type: "product", message: "", product: evaluatedProduct, evaluated: true };
-          // TODO: Fix this, it should replace the productSceletonMessage with the evaluatedProductMessage
-          // Dont shuffle the html elements as they finish evaluating
+          const evaluatedProductMessage = { renderKey: renderKeyCounter + product.id, type: "product", message: "", product: evaluatedProduct, evaluated: true };
           setChatLog(prevChatLog => [...prevChatLog.filter(m => m.product?.id !== evaluatedProduct.id), evaluatedProductMessage]);
         } catch (error: any) {
           console.error("Failed to evaluate product:", error);
-          const errorMessage = { type: "error", message: error.message, product };
+          const errorMessage = { renderKey: Infinity, type: "error", message: error.message, product: product };
           setChatLog(prevChatLog => [...prevChatLog, errorMessage]);
         }
-        // TODO: Fix this, it should replace the productSceletonMessage with the evaluatedProductMessage
-      })).then(() => setIsProductsToEval(() => false));
+      })).then(() => {
+        // Reset the productsToEval flag and increment the render key counter
+        setIsProductsToEval(() => false)
+        setRenderKeyCounter((prevRenderKeyCounter) => prevRenderKeyCounter + 1000000);
+      }
+      );
     }
   };
 
+  /**
+   * Fetch products from the backend
+   * @param message - The product query
+   * @returns The products matching the query
+   */
   async function fetchKassalappProducts(message: string): Promise<KassalappProduct[]> {
     return fetch('http://localhost:8000/find_products', {
       method: 'POST',
@@ -60,9 +94,13 @@ const Home = () => {
         console.error('Error:', error);
         return [];
       });
-
   };
 
+  /**
+   * Fetch the evaluation of a product from the backend
+   * @param product - The product to evaluate
+   * @returns The evaluated product
+   */
   async function fetchUpEvaluation(product: KassalappProduct): Promise<KassalappProduct> {
     const response = await fetch('http://localhost:8000/evaluate_product', {
       method: 'POST',
@@ -83,15 +121,19 @@ const Home = () => {
     <div className="container mx-auto">
       <div className="flex flex-col h-screen overflow-y-auto bg-stone-50">
         <Navbar />
+        {/* Render the searching animation if the application is searching for products */}
         <div className="fixed top-0 left-0 right-0 z-50">
           {isSearching && <SearchingAnimation spinnerText='Søker etter produkter..' />}
+          {/* Render the searching animation if the application is evaluating products */}
           {isProductsToEval && <SearchingAnimation spinnerText='Evaluerer produkter..' />}
         </div>
+        {/* Render the chat history */}
         <div className="flex-grow p-10">
           <div className="flex-col">
             <ChatHistory chatLog={chatLog} />
           </div>
         </div>
+        {/* Render the input field and send button */}
         <form onSubmit={handleSubmit} className="flex-none p-10">
           <div className="flex rounded-lg border border-gray-700  text-black bg-white" >
             <input type="text" className="flex-grow px-4 py-2 bg-transparent text-black focus:outline-none text-xl" placeholder="Spør meg om et matprodukt..." value={inputValue} onChange={(e) => setInputValue(e.target.value)} />
@@ -100,6 +142,7 @@ const Home = () => {
         </form>
       </div>
     </div>
+
   )
 };
 

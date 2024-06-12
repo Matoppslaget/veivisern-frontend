@@ -32,15 +32,19 @@ function pickBorderColor(processedClass: ProcessedClass): string {
   }
 }
 
-const ProductDetails = ({ product }: { product: KassalappProduct }) => {
+const ProductDetails = ({ product, evaluated }: { product: KassalappProduct, evaluated: boolean }) => {
   const customBgColor = pickBackgroundColor(product.processed_class);
   const customTextColor = pickTextColor(product.processed_class);
   const novaIngredients: Ingredient[] = Object.entries(product.nova_ingredients).map(([name, nova_group]) => ({
     name,
     nova_group: Number(nova_group)
   }));
-  return (
-    <details className={`border-2 p-2 shadow max-w-97`}>
+  return <div>
+    {!evaluated && <div className={`border-2 p-2 shadow max-w-97 `}>
+      <span> {product.name}</span> <span className={`animate-pulse inline-flex rounded-lg px-2 py-1 ml-2 text-sm bg-gray-200`}>Evaluerer...</span>
+    </div >
+    }
+    {evaluated && <details className={`border-2 p-2 shadow max-w-97`}>
       <summary>
         <span> {product.name}</span> <span className={`inline-flex rounded-lg px-2 py-1 ml-2 text-sm ${customBgColor}`}>{product.processed_class}</span>
       </summary>
@@ -61,7 +65,9 @@ const ProductDetails = ({ product }: { product: KassalappProduct }) => {
           </li>))}
       </ul >
     </details >
-  )
+    }
+
+  </div >
 };
 
 export default ProductDetails;
