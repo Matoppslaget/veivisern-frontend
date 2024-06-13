@@ -3,7 +3,7 @@ import Header from './Header';
 
 const Navbar = () => {
     return (
-        <nav className="flex justify-between px-4 py-5 bg-stone-50">
+        <nav className="h-24 flex justify-between px-4 py-5 bg-stone-50">
             <button type="button" className="w-24 h-auto focus:ring-white hover:opacity-50 active:opacity-50">
                 <svg className="w-6 h-6 ">
                     <path d="M3 8a1 1 0 0 1 1-1h16a1 1 0 1 1 0 2H4a1 1 0 0 1-1-1m0 8a1 1 0 0 1 1-1h10a1 1 0 1 1 0 2H4a1 1 0 0 1-1-1" ></path>

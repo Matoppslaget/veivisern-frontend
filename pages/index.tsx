@@ -8,27 +8,27 @@ import SendButton from '@/components/page_components/SendButton';
 
 
 /**
+ * TODO:
+ * - fix width of components in list. Now they expand
+ * Make "Om oss" page
+ * Make Sidebar open and close 
+*/
+
+/**
  * The Home component is the main component of the application.
  * It renders the navbar, chat history, input field and send button.
  * It also handles the submission of the input field and fetches products and evaluations from the backend.
  */
 const Home = () => {
   // State variables
-
-  // The input value from the user
   const [inputValue, setInputValue] = useState('');
-  // The counter for unique keys of chat messages
   const [renderKeyCounter, setRenderKeyCounter] = useState<number>(1000000);
-  // The log of all chat messages
   const [chatLog, setChatLog] = useState<Message[]>([]);
-  // The flag indicating if the application is currently searching for products
   const [isSearching, setIsSearching] = useState<boolean>(false);
-  // The flag indicating if the application is currently evaluating products
   const [isProductsToEval, setIsProductsToEval] = useState<boolean>(false);
 
   // Effect hook that runs when isProductsToEval changes
   useEffect(() => {
-    // Currently empty
   }, [isProductsToEval]);
 
   /**
@@ -36,25 +36,16 @@ const Home = () => {
    * @param event - The submit event
    */
   const handleSubmit = async (event: any) => {
-    // Reset the input value
     setInputValue('');
-    // Set the searching flag to true
     setIsSearching(true);
-    // Prevent the default form submission
     event.preventDefault();
-    // Add the user message to the chat log
     setChatLog((prevChatLog) => [...prevChatLog, { renderKey: renderKeyCounter, type: "user", message: inputValue }]);
-    // Fetch products from the backend and evaluate them
     const products: KassalappProduct[] = await fetchKassalappProducts(inputValue);
-    // Set the productsToEval flag to true
     setIsProductsToEval(() => true);
-    // If there are products, evaluate them and update the chat log
     if (products && products.length > 0) {
       setIsSearching(() => true);
-      // Create product skeleton messages
       const productSceletonMessages: Message[] = products.map(product => ({ renderKey: renderKeyCounter + product.id, type: "product", message: "", product: product, evaluated: false }))
       setChatLog(prevChatLog => [...prevChatLog, ...productSceletonMessages]);
-      // Evaluate the products and update the chat log
       Promise.all(products.map(async (product) => {
         try {
           const evaluatedProduct: KassalappProduct = await fetchUpEvaluation(product);
@@ -66,7 +57,6 @@ const Home = () => {
           setChatLog(prevChatLog => [...prevChatLog, errorMessage]);
         }
       })).then(() => {
-        // Reset the productsToEval flag and increment the render key counter
         setIsProductsToEval(() => false)
         setRenderKeyCounter((prevRenderKeyCounter) => prevRenderKeyCounter + 1000000);
       }
@@ -121,10 +111,8 @@ const Home = () => {
     <div className="container mx-auto">
       <div className="flex flex-col h-screen overflow-y-auto bg-stone-50">
         <Navbar />
-        {/* Render the searching animation if the application is searching for products */}
-        <div className="fixed top-0 left-0 right-0 z-50">
+        <div className="fixed top-24 left-0 right-0 z-50">
           {isSearching && <SearchingAnimation spinnerText='Søker etter produkter..' />}
-          {/* Render the searching animation if the application is evaluating products */}
           {isProductsToEval && <SearchingAnimation spinnerText='Evaluerer produkter..' />}
         </div>
         {/* Render the chat history */}
