@@ -39,32 +39,34 @@ const ProductDetails = ({ product, evaluated }: { product: KassalappProduct, eva
     name,
     nova_group: Number(nova_group)
   }));
-  return <div>
-    {!evaluated && <div className={`border-2 p-2 shadow max-w-97 `}>
-      <span> {product.name}</span> <span className={`animate-pulse inline-flex rounded-lg px-2 py-1 ml-2 text-sm bg-gray-200`}>Evaluerer...</span>
-    </div >
+  return <div className='w-130'>
+    {
+      !evaluated && <div className={`border-2 p-2 shadow max-w-130`}>
+        <span> {product.name}</span> <span className={`animate-pulse inline-flex rounded-lg px-2 py-1 ml-2 text-sm bg-gray-200`}>Evaluerer...</span>
+      </div >
     }
-    {evaluated && <details className={`border-2 p-2 shadow max-w-97`}>
-      <summary>
-        <span> {product.name}</span> <span className={`inline-flex rounded-lg px-2 py-1 ml-2 text-sm ${customBgColor}`}>{product.processed_class}</span>
-      </summary>
-      <p className={`mt-1 p-2 flex items-center font-semibold ${customTextColor}`}> {product.processed_class}</p>
-      <div className={`p-2 items-center `}>
-        <a href={product.url} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline">{product.name}</a>
-        {" "}er et <span className={customTextColor}>{product.processed_class.toLowerCase()}</span> produkt.
-      </div>
-      <h5 id="ingredienser" className="p-2 font-semibold">
-        <div className="flex items-center">
-          <span>Ingredienser:</span>
+    {
+      evaluated && <details className={`cursor-pointer border-1 shadow max-w-130`}>
+        <summary className={` items-center p-2 hover:bg-gray-300 transition-all duration-100`}>
+          <span> {product.name}</span> <span className={`inline-flex rounded-lg px-2 py-1 ml-2 text-sm ${customBgColor}`}>{product.processed_class}</span>
+        </summary>
+        <p className={`mt-1 p-2 flex items-center font-semibold ${customTextColor}`}> {product.processed_class}</p>
+        <div className={`p-2 items-center`}>
+          <a href={product.url} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline">{product.name}</a>
+          {" "}<br></br>er et <span className={customTextColor}>{product.processed_class.toLowerCase()}</span> produkt.
         </div>
-      </h5>
-      <ul className="list-disc list-inside p-3 space-y-0.5">
-        {novaIngredients.map((ingredient, index) => (
-          <li key={index}>
-            {ingredient.name} <span className="text-gray-600 italic">(Nova gruppe <span className='font-semibold'>{ingredient.nova_group}</span>)</span>
-          </li>))}
-      </ul >
-    </details >
+        <h5 id="ingredienser" className="p-2 font-semibold">
+          <div className="flex items-center">
+            <span>Ingredienser:</span>
+          </div>
+        </h5>
+        <ul className="list-disc list-inside p-3 space-y-0.5 overflow-auto">
+          {novaIngredients.map((ingredient, index) => (
+            <li key={index}>
+              {ingredient.name} <span className="text-gray-600 italic">(Nova gruppe <span className='font-semibold'>{ingredient.nova_group}</span>)</span>
+            </li>))}
+        </ul >
+      </details >
     }
 
   </div >
