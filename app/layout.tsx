@@ -20,7 +20,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <NavBar></NavBar>
-        <div className="bg-white py-24 sm:py-18">
+        <div className="bg-white py-24 sm:py-8">
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
             <div className="mx-auto max-w-2xl lg:text-center">
               <h2 className="text-base font-semibold leading-7 text-lime-800">Forstå det du spiser</h2>
