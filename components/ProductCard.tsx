@@ -1,17 +1,21 @@
-import Product from "./Product";
 import { QuestionMarkCircleIcon } from "@heroicons/react/24/outline";
 import { Tooltip, Typography } from "./MaterialTailwind"
+import { KassalappProduct } from "./ApiResponse";
+import Image from 'next/image';
+
 
 const redIngredients = ["hydrolysert protein av kylling", "hydrolysert protein av laks"];
 const yellowIngredients = ["Ertestivelse", "biprodukter av vegetabilsk opprinnelse", "betaglukaner fra gjær"];
 
-export default function ProductCard({ product }: { product: Product }) {
+export default function ProductCard({ product }: { product: KassalappProduct }) {
 
   return (
     <div className="relative py-4 rounded-lg ">
       <div className="py-2 ">
         <span className="py-2 text-3xl"> {product.name} </span>
-        <img className=" p-10 border justify-self-end" src={product.imageUrl} alt="product image" />
+        <div className='min-w-20 min-h-20 max-w-20 max-h-20 rounded-lg'>
+            <Image className="h-full w-full object-contain" sizes="(max-width: 768px) 100vw, 33vw" src={product.image} alt={product.name} width={20} height={20} />
+        </div>
         {product.ingredients.length === 0 ?
           <div className="py-4">
             <div className="text-2xl">Ingredienser ikke tilgjengelig</div>
@@ -21,7 +25,7 @@ export default function ProductCard({ product }: { product: Product }) {
             <div className="pt-8 py-4 text-2xl">Ingredienser: </div>
             <div className="max-h-80 overflow-auto">
               <div className="grid space-y-2 p-2">
-                {product.ingredients.map((ingredient) => (
+                {product.ingredients.split(",").map((ingredient) => (
                   <div className="w-[fit-content] p-2 flex items-center" key={ingredient}>
                     <div
                       className={`
