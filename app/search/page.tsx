@@ -44,7 +44,12 @@ export default function Home() {
 
 
     const handleClick = (product: KassalappProduct) => {
-        setSelectedProducts((prevSelectedProducts) => [...prevSelectedProducts, product]);
+        setSelectedProducts((prevSelectedProducts) => {
+            if (!prevSelectedProducts.some(p => p.id === product.id)) {
+                return [...prevSelectedProducts, product];
+            }
+            return prevSelectedProducts;
+        });
         setSelectedProduct(product);
     };
 
@@ -81,7 +86,7 @@ export default function Home() {
                     />
                     <MagnifyingGlassIcon className="text-gray-500 w-10 h-10 justify-end hover:cursor-pointer hover:text-black" />
                 </div>
-                <div> {/* Make this element disappear if not in focus, if user clicks somewhere else  */}
+                <div>
                     {showResults && query.length > 0 ? (
                         <div className="pr-4 absolute z-10" ref={resultsRef}>
                             {products.length > 0 ? (
@@ -115,27 +120,20 @@ export default function Home() {
             </div>
 
             <div className="p-4 px-10 mx-auto z-0">
-                <div className="py-10 px-10 grid grid-cols-5 space-x-10 justify-between">
-                    <div className=" justify-self-center pr-4 font-semibold col-span-3 w-full">
-                        Undersøkte produkter
+                <div className="py-10 px-10 grid grid-cols-7 space-x-10 justify-between">
+                    <div className="col-span-3 font-semibold justify-center">
+                        <div className="mx-auto font-normal text-lg">Undersøkte produkter</div>
                         {selectedProducts.length > 0 ? (
-                            <div className="bg-white rounded-xl shadow-sm p-4 space-y-1  w-full ">
+                            <div className="bg-white rounded-xl shadow-sm p-4 space-y-2  w-full ">
                                 {selectedProducts.map((product, index) => (
-                                    <div className="flex justify-between border">
-
-                                        <div className='min-w-20 min-h-20 max-w-20 max-h-20 rounded-lg'>
-                                            <a href={product.url} target="_blank" rel="noopener noreferrer">
-                                                <Image className="h-full w-full object-contain h-18 w-18" sizes="(max-width: 768px) 100vw, 33vw" src={product.image} alt={product.name} width={20} height={20} />
-                                            </a>
+                                    <div className="flex items-center">
+                                        <div key={index} className="w-full my-auto font-semibold rounded-md">
+                                            {product.name}
                                         </div>
-                                        <div key={index} className="w-full p-3 font-semibold rounded-md">
-                                            <a href={product.url} target="_blank" rel="noopener noreferrer">
-
-                                                {product.name} <br></br> <span className="font-normal">{product.brand.charAt(0).toUpperCase() + product.brand.slice(1).toLowerCase()}</span>
-                                            </a>
-                                        </div>
-                                        <div className="w-11/12 h-20 flex items-center hover:cursor-pointer text-gray-500 hover:text-black" onClick={() => handleClick(product)}>
-                                            <div className='p-2'>Se prosesseringsgrad</div> <ArrowRightIcon className=" w-6 h-6 justify-end hover:cursor-pointer" />
+                                        <div className="w-11/12 hover:cursor-pointer text-gray-500 hover:text-black" onClick={() => handleClick(product)}>
+                                            <div className="justify-end flex items-center">
+                                                <div className="px-2 hidden lg:block"> Se prosesseringsgrad </div> <ArrowRightIcon className=" w-6 h-6 justify-end" />
+                                            </div>
                                         </div>
                                     </div>
                                 ))}
@@ -145,7 +143,7 @@ export default function Home() {
 
                         )}
                     </div>
-                    <div className="border justify-self-center col-span-2">
+                    <div className="flex justify-center col-start-5 col-span-2">
                         {selectedProduct && (
                             <ProductCard product={selectedProduct} />
                         )}
