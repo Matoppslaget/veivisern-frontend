@@ -33,7 +33,7 @@ export default function Home() {
         }
     };
 
-    const debouncedFetchResults = useCallback(debounce(fetchResults, 1000), []);
+    const debouncedFetchResults = useCallback(debounce(fetchResults, 400), []);
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
