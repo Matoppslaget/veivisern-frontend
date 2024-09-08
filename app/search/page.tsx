@@ -92,14 +92,13 @@ export default function Home() {
                             {products.length > 0 ? (
                                 <div className="bg-white rounded-xl shadow-sm p-4 space-y-1 border w-full ">
                                     {products.map((product, index) => (
-                                        <div className="flex justify-between border">
-
+                                        <div key={index} className="flex justify-between border">
                                             <div className='min-w-20 min-h-20 max-w-20 max-h-20 rounded-lg'>
                                                 <a href={product.url} target="_blank" rel="noopener noreferrer">
                                                     <Image className="h-full w-full object-contain h-18 w-18" sizes="(max-width: 768px) 100vw, 33vw" src={product.image} alt={product.name} width={20} height={20} />
                                                 </a>
                                             </div>
-                                            <div key={index} className="w-full p-3 font-semibold rounded-md">
+                                            <div className="w-full p-3 font-semibold rounded-md">
                                                 <a href={product.url} target="_blank" rel="noopener noreferrer">
 
                                                     {product.name} <br></br> <span className="font-normal">{product.brand.charAt(0).toUpperCase() + product.brand.slice(1).toLowerCase()}</span>
@@ -126,8 +125,8 @@ export default function Home() {
                         {selectedProducts.length > 0 ? (
                             <div className="bg-white rounded-xl shadow-sm p-4 space-y-2  w-full ">
                                 {selectedProducts.map((product, index) => (
-                                    <div className="flex items-center">
-                                        <div key={index} className="w-full my-auto font-semibold rounded-md">
+                                    <div key={index} className="flex items-center">
+                                        <div className="w-full my-auto font-semibold rounded-md">
                                             {product.name}
                                         </div>
                                         <div className="w-11/12 hover:cursor-pointer text-gray-500 hover:text-black" onClick={() => handleClick(product)}>
