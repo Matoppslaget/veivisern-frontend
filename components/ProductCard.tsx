@@ -13,10 +13,10 @@ export default function ProductCard({ product }: { product: KassalappProduct }) 
     <div className="shadow-lg  border-4 border-opacity-55 border-green-800 flex justify-center w-full ">
       <div className="">
         <span className="flow-root my-3 text-center text-2xl"> {product.name} </span>
-        <div className='flow-root my-6 mx-auto box-border h-32 w-32'>
+        <div className='flow-root my-4 mx-auto box-border h-48 w-48'>
           <Image className="h-full w-full object-contain" sizes="(max-width: 768px) 100vw, 33vw" src={product.image} alt={product.name} width={20} height={20} />
         </div>
-        <div className="flow-root my-6 py-1 mx-auto text-center italic font-semibold"> Produktet er ultraprosessert ! </div>
+        <div className="flow-root my-2 mx-auto text-center italic font-semibold"> Produktet er kanskje UP, kanskje ikke! </div>
         <div className="flow-root my-6 ">
           {(!product.ingredients || product.ingredients.length === 0) ?
             <div className="py-2">
@@ -24,7 +24,7 @@ export default function ProductCard({ product }: { product: KassalappProduct }) 
               <span> Produsenten har ikke oppgitt noen ingredienser.</span>
             </div>
             : <div className="grid">
-              <div className="pl-2 p-2 text-xl">Ingredienser: </div>
+              <div className="pl-4 p-2 text-lg">Ingredienser: </div>
                 <div className=" max-h-80 overflow-auto grid p-2 border-2 border-gray-100 shadow-lg">
                   {product.ingredients.split(",").map((ingredient) => (
                     <div className="p-1 flex" key={ingredient}>
@@ -38,7 +38,7 @@ export default function ProductCard({ product }: { product: KassalappProduct }) 
                             : yellowIngredients.includes(ingredient) ?
                               'bg-yellow-400 hover:border-yellow-500 '
                               : ''}  
-                              px-2 py-1 text-lg`}
+                              px-2 py-1 text-md`}
                       >
                         {ingredient}
                       </div>

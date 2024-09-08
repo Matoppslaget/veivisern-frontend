@@ -121,12 +121,12 @@ export default function Home() {
             <div className="p-4 px-10 mx-auto z-0">
                 <div className="py-10 px-10 grid grid-cols-7 space-x-10 justify-between">
                     <div className="col-span-3 font-semibold justify-center">
-                        <div className="mx-auto font-normal text-lg">Undersøkte produkter</div>
+                        <div className="pl-4 mx-auto font-normal text-2xl">Valgte produkter</div>
                         {selectedProducts.length > 0 ? (
-                            <div className="bg-white rounded-xl shadow-sm p-4 space-y-2  w-full ">
+                            <ul className="bg-white rounded-xl mt-4 w-full shadow-lg">
                                 {selectedProducts.map((product, index) => (
-                                    <div key={index} className="flex items-center">
-                                        <div className="w-full my-auto font-semibold rounded-md">
+                                    <li key={index} className="flex items-center even:bg-white odd:bg-gray-200 odd:bg-opacity-50 py-2 px-2">
+                                        <div className="w-full my-auto font-semibold rounded-md ">
                                             {product.name}
                                         </div>
                                         <div className="w-11/12 hover:cursor-pointer text-gray-500 hover:text-black" onClick={() => handleClick(product)}>
@@ -134,9 +134,9 @@ export default function Home() {
                                                 <div className="px-2 hidden lg:block"> Se prosesseringsgrad </div> <ArrowRightIcon className=" w-6 h-6 justify-end" />
                                             </div>
                                         </div>
-                                    </div>
+                                    </li>
                                 ))}
-                            </div>
+                            </ul>
                         ) : (
                             <div className="bg-white rounded-xl shadow-sm p-4 font-normal text-center ">Du har enda ikke valgt produkter <br></br><br></br> <span className="italic">prøv et søk!</span></div>
 
