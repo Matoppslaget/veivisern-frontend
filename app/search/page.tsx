@@ -101,7 +101,7 @@ export default function Home() {
                                             <div className="w-full p-3 font-semibold rounded-md">
                                                 <a href={product.url} target="_blank" rel="noopener noreferrer">
 
-                                                    {product.name} <br></br> <span className="font-normal">{product.brand.charAt(0).toUpperCase() + product.brand.slice(1).toLowerCase()}</span>
+                                                    {product.name} <br></br> <span className="font-normal">{product?.brand ? product.brand.charAt(0).toUpperCase() + product.brand.slice(1).toLowerCase() : "Ukjent merke"}</span>
                                                 </a>
                                             </div>
                                             <div className="w-11/12 h-20 flex items-center hover:cursor-pointer text-gray-500 hover:text-black pr-2" onClick={() => handleClick(product)}>

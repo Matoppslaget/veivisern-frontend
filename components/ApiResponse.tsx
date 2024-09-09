@@ -1,7 +1,7 @@
 export interface KassalappProduct {
     id: number,
     name: string,
-    brand: string,
+    brand?: string,
     vendor: string,
     ean: string,
     url: string,
