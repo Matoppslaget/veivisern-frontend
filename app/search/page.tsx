@@ -1,12 +1,13 @@
 "use client"
 
-import { useState, useCallback, useRef, useEffect } from "react";
-import { MagnifyingGlassIcon, ArrowRightIcon } from "@heroicons/react/24/outline"
+import ApiResponse, { KassalappProduct } from '@/components/ApiResponse';
+import ProductCard from '@/components/ProductCard';
+import SearchBar from "@/components/SearchBar";
+import ShowProducts from "@/components/ShowProducts";
+import { ArrowRightIcon } from "@heroicons/react/24/outline";
 import axios from 'axios';
 import debounce from 'lodash.debounce';
-import ApiResponse, { KassalappProduct } from '@/components/ApiResponse';
-import Image from 'next/image';
-import ProductCard from '@/components/ProductCard';
+import { useCallback, useEffect, useRef, useState } from "react";
 
 const apiKey = process.env.NEXT_PUBLIC_KASSALAPP_API_KEY;
 
@@ -44,6 +45,7 @@ export default function Home() {
 
 
     const handleClick = (product: KassalappProduct) => {
+        setShowResults(false);
         setSelectedProducts((prevSelectedProducts) => {
             if (!prevSelectedProducts.some(p => p.id === product.id)) {
                 return [...prevSelectedProducts, product];
@@ -72,75 +74,47 @@ export default function Home() {
     }, []);
 
     return (
-        <div className="space-y-5 z-20" >
-            <div className="px-10 mx-auto max-w-4xl">
-                <div className="p-2 px-4 bg-white rounded-xl shadow-sm flex justify-between space-x-4 border">
-                    <input
-                        placeholder="Søk etter produkt..."
-                        type="text"
-                        className="w-full rounded-md py-1.5 pl-4 pr-20 text-gray-900 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-inset focus:ring-1 focus:ring-green-700 focus:ring-opacity-30 focus:outline-none sm:text-sm sm:leading-6"
-                        value={query}
-                        onChange={handleInputChange}
-                        onFocus={() => setShowResults(true)}
-                        ref={searchInputRef}
-                    />
-                    <MagnifyingGlassIcon className="text-gray-500 w-10 h-10 justify-end hover:cursor-pointer hover:text-black" />
-                </div>
-                <div>
-                    {showResults && query.length > 0 ? (
-                        <div className="pr-4 absolute z-10" ref={resultsRef}>
-                            {products.length > 0 ? (
-                                <div className="bg-white rounded-xl shadow-sm p-4 space-y-1 border w-full ">
-                                    {products.map((product, index) => (
-                                        <div key={index} className="flex justify-between border">
-                                            <div className='min-w-20 min-h-20 max-w-20 max-h-20 rounded-lg'>
-                                                <a href={product.url} target="_blank" rel="noopener noreferrer">
-                                                    <Image className="h-full w-full object-contain h-18 w-18" sizes="(max-width: 768px) 100vw, 33vw" src={product.image} alt={product.name} width={20} height={20} />
-                                                </a>
-                                            </div>
-                                            <div className="w-full p-3 font-semibold rounded-md">
-                                                <a href={product.url} target="_blank" rel="noopener noreferrer">
-
-                                                    {product.name} <br></br> <span className="font-normal">{product?.brand ? product.brand.charAt(0).toUpperCase() + product.brand.slice(1).toLowerCase() : "Ukjent merke"}</span>
-                                                </a>
-                                            </div>
-                                            <div className="w-11/12 h-20 flex items-center hover:cursor-pointer text-gray-500 hover:text-black pr-2" onClick={() => handleClick(product)}>
-                                                <div className='p-2'>Se prosesseringsgrad</div> <ArrowRightIcon className="w-6 h-6 justify-end hover:cursor-pointer" />
-                                            </div>
-                                        </div>
-                                    ))}
-                                </div>
-                            ) : (
-                                <div className="bg-white rounded-xl shadow-sm p-4 border">Ingen produkter funnet</div>
-                            )}
-                        </div>
-                    ) : null}
-                </div>
-            </div>
-
-            <div className="p-4 px-10 mx-auto z-0">
-                <div className="py-10 px-10 grid grid-cols-7 space-x-10 justify-between">
+        <div className="space-y-" >
+            <div className="p-4 px-10 mx-">
+                <div className="py-4 px-10 grid grid-cols-7 space-x-10 justify-between">
                     <div className="col-span-3 font-semibold justify-center">
-                        <div className="pl-4 mx-auto font-normal text-2xl">Valgte produkter</div>
-                        {selectedProducts.length > 0 ? (
-                            <ul className="bg-white rounded-xl mt-4 w-full shadow-lg">
-                                {selectedProducts.map((product, index) => (
-                                    <li key={index} className="flex items-center even:bg-white odd:bg-gray-200 odd:bg-opacity-50 py-2 px-2">
-                                        <div className="w-full my-auto font-semibold rounded-md ">
-                                            {product.name}
-                                        </div>
-                                        <div className="w-11/12 hover:cursor-pointer text-gray-500 hover:text-black" onClick={() => handleClick(product)}>
-                                            <div className="justify-end flex items-center">
-                                                <div className="px-2 hidden lg:block"> Se prosesseringsgrad </div> <ArrowRightIcon className=" w-6 h-6 justify-end" />
-                                            </div>
-                                        </div>
-                                    </li>
-                                ))}
-                            </ul>
-                        ) : (
-                            <div className="bg-white rounded-xl shadow-sm p-4 font-normal text-center ">Du har enda ikke valgt produkter <br></br><br></br> <span className="italic">prøv et søk!</span></div>
-
-                        )}
+                        <div className="pl-4 mx-auto font-normal text-2xl">Søk og velg produkter</div>
+                        <div className="my-4 px-4 max-w-4xl">
+                            <SearchBar
+                                query={query}
+                                onInputChange={handleInputChange}
+                                onFocus={() => setShowResults(true)}
+                            />
+                            {showResults && query.length > 0 ? (
+                                <div className="max-w-4xl" ref={resultsRef}>
+                                    {products.length > 0 ? (
+                                        <ShowProducts products={products} handleClick={handleClick} />  // Use
+                                    ) : (
+                                        <div className="bg-white rounded-xl shadow-sm p-4 border">Ingen produkter funnet</div>
+                                    )}
+                                </div>
+                            ) : null}
+                            {!showResults && selectedProducts.length > 0 ? (
+                                <div className="mt-4">
+                                    Valgte produkter:
+                                    <ul className="bg-white rounded-xl mt-4 w-full shadow-lg">
+                                        {selectedProducts.map((product, index) => (
+                                            <li key={index} className="flex items-center even:bg-white odd:bg-gray-200 odd:bg-opacity-50 py-2 px-2">
+                                                <div className="w-full my-auto font-semibold rounded-md ">
+                                                    {product.name}
+                                                </div>
+                                                <div className="w-11/12 hover:cursor-pointer text-gray-500 hover:text-black" onClick={() => handleClick(product)}>
+                                                    <div className="justify-end flex items-center">
+                                                        <div className="px-2 hidden lg:block"> Se prosesseringsgrad </div> <ArrowRightIcon className="w-6 h-6 justify-end" />
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            ) : null
+                            }
+                        </div>
                     </div>
                     <div className="flex justify-center col-start-5 col-span-2">
                         {selectedProduct && (
