@@ -1,50 +1,51 @@
 "use client"
 
-import ApiResponse, { KassalappProduct } from '@/components/ApiResponse';
+import { KassalappProduct } from '@/components/ApiResponse';
 import ProductCard from '@/components/ProductCard';
 import SearchBar from "@/components/SearchBar";
 import ShowProducts from "@/components/ShowProducts";
-import { ArrowRightIcon } from "@heroicons/react/24/outline";
-import axios from 'axios';
 import debounce from 'lodash.debounce';
 import { useCallback, useEffect, useRef, useState } from "react";
-
-const apiKey = process.env.NEXT_PUBLIC_KASSALAPP_API_KEY;
+import { fetchResults } from '@/api/KassalappApi';
+import CompactProductList from '@/components/CompactProductList';
 
 export default function Home() {
+    // State variables
     const [query, setQuery] = useState('');
     const [products, setProducts] = useState<KassalappProduct[]>([]);
     const [selectedProducts, setSelectedProducts] = useState<KassalappProduct[]>([]);
     const [selectedProduct, setSelectedProduct] = useState<KassalappProduct | null>(null);
     const [showResults, setShowResults] = useState(false);
+
+    // References for click-outside detection
     const searchInputRef = useRef<HTMLInputElement>(null);
     const resultsRef = useRef<HTMLDivElement>(null);
 
-    const fetchResults = async (product: string) => {
-        const url = 'https://kassal.app/api/v1/products'
-        try {
-            const response: ApiResponse = await axios.get(url, {
-                params: { search: product },
-                headers: { 'Authorization': `Bearer ${apiKey}` }
-            });
-            console.log(response.data.data);
-            setProducts(response.data.data);
-        } catch (error) {
-            console.error('Error fetching data:', error);
-        }
-    };
 
-    const debouncedFetchResults = useCallback(debounce(fetchResults, 400), []);
+    const debouncedFetchResults = useCallback(
+        debounce(async (product: string) => {
+            try {
+                const results = await fetchResults(product);
+                setProducts(results);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        }, 400),
+        []
+    );
 
-    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const value = event.target.value;
-        setQuery(value);
-        debouncedFetchResults(value);
-        setShowResults(true);
-    };
+    const handleInputChange = useCallback(
+        (event: React.ChangeEvent<HTMLInputElement>) => {
+            const value = event.target.value;
+            setQuery(value);
+            debouncedFetchResults(value);
+            setShowResults(true);
+        },
+        [debouncedFetchResults]
+    );
 
 
-    const handleClick = (product: KassalappProduct) => {
+    const handleProductClick = (product: KassalappProduct) => {
         setShowResults(false);
         setSelectedProducts((prevSelectedProducts) => {
             if (!prevSelectedProducts.some(p => p.id === product.id)) {
@@ -55,23 +56,57 @@ export default function Home() {
         setSelectedProduct(product);
     };
 
-    const handleClickOutside = (event: MouseEvent) => {
-        if (
-            searchInputRef.current &&
-            !searchInputRef.current.contains(event.target as Node) &&
-            resultsRef.current &&
-            !resultsRef.current.contains(event.target as Node)
-        ) {
-            setShowResults(false);
-        }
-    };
+
 
     useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (
+                searchInputRef.current &&
+                !searchInputRef.current.contains(event.target as Node) &&
+                resultsRef.current &&
+                !resultsRef.current.contains(event.target as Node)
+            ) {
+                setShowResults(false);
+            }
+        };
+
         document.addEventListener("mousedown", handleClickOutside);
         return () => {
             document.removeEventListener("mousedown", handleClickOutside);
         };
     }, []);
+
+
+    // Render selected products or results
+    const renderSelectedProducts = () => {
+        if (!showResults && selectedProducts.length > 0) {
+            return (
+                <div className="mt-4">
+                    Valgte produkter:
+                    <CompactProductList
+                        selectedProducts={selectedProducts}
+                        onProductClick={handleProductClick}
+                    />
+                </div>
+            );
+        }
+        return null;
+    };
+
+    const renderSearchResults = () => {
+        if (showResults && query.length > 0) {
+            return (
+                <div className="max-w-4xl" ref={resultsRef}>
+                    {products.length > 0 ? (
+                        <ShowProducts products={products} handleClick={handleProductClick} />
+                    ) : (
+                        <div className="bg-white rounded-xl shadow-sm p-4 border">Ingen produkter funnet</div>
+                    )}
+                </div>
+            );
+        }
+        return null;
+    };
 
     return (
         <div className="space-y-" >
@@ -85,35 +120,8 @@ export default function Home() {
                                 onInputChange={handleInputChange}
                                 onFocus={() => setShowResults(true)}
                             />
-                            {showResults && query.length > 0 ? (
-                                <div className="max-w-4xl" ref={resultsRef}>
-                                    {products.length > 0 ? (
-                                        <ShowProducts products={products} handleClick={handleClick} />  // Use
-                                    ) : (
-                                        <div className="bg-white rounded-xl shadow-sm p-4 border">Ingen produkter funnet</div>
-                                    )}
-                                </div>
-                            ) : null}
-                            {!showResults && selectedProducts.length > 0 ? (
-                                <div className="mt-4">
-                                    Valgte produkter:
-                                    <ul className="bg-white rounded-xl mt-4 w-full shadow-lg">
-                                        {selectedProducts.map((product, index) => (
-                                            <li key={index} className="flex items-center even:bg-white odd:bg-gray-200 odd:bg-opacity-50 py-2 px-2">
-                                                <div className="w-full my-auto font-semibold rounded-md ">
-                                                    {product.name}
-                                                </div>
-                                                <div className="w-11/12 hover:cursor-pointer text-gray-500 hover:text-black" onClick={() => handleClick(product)}>
-                                                    <div className="justify-end flex items-center">
-                                                        <div className="px-2 hidden lg:block"> Se prosesseringsgrad </div> <ArrowRightIcon className="w-6 h-6 justify-end" />
-                                                    </div>
-                                                </div>
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </div>
-                            ) : null
-                            }
+                            {renderSearchResults()}
+                            {renderSelectedProducts()}
                         </div>
                     </div>
                     <div className="flex justify-center col-start-5 col-span-2">
