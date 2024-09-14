@@ -14,7 +14,7 @@ export interface KassalappProduct {
     weight_unit: string
 }
 
-export default interface ApiResponse {
+export default interface KassalappResponse {
     data: {
         data: KassalappProduct[]
     }
