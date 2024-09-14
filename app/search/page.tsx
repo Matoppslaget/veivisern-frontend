@@ -1,6 +1,6 @@
 "use client"
 
-import { KassalappProduct } from '@/components/ApiResponse';
+import { EvaluatedProduct, KassalappProduct } from '@/components/KassalappResponse';
 import ProductCard from '@/components/ProductCard';
 import SearchBar from "@/components/SearchBar";
 import ShowProducts from "@/components/ShowProducts";
@@ -8,6 +8,7 @@ import debounce from 'lodash.debounce';
 import { useCallback, useEffect, useRef, useState } from "react";
 import { fetchResults } from '@/api/KassalappApi';
 import CompactProductList from '@/components/CompactProductList';
+import { fetchProductEvaluation } from '@/api/ProductEvaluator';
 
 export default function Home() {
     // State variables
@@ -15,6 +16,8 @@ export default function Home() {
     const [products, setProducts] = useState<KassalappProduct[]>([]);
     const [selectedProducts, setSelectedProducts] = useState<KassalappProduct[]>([]);
     const [selectedProduct, setSelectedProduct] = useState<KassalappProduct | null>(null);
+    const [productsUnderEvaluation, setProductsUnderEvaluation] = useState<number[]>([]);
+    const [evaluationResults, setEvaluationResults] = useState<EvaluatedProduct[]>([]);
     const [showResults, setShowResults] = useState(false);
 
     // References for click-outside detection
@@ -46,6 +49,13 @@ export default function Home() {
 
 
     const handleProductClick = (product: KassalappProduct) => {
+        if (!evaluationResults.some(p => p.id === product.id)) {
+            setProductsUnderEvaluation([...productsUnderEvaluation, product.id]);
+            fetchProductEvaluation(product).then((res: EvaluatedProduct) => {
+                setProductsUnderEvaluation(productsUnderEvaluation.filter(id => id !== product.id));
+                setEvaluationResults([...evaluationResults, res]);
+            });
+        }
         setShowResults(false);
         setSelectedProducts((prevSelectedProducts) => {
             if (!prevSelectedProducts.some(p => p.id === product.id)) {
@@ -126,7 +136,7 @@ export default function Home() {
                     </div>
                     <div className="flex justify-center col-start-5 col-span-2">
                         {selectedProduct && (
-                            <ProductCard product={selectedProduct} />
+                            <ProductCard product={selectedProduct} isEvaluating={productsUnderEvaluation.includes(selectedProduct.id)} evaluatedProduct={evaluationResults.find((product) => product.id === selectedProduct?.id)} />
                         )}
                     </div>
                 </div>

@@ -1,55 +1,67 @@
 import { QuestionMarkCircleIcon } from "@heroicons/react/24/outline";
 import { Tooltip, Typography } from "./MaterialTailwind"
-import { KassalappProduct } from "./ApiResponse";
+import { EvaluatedProduct, KassalappProduct, ProcessedClass } from "./KassalappResponse";
 import Image from 'next/image';
+import { Spinner } from "@material-tailwind/react";
+
+interface ProductCardProps {
+  product: KassalappProduct;
+  isEvaluating: boolean;
+  evaluatedProduct?: EvaluatedProduct;
+}
 
 
-const redIngredients = ["vann", "100% bananer", "hydrolysert protein av kylling", "hydrolysert protein av laks"];
-const yellowIngredients = ["sitronjuicekonsentrat", "sitronjuicekonsentrat", "betaglukaner fra gjær"];
-
-export default function ProductCard({ product }: { product: KassalappProduct }) {
-
+export default function ProductCard({ product, isEvaluating, evaluatedProduct }: ProductCardProps) {
   return (
     <div className="shadow-lg  border-4 border-opacity-55 border-green-800 flex justify-center w-full ">
       <div className="">
         <span className="flow-root my-3 text-center text-2xl"> {product.name} </span>
         <div className='flow-root my-4 mx-auto box-border h-48 w-48'>
-          <Image className="h-full w-full object-contain" sizes="(max-width: 768px) 100vw, 33vw" src={product.image} alt={product.name} width={20} height={20} />
+          <Image className="h-full w-full object-contain" sizes="(max-width: 768px) 100vw, 33vw" src={product.image ? product.image : ""} alt={product.name} width={20} height={20} />
         </div>
-        <div className="flow-root my-2 mx-auto text-center italic font-semibold"> Produktet er kanskje UP, kanskje ikke! </div>
-        <div className="flow-root my-6 ">
-          {(!product.ingredients || product.ingredients.length === 0) ?
-            <div className="py-2">
-              <div className="text-2xl">Ingredienser ikke tilgjengelig</div>
-              <span> Produsenten har ikke oppgitt noen ingredienser.</span>
-            </div>
-            : <div className="grid">
-              <div className="pl-4 p-2 text-lg">Ingredienser: </div>
+        {isEvaluating && <div>
+          <div className="flex justify-center space-x-3 my-4 p-2 text-center italic font-semibold text-gray-500">
+            <Spinner></Spinner> <span> Spinning the UP-roulette</span>
+          </div>
+          <div className="pl-4 p-2 text-lg">Ingredienser: </div>
+          {product.ingredients ?
+            <div className="flow-root my-2 mx-auto px-2 text-gray-500"> {product.ingredients} </div> :
+            <div className="flow-root my-2 mx-auto text-center italic font-semibold"> Produsenten har ikke oppgitt ingredienser </div>}
+        </div>}
+        {evaluatedProduct &&
+          <div className={`my-8 text-center text-xl font-semibold
+          `}> <span className={`border p-2 px-3 rounded-xl ${evaluatedProduct.upAnswer === ProcessedClass.ULTRAPROCESSED ?
+              'border-red-600 bg-red-200' : evaluatedProduct.upAnswer === ProcessedClass.PROCESSED ? 'border-yellow-400 bg-yellow-200' : 'border-green-600 bg-green-600 bg-opacity-50'}`}>{evaluatedProduct.upAnswer}</span> </div>}
+        {evaluatedProduct && evaluatedProduct.upAnswer === ProcessedClass.ULTRAPROCESSED && <div className="text-left mx-4">Se nærmere på hvilke ingredienser det skyldes under </div>}
+{/* For debug, søk opp tine økologisk lettmelk. Ingrediensene viser økologisk lettmelk, Novaingredients viser "properties required" */}
+        {evaluatedProduct &&
+          <div className="flow-root my-6 ">
+            {(!evaluatedProduct.novaIngredients || evaluatedProduct.novaIngredients.length === 0) ?
+              <div className="py-2">
+                <div className="text-2xl">Ingredienser ikke tilgjengelig</div>
+                <span> Produsenten har ikke oppgitt noen ingredienser.</span>
+              </div>
+              : <div className="grid">
+                <div className="pl-4 p-2 text-lg">Ingredienser: </div>
                 <div className=" max-h-80 overflow-auto grid p-2 border-2 border-gray-100 shadow-lg">
-                  {product.ingredients.split(",").map((ingredient) => (
+                  {evaluatedProduct.novaIngredients && Object.entries(evaluatedProduct.novaIngredients).map(([ingredient, novaClass]) => (
                     <div className="p-1 flex" key={ingredient}>
                       <div
-                        className={`
-                              ${redIngredients.includes(ingredient) || yellowIngredients.includes(ingredient) ?
-                            'rounded-lg'
-                            : 'bg-gray-100'}  
-                              ${redIngredients.includes(ingredient) ?
-                            'bg-red-600 hover:border-red-500 text-gray-50'
-                            : yellowIngredients.includes(ingredient) ?
-                              'bg-yellow-400 hover:border-yellow-500 '
-                              : ''}  
-                              px-2 py-1 text-md`}
+                        className={`px-2 py-1 text-md
+                              ${novaClass > 2 ? 'rounded-lg' : 'bg-gray-100 bg-opacity-50'}  
+                              ${novaClass === 4 ? 'bg-red-600 hover:border-red-500 text-gray-50' :
+                            novaClass === 3 ? 'bg-yellow-400 hover:border-yellow-500' : ''}`}
                       >
                         {ingredient}
                       </div>
-                      {redIngredients.includes(ingredient) &&
+                      {novaClass === 4 &&
                         <span>
                           <Tooltip
                             className="border border-blue-gray-50 bg-white px-4 py-3 shadow-xl shadow-black/10"
                             content={
                               <div className="w-80">
                                 <Typography color="blue-gray" className="text-lg font-bold">
-                                  Det æ fali det!
+                                  Det æ fali det...
                                 </Typography>
                                 <Typography
                                   variant="small"
@@ -68,7 +80,7 @@ export default function ProductCard({ product }: { product: KassalappProduct }) 
                           </Tooltip>
                         </span>
                       }
-                      {yellowIngredients.includes(ingredient) &&
+                      {novaClass === 3 &&
                         <span>
                           <Tooltip
                             className="border border-blue-gray-50 bg-white px-4 py-3 shadow-xl shadow-black/10"
@@ -97,10 +109,10 @@ export default function ProductCard({ product }: { product: KassalappProduct }) 
                     </div>
                   ))}
                 </div>
-            </div>
-          }
-        </div>
-
+              </div>
+            }
+          </div>
+        }
       </div >
     </div >
 
