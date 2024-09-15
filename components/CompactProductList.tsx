@@ -1,4 +1,4 @@
-import { KassalappProduct } from '@/components/ApiResponse';
+import { KassalappProduct } from '@/components/KassalappResponse';
 import { ArrowRightIcon } from "@heroicons/react/24/outline";
 
 interface CompactProductListProps {

@@ -1,6 +1,6 @@
 import { ArrowRightIcon } from "@heroicons/react/24/outline";
 import Image from 'next/image';
-import { KassalappProduct } from '@/components/ApiResponse';
+import { KassalappProduct } from '@/components/KassalappResponse';
 
 interface ShowProductsProps {
     products: KassalappProduct[];
@@ -14,7 +14,7 @@ const ShowProducts: React.FC<ShowProductsProps> = ({ products, handleClick }) =>
                 <div key={index} className="rounded-md flex justify-stretch border border-gray-300 border-opacity-70">
                     <div className='min-w-20 min-h-20 max-w-20 max-h-20 rounded-lg'>
                         <a href={product.url} target="_blank" rel="noopener noreferrer">
-                            <Image className="p-1 h-full w-full object-contain" sizes="(max-width: 768px) 100vw, 33vw" src={product.image} alt={product.name} width={20} height={20} />
+                            <Image className="p-1 h-full w-full object-contain" sizes="(max-width: 768px) 100vw, 33vw" src={product.image ? product.image : ''} alt={product.name} width={20} height={20} />
                         </a>
                     </div>
                     <div className="my-auto pl-8 w-full font-semibold rounded-md">
