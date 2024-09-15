@@ -1,7 +1,8 @@
 import axios from 'axios';
 import { EvaluatedProduct, EvaluatedProductResponse, KassalappProduct } from '@/components/KassalappResponse';
 
-const ProductEvaluationEndpoint = 'http://127.0.0.1:8000/evaluate_product';  // Point to the local FastAPI endpoint
+const env = process.env.NEXT_PUBLIC_ENVIRONMENT;
+const ProductEvaluationEndpoint = env === 'prod' ? 'https://brainy-oneida-sanders-consulting-4fc76d82.koyeb.app/evaluate_product' : 'http://localhost:8000/evaluate_product';  // Point to the local FastAPI endpoint
 
 export const fetchProductEvaluation = async (product: KassalappProduct): Promise<EvaluatedProduct> => {
     try {
