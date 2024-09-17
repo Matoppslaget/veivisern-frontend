@@ -28,7 +28,7 @@ export default function RootLayout({
                 UP ORAKEL 🦉
               </p></a>
               <p className="mt-6 text-lg leading-8 text-gray-600">
-                Med ditt UP orakel kan du lære mer om ditt kosthold
+                Med UP orakel kan du lære mer om ditt kosthold
               </p>
             </div>
           </div>

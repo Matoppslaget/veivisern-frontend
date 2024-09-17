@@ -31,25 +31,36 @@ export default function NavBar() {
                         </div>
                         <div className="hidden sm:ml-6 sm:block">
                             <div className="flex space-x-4">
-                                {navigation.map((item) => (
-                                    <a
-                                        key={item.name}
-                                        href={item.href}
-                                        aria-current={item.current ? 'page' : undefined}
-                                        className={classNames(
-                                            item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-lime-700 hover:text-white',
-                                            'rounded-md px-2 py-2.5 text-sm font-medium',
-                                        )}
-                                    >
-                                        {item.name}
-                                    </a>
-                                ))}
+                                <a
+                                    key={navigation.at(0)!!.name}
+                                    href={navigation.at(0)!!.href}
+                                    aria-current={navigation.at(0)!!.current ? 'page' : undefined}
+                                    className={classNames(
+                                        navigation.at(0)!!.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-lime-700 hover:text-white',
+                                        'rounded-md px-2 py-2.5 text-sm font-medium',
+                                    )}
+                                >
+                                    {navigation.at(0)!!.name}
+                                </a>
+
+
                             </div>
                         </div>
-                    </div>
-                    <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
 
-                        {/* Profile dropdown */}
+                    </div>
+                    <a
+                        key={navigation.at(1)!!.name}
+                        href={navigation.at(1)!!.href}
+                        aria-current={navigation.at(1)!!.current ? 'page' : undefined}
+                        className={classNames(
+                            navigation.at(1)!!.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-lime-700 hover:text-white',
+                            'absolute inset-y-0 right-0 flex text-sm font-medium items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0',
+                        )}
+                    >
+                        {navigation.at(1)!!.name}
+                    </a>
+                    {/* <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+
                         <Menu as="div" className="relative ml-3">
                             <div>
                                 <MenuButton className="relative flex rounded-full px-2 py-1 text-sm focus:outline-none focus:ring-2 text-gray-300 hover:bg-lime-700 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
@@ -79,7 +90,7 @@ export default function NavBar() {
                                 </MenuItem>
                             </MenuItems>
                         </Menu>
-                    </div>
+                    </div> */}
                 </div>
             </div>
 

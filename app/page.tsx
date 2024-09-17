@@ -5,10 +5,10 @@ export default function Introduction() {
                 <div className="relative mx-auto max-w-7xl px-4 sm:static sm:px-6 lg:px-8">
                     <div className="sm:max-w-lg">
                         <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
-                            UP orakel viser vei
+                            Orakelet viser vei
                         </h1>
                         <p className="mt-4 text-xl text-gray-500">
-                            Endelig kan du få kontroll på hva du spiser.
+                            Endelig kan du få kontroll på hva du spiser
                         </p>
                     </div>
                     <div>
