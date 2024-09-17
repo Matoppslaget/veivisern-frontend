@@ -42,7 +42,11 @@ export default function Home() {
             const value = event.target.value;
             setQuery(value);
             debouncedFetchResults(value);
-            setShowResults(true);
+            if (value.length > 0) {
+                setShowResults(true);
+            } else {
+                setShowResults(false);
+            }
         },
         [debouncedFetchResults]
     );
@@ -66,29 +70,26 @@ export default function Home() {
         setSelectedProduct(product);
     };
 
-
+    const handleClickOutside = (event: MouseEvent) => {
+        if (
+            searchInputRef.current &&
+            !searchInputRef.current.contains(event.target as Node) &&
+            resultsRef.current &&
+            !resultsRef.current.contains(event.target as Node)
+        ) {
+            setShowResults(false);
+        }
+    };
 
     useEffect(() => {
-        const handleClickOutside = (event: MouseEvent) => {
-            if (
-                searchInputRef.current &&
-                !searchInputRef.current.contains(event.target as Node) &&
-                resultsRef.current &&
-                !resultsRef.current.contains(event.target as Node)
-            ) {
-                setShowResults(false);
-            }
-        };
-
         document.addEventListener("mousedown", handleClickOutside);
         return () => {
             document.removeEventListener("mousedown", handleClickOutside);
         };
     }, []);
 
-
-    // Render selected products or results
     const renderSelectedProducts = () => {
+        console.log("Rendering selected products", (!showResults && selectedProducts.length > 0))
         if (!showResults && selectedProducts.length > 0) {
             return (
                 <div className="mt-4">
@@ -117,7 +118,7 @@ export default function Home() {
         }
         return null;
     };
-
+    // Debug:: Når eg har valgt produkt, deretter visker vekk alt i søkefeltet, så forsvinner "SelectedProducts"- lista
     return (
         <div className="space-y-" >
             <div className="p-4 px-10 mx-">
@@ -127,8 +128,13 @@ export default function Home() {
                         <div className="my-4 px-4 max-w-4xl">
                             <SearchBar
                                 query={query}
+                                parentRef={searchInputRef}
                                 onInputChange={handleInputChange}
-                                onFocus={() => setShowResults(true)}
+                                onFocus={() => {
+                                    if (query.length > 0) {
+                                        setShowResults(true);
+                                    }
+                                }}
                             />
                             {renderSearchResults()}
                             {renderSelectedProducts()}

@@ -3,13 +3,12 @@ import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
 interface SearchBarProps {
     query: string;
+    parentRef: React.RefObject<HTMLInputElement>;
     onInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
     onFocus: () => void;
 }
 
-const SearchBar: React.FC<SearchBarProps> = ({ query, onInputChange, onFocus }) => {
-    const searchInputRef = useRef<HTMLInputElement>(null);
-
+const SearchBar: React.FC<SearchBarProps> = ({ query, parentRef, onInputChange, onFocus }) => {
     return (
         <div className="p-1.5 pl-2 pr-4 bg-white rounded-xl shadow-sm flex justify-between space-x-2 border">
             <input
@@ -19,7 +18,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ query, onInputChange, onFocus }) 
                 value={query}
                 onChange={onInputChange}
                 onFocus={onFocus}
-                ref={searchInputRef}
+                ref={parentRef}
             />
             <MagnifyingGlassIcon className="text-gray-500 w-10 h-10 justify-end hover:cursor-pointer hover:text-black" />
         </div>

@@ -47,7 +47,8 @@ export default function NavBar() {
                             </div>
                         </div>
 
-                    </div>
+                    </div >
+                    
                     <a
                         key={navigation.at(1)!!.name}
                         href={navigation.at(1)!!.href}
@@ -93,7 +94,7 @@ export default function NavBar() {
                     </div> */}
                 </div>
             </div>
-
+{/* 
             <DisclosurePanel className="sm:hidden">
                 <div className="space-y-1 px-2 pb-3 pt-2">
                     {navigation.map((item) => (
@@ -111,7 +112,7 @@ export default function NavBar() {
                         </DisclosureButton>
                     ))}
                 </div>
-            </DisclosurePanel>
+            </DisclosurePanel> */}
         </Disclosure>
     )
 }
