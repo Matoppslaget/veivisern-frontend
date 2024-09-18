@@ -109,11 +109,7 @@ export default function Home() {
         if (showResults && query.length > 0) {
             return (
                 <div className="max-w-4xl" ref={resultsRef}>
-                    {products.length > 0 ? (
-                        <ShowProducts products={products} handleClick={handleProductClick} />
-                    ) : (
-                        <div className="bg-white rounded-xl shadow-sm p-4 border">Ingen produkter funnet</div>
-                    )}
+                    <ShowProducts products={products} handleClick={handleProductClick} />
                 </div>
             );
         }

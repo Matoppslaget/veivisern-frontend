@@ -23,17 +23,13 @@ export default function ProductCard({ product, isEvaluating, evaluatedProduct }:
           <div className="flex justify-center space-x-3 my-4 p-2 text-center italic font-semibold text-gray-500">
             <Spinner></Spinner> <span> Spinning the UP-roulette</span>
           </div>
-          <div className="pl-4 p-2 text-lg">Ingredienser: </div>
-          {product.ingredients ?
-            <div className="flow-root my-2 mx-auto px-2 text-gray-500"> {product.ingredients} </div> :
-            <div className="flow-root my-2 mx-auto text-center italic font-semibold"> Produsenten har ikke oppgitt ingredienser </div>}
         </div>}
         {evaluatedProduct &&
           <div className={`my-8 text-center text-xl font-semibold
           `}> <span className={`border p-2 px-3 rounded-xl ${evaluatedProduct.upAnswer === ProcessedClass.ULTRAPROCESSED ?
               'border-red-600 bg-red-200' : evaluatedProduct.upAnswer === ProcessedClass.PROCESSED ? 'border-yellow-400 bg-yellow-200' : 'border-green-600 bg-green-600 bg-opacity-50'}`}>{evaluatedProduct.upAnswer}</span> </div>}
         {evaluatedProduct && evaluatedProduct.upAnswer === ProcessedClass.ULTRAPROCESSED && <div className="text-left mx-4">Se nærmere på hvilke ingredienser det skyldes under </div>}
-{/* For debug, søk opp tine økologisk lettmelk. Ingrediensene viser økologisk lettmelk, Novaingredients viser "properties required" */}
+        {/* For debug, søk opp tine økologisk lettmelk. Ingrediensene viser økologisk lettmelk, Novaingredients viser "properties required" */}
         {evaluatedProduct &&
           <div className="flow-root my-6 ">
             {(!evaluatedProduct.novaIngredients || evaluatedProduct.novaIngredients.length === 0) ?
