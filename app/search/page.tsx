@@ -22,6 +22,7 @@ export default function Home() {
 
     // References for click-outside detection
     const searchInputRef = useRef<HTMLInputElement>(null);
+    const searchDivRef = useRef<HTMLDivElement>(null);
     const resultsRef = useRef<HTMLDivElement>(null);
 
 
@@ -72,8 +73,8 @@ export default function Home() {
 
     const handleClickOutside = (event: MouseEvent) => {
         if (
-            searchInputRef.current &&
-            !searchInputRef.current.contains(event.target as Node) &&
+            searchDivRef.current &&
+            !searchDivRef.current.contains(event.target as Node) &&
             resultsRef.current &&
             !resultsRef.current.contains(event.target as Node)
         ) {
@@ -125,7 +126,8 @@ export default function Home() {
                         <div className="my-4 px-4 max-w-4xl">
                             <SearchBar
                                 query={query}
-                                parentRef={searchInputRef}
+                                searchInputRef={searchInputRef}
+                                searchDivRef={searchDivRef}
                                 onInputChange={handleInputChange}
                                 onFocus={() => {
                                     if (query.length > 0) {
