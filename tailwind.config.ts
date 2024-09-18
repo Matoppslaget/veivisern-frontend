@@ -2,6 +2,8 @@ const withMT = require("@material-tailwind/react/utils/withMT");
 import type { Config } from "tailwindcss";
 const colors = require('tailwindcss/colors')
 
+type AddUtilitiesFn = (utilities: object) => void;
+
 const config: Config = withMT({
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -29,7 +31,18 @@ const config: Config = withMT({
       },
     },
   },
-  plugins: [],
+  plugins: [
+    function ({ addUtilities }: { addUtilities: AddUtilitiesFn }) {
+      addUtilities({
+        '.hide-cancel-button': {
+          '&::-webkit-search-cancel-button': {
+            '-webkit-appearance': 'none',
+            appearance: 'none',
+          },
+        },
+      });
+    },
+  ],
 });
 
 export default config;

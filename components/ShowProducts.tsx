@@ -9,7 +9,7 @@ interface ShowProductsProps {
 
 const ShowProducts: React.FC<ShowProductsProps> = ({ products, handleClick }) => {
     return (
-        <div className="rounded-xl shadow-sm p-1 pt-1 space-y-1 border 50 w-full">
+        <div className="rounded-xl shadow-sm  p-1 pt-1 space-y-1 border-t-0 border 50 w-full">
             {products.map((product, index) => (
                 <div key={index} className="rounded-md flex justify-stretch border border-gray-300 border-opacity-70 hover:cursor-pointer hover:bg-green-700 hover:bg-opacity-20" onClick={() => handleClick(product)}>
                     <div className='min-w-20 min-h-20 max-w-20 max-h-20 rounded-lg'>
