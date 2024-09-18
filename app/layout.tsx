@@ -22,22 +22,14 @@ export default function RootLayout({
       <body className={`${inter.className} min-h-screen flex flex-col`}>
         <NavBar></NavBar>
         <main className="flex-grow">
-          <div className="bg-white py-12 sm:py-8">
-            <div className="mx-auto max-w-7xl px-6 lg:px-8">
-              <div className="mx-auto max-w-2xl lg:text-center">
-                <h2 className="text-base font-semibold leading-7 text-lime-800">Forstå det du spiser</h2>
-                <a href="/"><p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl" >
-                  UP ORAKEL 🦉
-                </p></a>
-                <p className="mt-6 text-lg leading-8 text-gray-600">
-                  Med UP orakel kan du lære mer om ditt kosthold
-                </p>
-              </div>
-            </div>
+          <div className="p-4 mx-auto max-w-2xl lg:text-center">
+          <h2 className="text-base font-semibold leading-7 text-lime-800">Forstå det du spiser</h2>
+            <a href="/"><p className=" text-3xl p-2 pb-4 font-bold tracking-tight text-gray-900 sm:text-4xl" >
+              UP ORAKEL 🦉
+            </p></a>
           </div>
           {children}
         </main>
-        <div className="my-8"></div>
         <Footer />
         <Analytics />
       </body>

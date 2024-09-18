@@ -15,7 +15,7 @@ export default function NavBar() {
     return (
         <Disclosure as="nav" className="bg-lime-800">
             <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
-                <div className="relative flex h-16 items-center justify-between">
+                <div className="relative flex h-14 items-center justify-between">
                     {/* <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
 
                         <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-lime-500 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
@@ -27,7 +27,7 @@ export default function NavBar() {
                     </div> */}
                     <div className="flex items-center justify-center sm:items-stretch sm:justify-start">
                         <div className="flex flex-shrink-0 items-center">
-                            <a href="/"> <div className="text-4xl h-10 w-auto"> 🦉 </div></a>
+                            <a href="/"> <div className="text-3xl h-10 w-auto"> 🦉 </div></a>
                         </div>
                         <div className="sm:ml-6 sm:block">
                             <div className="flex space-x-4">
