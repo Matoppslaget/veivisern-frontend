@@ -19,7 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.className} min-h-screen flex flex-col border`}>
+      <body className={`${inter.className} min-h-screen flex flex-col`}>
         <NavBar></NavBar>
         <main className="flex-grow">
           <div className="bg-white py-12 sm:py-8">

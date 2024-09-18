@@ -14,8 +14,8 @@ export default function Team() {
             </div >
             <div className="p-4">
                 <p className="text-md p-1 text-center">Teamet som har laget UP orakel er Anders og Sander. </p>
-                <p className="text-md text-center">Vi har utdanning fra NTNU og jobber til daglig med å programmere og bygge programvare.</p>
-                <p className="text-md text-center">Vi synes det burde være lettere å forstå det vi spiser, og det er det vi ønsker å oppnå med UP Orakel.</p>
+                <p className="hidden md:visible text-md text-center">Vi har utdanning fra NTNU og jobber til daglig med å programmere og bygge programvare.</p>
+                <p className="hidden text-md text-center">Vi synes det burde være lettere å forstå det vi spiser, og det er det vi ønsker å oppnå med UP Orakel.</p>
                 <p className="text-md p-1 text-center">Gi oss gjerne en tilbakemelding, enten du har ris eller ros. Vi ønsker å lage en så god opplevelse som mulig.</p>
                 <p className="text-md p-1 text-center">Takk for at du bruker UP orakel!</p>
             </div>

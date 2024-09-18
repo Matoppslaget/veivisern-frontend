@@ -15,7 +15,7 @@ export default function Home() {
     const [query, setQuery] = useState('');
     const [products, setProducts] = useState<KassalappProduct[]>([]);
     const [selectedProducts, setSelectedProducts] = useState<KassalappProduct[]>([]);
-    const [selectedProduct, setSelectedProduct] = useState<KassalappProduct | null>(null);
+    const [selectedProduct, setSelectedProduct] = useState<KassalappProduct | undefined>(undefined);
     const [productsUnderEvaluation, setProductsUnderEvaluation] = useState<number[]>([]);
     const [evaluationResults, setEvaluationResults] = useState<EvaluatedProduct[]>([]);
     const [showResults, setShowResults] = useState(false);
@@ -95,6 +95,7 @@ export default function Home() {
                 <div className="mt-4">
                     Valgte produkter:
                     <CompactProductList
+                        selectedProduct={selectedProduct}
                         selectedProducts={selectedProducts}
                         onProductClick={handleProductClick}
                     />
