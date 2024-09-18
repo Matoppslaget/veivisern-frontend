@@ -13,7 +13,7 @@ interface ProductCardProps {
 
 export default function ProductCard({ product, isEvaluating, evaluatedProduct }: ProductCardProps) {
   return (
-    <div className="shadow-lg  border-4 border-opacity-55 border-green-800 flex justify-center w-full ">
+    <div className="flex justify-center w-full ">
       <div className="">
         <span className="flow-root my-3 text-center text-2xl"> {product.name} </span>
         <div className='flow-root my-4 mx-auto box-border h-48 w-48'>
@@ -39,7 +39,7 @@ export default function ProductCard({ product, isEvaluating, evaluatedProduct }:
               </div>
               : <div className="grid">
                 <div className="pl-4 p-2 text-lg">Ingredienser: </div>
-                <div className=" max-h-80 overflow-auto grid p-2 border-2 border-gray-100 shadow-lg">
+                <div className=" max-h-80 overflow-auto grid shadow-[inset_0_-24px_10px_-10px_rgba(0,0,0,0.06)]">
                   {evaluatedProduct.novaIngredients && Object.entries(evaluatedProduct.novaIngredients).map(([ingredient, novaClass]) => (
                     <div className="p-1 flex" key={ingredient}>
                       <div
