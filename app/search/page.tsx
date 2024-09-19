@@ -126,12 +126,15 @@ export default function Home() {
                         <div className="my-4 px-4 max-w-4xl">
                             <SearchBar
                                 query={query}
+                                setQuery={setQuery}
                                 searchInputRef={searchInputRef}
                                 searchDivRef={searchDivRef}
                                 onInputChange={handleInputChange}
                                 onFocus={() => {
                                     if (query.length > 0) {
                                         setShowResults(true);
+                                    } else {
+                                        setShowResults(false);
                                     }
                                 }}
                             />
