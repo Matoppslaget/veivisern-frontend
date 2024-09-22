@@ -13,7 +13,7 @@ interface ProductCardProps {
 
 export default function ProductCard({ product, isEvaluating, evaluatedProduct }: ProductCardProps) {
   return (
-    <div className="flex justify-center w-full ">
+    <div className="mx-6 flex justify-center w-full ">
       <div className="">
         <span className="flow-root my-3 text-center text-2xl"> {product.name} </span>
         <div className='flow-root my-4 mx-auto box-border h-48 w-48'>
@@ -28,7 +28,6 @@ export default function ProductCard({ product, isEvaluating, evaluatedProduct }:
           <div className={`my-8 text-center text-xl font-semibold
           `}> <span className={`border p-2 px-3 rounded-xl ${evaluatedProduct.upAnswer === ProcessedClass.ULTRAPROCESSED ?
               'border-red-600 bg-red-200' : evaluatedProduct.upAnswer === ProcessedClass.PROCESSED ? 'border-yellow-400 bg-yellow-200' : 'border-green-600 bg-green-600 bg-opacity-50'}`}>{evaluatedProduct.upAnswer}</span> </div>}
-        {evaluatedProduct && evaluatedProduct.upAnswer === ProcessedClass.ULTRAPROCESSED && <div className="text-left mx-4">Se nærmere på hvilke ingredienser det skyldes under </div>}
         {/* For debug, søk opp tine økologisk lettmelk. Ingrediensene viser økologisk lettmelk, Novaingredients viser "properties required" */}
         {evaluatedProduct &&
           <div className="flow-root my-6 ">
