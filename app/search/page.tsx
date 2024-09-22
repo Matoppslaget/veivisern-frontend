@@ -93,8 +93,8 @@ export default function Home() {
         console.log("Rendering selected products", (!showResults && selectedProducts.length > 0))
         if (!showResults && selectedProducts.length > 0) {
             return (
-                <div className="mt-4">
-                    Valgte produkter:
+                <div className="mt-4 hidden sm:block">
+                    <span className="">Valgte produkter:</span>
                     <CompactProductList
                         selectedProduct={selectedProduct}
                         selectedProducts={selectedProducts}
@@ -118,11 +118,10 @@ export default function Home() {
     };
     // Debug:: Når eg har valgt produkt, deretter visker vekk alt i søkefeltet, så forsvinner "SelectedProducts"- lista
     return (
-        <div className="space-y-" >
-            <div className="p-4 px-10 mx-">
-                <div className="py-4 px-10 grid grid-cols-7 space-x-10 justify-between">
-                    <div className="col-span-3 font-semibold justify-center">
-                        <div className="pl-4 mx-auto font-normal text-2xl">Søk og velg produkter</div>
+            <div className="sm:p-4">
+                <div className="sm:mx-auto sm:py-4 sm:px-10 sm:space-x-40 sm:flex sm:justify-center">
+                    <div className="font-semibold justify-center flex-grow">
+                        <div className="hidden sm:blockpl-4 mx-auto font-normal text-2xl">Søk og velg produkter</div>
                         <div className="my-4 px-4 max-w-4xl">
                             <SearchBar
                                 query={query}
@@ -142,13 +141,12 @@ export default function Home() {
                             {renderSelectedProducts()}
                         </div>
                     </div>
-                    <div className="flex justify-center col-start-5 col-span-2">
+                    <div className="flex justify-center">
                         {selectedProduct && (
                             <ProductCard product={selectedProduct} isEvaluating={productsUnderEvaluation.includes(selectedProduct.id)} evaluatedProduct={evaluationResults.find((product) => product.id === selectedProduct?.id)} />
                         )}
                     </div>
                 </div>
             </div>
-        </div >
     );
 };

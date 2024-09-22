@@ -3,12 +3,11 @@ import Team from '@/components/Team'
 
 export default function Home() {
   return (
-    <div>
+    <div className='pb-8'>
       {/* <FeatureOverview>
 
       </FeatureOverview> */}
       <Team>
-
       </Team>
     </div>
   )

@@ -16,11 +16,11 @@ const ShowProducts: React.FC<ShowProductsProps> = ({ products, handleClick }) =>
                         <div className='min-w-20 min-h-20 max-w-20 max-h-20 rounded-lg'>
                             <Image className="p-1 h-full w-full object-contain text-sm" sizes="(max-width: 768px) 100vw, 33vw" src={product.image ? product.image : ''} alt={''} width={20} height={20} />
                         </div>
-                        <div className="my-auto pl-8 w-full font-semibold rounded-md ">
+                        <div className="my-auto pl-2 sm:pl-8 w-full font-normal sm:font-semibold rounded-md ">
                             {product.name}
                         </div>
                         <div className=" w-6/12 h-20 flex items-center justify-center hover:cursor-pointer" >
-                            <div className=''>Se detaljer</div> <ArrowRightIcon className="w-6 h-6 mx-2" />
+                            <div className='hidden sm:block'>Se detaljer</div> <ArrowRightIcon className="w-6 h-6 mx-2" />
                         </div>
                     </div>
                 ))}

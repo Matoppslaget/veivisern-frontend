@@ -14,7 +14,7 @@ function classNames(...classes: string[]) {
 export default function NavBar() {
     return (
         <Disclosure as="nav" className="bg-lime-800">
-            <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+            <div className="mx-auto max-w-7xl px-6 sm:px-6 lg:px-8">
                 <div className="relative flex h-14 items-center justify-between">
                     {/* <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
 
@@ -29,7 +29,7 @@ export default function NavBar() {
                         <div className="flex flex-shrink-0 items-center">
                             <a href="/"> <div className="text-3xl h-10 w-auto"> 🦉 </div></a>
                         </div>
-                        <div className="sm:ml-6 sm:block">
+                        <div className="ml-4 sm:ml-6 sm:block">
                             <div className="flex space-x-4">
                                 <a
                                     key={navigation.at(0)!!.name}
@@ -51,7 +51,7 @@ export default function NavBar() {
                         aria-current={navigation.at(1)!!.current ? 'page' : undefined}
                         className={classNames(
                             navigation.at(1)!!.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-lime-700 hover:text-white',
-                            'inset-y-0 right-0 rounded-md px-2 py-2.5 flex text-sm font-medium items-center pr-3 sm:static sm:inset-auto sm:ml-6 sm:pr-0',
+                            'rounded-md px-2 py-2.5 flex text-sm font-medium items-center',
                         )}
                     >
                         {navigation.at(1)!!.name}
