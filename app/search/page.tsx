@@ -90,7 +90,6 @@ export default function Home() {
     }, []);
 
     const renderSelectedProducts = () => {
-        console.log("Rendering selected products", (!showResults && selectedProducts.length > 0))
         if (!showResults && selectedProducts.length > 0) {
             return (
                 <div className="mt-4 hidden sm:block">
@@ -98,6 +97,7 @@ export default function Home() {
                     <CompactProductList
                         selectedProduct={selectedProduct}
                         selectedProducts={selectedProducts}
+                        evaluationResults={evaluationResults}
                         onProductClick={handleProductClick}
                     />
                 </div>
@@ -118,35 +118,35 @@ export default function Home() {
     };
     // Debug:: Når eg har valgt produkt, deretter visker vekk alt i søkefeltet, så forsvinner "SelectedProducts"- lista
     return (
-            <div className="sm:p-4">
-                <div className="sm:mx-auto sm:py-4 sm:px-10 sm:space-x-40 sm:flex sm:justify-center">
-                    <div className="font-semibold justify-center flex-grow">
-                        <div className="hidden sm:blockpl-4 mx-auto font-normal text-2xl">Søk og velg produkter</div>
-                        <div className="my-4 px-4 max-w-4xl">
-                            <SearchBar
-                                query={query}
-                                setQuery={setQuery}
-                                searchInputRef={searchInputRef}
-                                searchDivRef={searchDivRef}
-                                onInputChange={handleInputChange}
-                                onFocus={() => {
-                                    if (query.length > 0) {
-                                        setShowResults(true);
-                                    } else {
-                                        setShowResults(false);
-                                    }
-                                }}
-                            />
-                            {renderSearchResults()}
-                            {renderSelectedProducts()}
-                        </div>
-                    </div>
-                    <div className="flex justify-center">
-                        {selectedProduct && (
-                            <ProductCard product={selectedProduct} isEvaluating={productsUnderEvaluation.includes(selectedProduct.id)} evaluatedProduct={evaluationResults.find((product) => product.id === selectedProduct?.id)} />
-                        )}
+        <div className="sm:p-4">
+            <div className="sm:mx-auto sm:py-4 sm:px-10 sm:space-x-40 sm:flex sm:justify-center">
+                <div className="font-semibold justify-center flex-grow">
+                    <div className="hidden sm:blockpl-4 mx-auto font-normal text-2xl">Søk og velg produkter</div>
+                    <div className="my-4 px-4 max-w-4xl">
+                        <SearchBar
+                            query={query}
+                            setQuery={setQuery}
+                            searchInputRef={searchInputRef}
+                            searchDivRef={searchDivRef}
+                            onInputChange={handleInputChange}
+                            onFocus={() => {
+                                if (query.length > 0) {
+                                    setShowResults(true);
+                                } else {
+                                    setShowResults(false);
+                                }
+                            }}
+                        />
+                        {renderSearchResults()}
+                        {renderSelectedProducts()}
                     </div>
                 </div>
+                <div className="flex justify-center">
+                    {selectedProduct && (
+                        <ProductCard product={selectedProduct} isEvaluating={productsUnderEvaluation.includes(selectedProduct.id)} evaluatedProduct={evaluationResults.find((product) => product.id === selectedProduct?.id)} />
+                    )}
+                </div>
             </div>
+        </div>
     );
 };
