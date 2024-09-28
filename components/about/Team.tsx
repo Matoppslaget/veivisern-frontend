@@ -1,6 +1,6 @@
 import { Button } from "@material-tailwind/react"
 import Image from "next/image"
-import mailtoHref from "./MailToLink"
+import mailtoHref from "../common/MailToLink"
 
 export default function Team() {
     return (

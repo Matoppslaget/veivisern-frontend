@@ -1,6 +1,6 @@
 import { QuestionMarkCircleIcon } from "@heroicons/react/24/outline";
-import { Tooltip, Typography } from "./MaterialTailwind"
-import { EvaluatedProduct, KassalappProduct, ProcessedClass } from "./KassalappResponse";
+import { Tooltip, Typography } from "../common/MaterialTailwind"
+import { EvaluatedProduct, KassalappProduct, ProcessedClass } from "../../types/ProductTypes";
 import Image from 'next/image';
 import { Spinner } from "@material-tailwind/react";
 

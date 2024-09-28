@@ -14,25 +14,15 @@ export interface KassalappProduct {
     weightUnit?: string,
 }
 
-export default interface KassalappResponse {
-    data: {
-        data: KassalappProduct[]
-    }
-}
-
 export interface EvaluatedProduct extends KassalappProduct {
     novaIngredients?: NovaIngredients,
     processedClass?: ProcessedClass,
     upAnswer?: ProcessedClass
 }
 
-export interface EvaluatedProductResponse {
-    data: EvaluatedProduct
-}
-
-interface NovaIngredients {
+export interface NovaIngredients {
     [key: string]: number;
-  }
+}
 
 export enum ProcessedClass {
     NOT_SET = "NOT_SET",
