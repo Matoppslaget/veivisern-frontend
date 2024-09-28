@@ -1,5 +1,6 @@
 import axios from 'axios';
-import  KassalappResponse, { KassalappProduct } from '@/components/KassalappResponse';
+import { KassalappProduct } from '@/types/ProductTypes';
+import KassalappResponse from '@/types/ResponseTypes';
 
 const apiKey = process.env.NEXT_PUBLIC_KASSALAPP_API_KEY;
 const KassalappEndpoint = 'https://kassal.app/api/v1/products';

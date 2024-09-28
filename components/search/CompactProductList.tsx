@@ -1,4 +1,4 @@
-import { EvaluatedProduct, KassalappProduct, ProcessedClass } from '@/components/KassalappResponse';
+import { EvaluatedProduct, KassalappProduct, ProcessedClass } from '@/types/ProductTypes'
 import { ArrowRightIcon } from "@heroicons/react/24/outline";
 import { join } from 'path';
 

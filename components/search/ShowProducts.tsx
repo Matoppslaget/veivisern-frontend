@@ -1,6 +1,6 @@
 import { ArrowRightIcon } from "@heroicons/react/24/outline";
 import Image from 'next/image';
-import { KassalappProduct } from '@/components/KassalappResponse';
+import { KassalappProduct } from '@/types/ProductTypes';
 
 interface ShowProductsProps {
     products: KassalappProduct[];

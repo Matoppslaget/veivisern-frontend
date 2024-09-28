@@ -1,13 +1,13 @@
 "use client"
 
-import { EvaluatedProduct, KassalappProduct } from '@/components/KassalappResponse';
-import ProductCard from '@/components/ProductCard';
+import { EvaluatedProduct, KassalappProduct } from "@/types/ProductTypes";
+import ProductCard from '@/components/search/ProductCard';
 import SearchBar from "@/components/search/SearchBar";
 import ShowProducts from "@/components/search/ShowProducts";
 import debounce from 'lodash.debounce';
 import { useCallback, useEffect, useRef, useState } from "react";
 import { fetchResults } from '@/api/KassalappApi';
-import CompactProductList from '@/components/CompactProductList';
+import CompactProductList from '@/components/search/CompactProductList';
 import { fetchProductEvaluation } from '@/api/ProductEvaluator';
 
 export default function Home() {
