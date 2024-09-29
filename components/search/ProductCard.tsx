@@ -1,8 +1,7 @@
-import { QuestionMarkCircleIcon } from "@heroicons/react/24/outline";
-import { Tooltip, Typography } from "../common/MaterialTailwind"
 import { EvaluatedProduct, KassalappProduct, ProcessedClass } from "../../types/ProductTypes";
 import Image from 'next/image';
 import { Spinner } from "@material-tailwind/react";
+import VeivisernTooltip from "./VeivisernTooltip";
 
 interface ProductCardProps {
   product: KassalappProduct;
@@ -21,17 +20,16 @@ export default function ProductCard({ product, isEvaluating, evaluatedProduct }:
         </div>
         {isEvaluating && <div>
           <div className="flex justify-center space-x-3 my-4 p-2 text-center italic font-semibold text-gray-500">
-            <Spinner></Spinner> <span> Spinning the UP-roulette</span>
+            <Spinner></Spinner> <span> Henter produktdetaljer..</span>
           </div>
         </div>}
         {evaluatedProduct &&
           <div className={`my-8 text-center text-xl font-semibold
           `}> <span className={`border p-2 px-3 rounded-xl ${evaluatedProduct.upAnswer === ProcessedClass.ULTRAPROCESSED ?
               'border-red-600 bg-red-200' : evaluatedProduct.upAnswer === ProcessedClass.PROCESSED ? 'border-yellow-400 bg-yellow-200' : 'border-green-600 bg-green-600 bg-opacity-50'}`}>{evaluatedProduct.upAnswer}</span> </div>}
-        {/* For debug, søk opp tine økologisk lettmelk. Ingrediensene viser økologisk lettmelk, Novaingredients viser "properties required" */}
         {evaluatedProduct &&
           <div className="flow-root my-6 ">
-            {(!evaluatedProduct.novaIngredients || evaluatedProduct.novaIngredients.length === 0) ?
+            {(!evaluatedProduct.novaIngredients || Object.keys(evaluatedProduct.novaIngredients).length === 0) ?
               <div className="py-2">
                 <div className="text-2xl">Ingredienser ikke tilgjengelig</div>
                 <span> Produsenten har ikke oppgitt noen ingredienser.</span>
@@ -49,57 +47,8 @@ export default function ProductCard({ product, isEvaluating, evaluatedProduct }:
                       >
                         {ingredient}
                       </div>
-                      {novaClass === 4 &&
-                        <span>
-                          <Tooltip
-                            className="border border-blue-gray-50 bg-white px-4 py-3 shadow-xl shadow-black/10"
-                            content={
-                              <div className="w-80">
-                                <Typography color="blue-gray" className="text-lg font-bold">
-                                  Det æ fali det...
-                                </Typography>
-                                <Typography
-                                  variant="small"
-                                  color="blue-gray"
-                                  className="text-lg opacity-80"
-                                >
-                                  Denne vil du ikke spise!!
-                                </Typography>
-                              </div>
-                            }
-                            animate={{
-                              mount: { scale: 1, y: 0 },
-                              unmount: { scale: 0, y: 25 },
-                            }}>
-                            <QuestionMarkCircleIcon className="hover:cursor-pointer pl-2 w-[34px] h-[28px]"></QuestionMarkCircleIcon>
-                          </Tooltip>
-                        </span>
-                      }
-                      {novaClass === 3 &&
-                        <span>
-                          <Tooltip
-                            className="border border-blue-gray-50 bg-white px-4 py-3 shadow-xl shadow-black/10"
-                            content={
-                              <div className="w-80">
-                                <Typography color="blue-gray" className="text-lg font-bold">
-                                  Hvem vet, kanskje denne er farlig?
-                                </Typography>
-                                <Typography
-                                  variant="small"
-                                  color="blue-gray"
-                                  className="text-lg opacity-80"
-                                >
-                                  Mye som tyder på at denna ikke er helt bra.
-                                </Typography>
-                              </div>
-                            }
-                            animate={{
-                              mount: { scale: 1, y: 0 },
-                              unmount: { scale: 0, y: 25 },
-                            }}>
-                            <QuestionMarkCircleIcon className="hover:cursor-pointer pl-2 w-[34px] h-[28px]"></QuestionMarkCircleIcon>
-                          </Tooltip>
-                        </span>
+                      {(novaClass === 4 || novaClass === 3) &&
+                        <VeivisernTooltip novaClass={novaClass}></VeivisernTooltip>
                       }
                     </div>
                   ))}

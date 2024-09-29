@@ -1,7 +1,4 @@
-// Footer.tsx
-import React from 'react';
-
-const Footer: React.FC = () => {
+export default function Footer() {
   return (
     <footer className="bg-gray-800 text-white py-2 sm:py-4">
       <div className="sm:flex sm:justify-between text-center sm:px-10">
@@ -15,5 +12,3 @@ const Footer: React.FC = () => {
     </footer>
   );
 };
-
-export default Footer;

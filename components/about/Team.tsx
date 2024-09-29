@@ -1,6 +1,6 @@
-import { Button } from "@material-tailwind/react"
 import Image from "next/image"
 import mailtoHref from "../common/MailToLink"
+import VeivisernButton from "../common/VeivisernButton"
 
 export default function Team() {
     return (
@@ -20,12 +20,7 @@ export default function Team() {
                 <p className="text-md p-1 text-center">Takk for at du bruker UP orakel!</p>
             </div>
             <div className="flex justify-center">
-                <a
-                    href={mailtoHref}
-                    className="rounded-md border border-transparent bg-lime-700 px-8 py-3 text-center font-medium text-white hover:bg-lime-600"
-                >
-                    Gi tilbakemelding
-                </a>
+                <VeivisernButton buttonText="Gi tilbakemelding" buttonHref={mailtoHref} />
             </div>
         </div >
     )

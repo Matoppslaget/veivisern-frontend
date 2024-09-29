@@ -20,8 +20,15 @@ export interface EvaluatedProduct extends KassalappProduct {
     upAnswer?: ProcessedClass
 }
 
+export enum NovaClass{
+    ONE = 1,
+    TWO = 2,
+    THREE = 3,
+    FOUR = 4
+}
+
 export interface NovaIngredients {
-    [key: string]: number;
+    [key: string]: NovaClass;
 }
 
 export enum ProcessedClass {

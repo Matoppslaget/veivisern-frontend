@@ -1,6 +1,5 @@
 import { EvaluatedProduct, KassalappProduct, ProcessedClass } from '@/types/ProductTypes'
 import { ArrowRightIcon } from "@heroicons/react/24/outline";
-import TruncatedProductName from './TruncatedProductName';
 
 interface CompactProductListProps {
     selectedProduct?: KassalappProduct;
@@ -41,7 +40,6 @@ const CompactProductList: React.FC<CompactProductListProps> = ({ selectedProduct
                             onClick={() => onProductClick(product)}>
                             <div className="w-full font-semibold flex space-x-2 items-center px-2">
                                 <div className="whitespace-nowrap overflow-hidden"> {product.name} </div>
-                                {/* <TruncatedProductName name={product.name} /> */}
                                 <div className="">
                                     {evaluatedProduct && getProcessedStyling(evaluatedProduct)}
                                 </div>
@@ -56,18 +54,6 @@ const CompactProductList: React.FC<CompactProductListProps> = ({ selectedProduct
                 })}
             </ul>
         </>
-    );
-};
-
-interface CompactListElement {
-    isHovered: boolean;
-}
-
-const ChildComponent: React.FC<CompactListElement> = ({ isHovered }) => {
-    return (
-        <div className={`p-2 ${isHovered ? 'bg-green-200' : 'bg-red-200'}`}>
-            Child Div
-        </div>
     );
 };
 
