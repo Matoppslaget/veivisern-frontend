@@ -1,6 +1,6 @@
 import { EvaluatedProduct, KassalappProduct, ProcessedClass } from '@/types/ProductTypes'
 import { ArrowRightIcon } from "@heroicons/react/24/outline";
-import { join } from 'path';
+import TruncatedProductName from './TruncatedProductName';
 
 interface CompactProductListProps {
     selectedProduct?: KassalappProduct;
@@ -15,8 +15,9 @@ const CompactProductList: React.FC<CompactProductListProps> = ({ selectedProduct
         return evaluationResults.find(e => e.id === product.id) || null;
     };
 
+
     const getProcessedStyling = (evaluatedProduct: EvaluatedProduct) => {
-        return (<span className={`border text-md font-normal p-0.5 px-3 rounded-xl  
+        return (<span className={`border text-md font-normal px-2 rounded-xl  
             ${evaluatedProduct.upAnswer === ProcessedClass.ULTRAPROCESSED ?
                 'border-red-600 bg-red-200' :
                 evaluatedProduct.upAnswer === ProcessedClass.PROCESSED ?
@@ -29,7 +30,7 @@ const CompactProductList: React.FC<CompactProductListProps> = ({ selectedProduct
 
     return (
         <>
-            <ul className="bg-white rounded-xl mt-4 w-full shadow-lg">
+            <ul className="bg-white rounded-xl mt-4 w-full shadow-lg flex-initial">
                 {selectedProducts.map((product, index) => {
                     const evaluatedProduct = getEvaluatedProduct(product)
                     const displayProduct = evaluatedProduct || product
@@ -38,15 +39,16 @@ const CompactProductList: React.FC<CompactProductListProps> = ({ selectedProduct
                         <li key={index}
                             className={`even:bg-white odd:bg-gray-200 odd:bg-opacity-50 flex items-center py-2 px-2 hover:cursor-pointer hover:bg-green-700 hover:bg-opacity-20 ${isSelected ? 'rounded-md ring-green-700 ring-2 ring-inset p-0' : ''}`}
                             onClick={() => onProductClick(product)}>
-                            <div className="w-full my-auto font-semibold rounded-md flex justify-start px-2">
-                                <span className="flex-shrink-0">{product.name}</span>
-                                <div className="flex-shrink-0 ml-2">
+                            <div className="w-full font-semibold flex space-x-2 items-center px-2">
+                                <div className="whitespace-nowrap overflow-hidden"> {product.name} </div>
+                                {/* <TruncatedProductName name={product.name} /> */}
+                                <div className="">
                                     {evaluatedProduct && getProcessedStyling(evaluatedProduct)}
                                 </div>
                             </div>
                             <div className="w-11/12  text-gray-500 hover:text-black" >
-                                <div className="justify-end flex items-center">
-                                    <div className="px-2 hidden 2xl:block"> Se detaljer</div> <ArrowRightIcon className="w-6 h-6 justify-end" />
+                                <div className="justify-end hidden 2xl:flex items-center">
+                                    <div className="px-2 ">Detaljer</div> <ArrowRightIcon className="w-6 h-6 justify-end" />
                                 </div>
                             </div>
                         </li>
