@@ -58,7 +58,7 @@ export default function Home() {
             setProductsUnderEvaluation([...productsUnderEvaluation, product.id]);
             fetchProductEvaluation(product).then((res: EvaluatedProduct) => {
                 setProductsUnderEvaluation(productsUnderEvaluation.filter(id => id !== product.id));
-                setEvaluationResults([...evaluationResults, res]);
+                setEvaluationResults(prevEvaluationResults => [...prevEvaluationResults, res]);
             });
         }
         setShowResults(false);
@@ -90,6 +90,7 @@ export default function Home() {
     }, []);
 
     const renderSelectedProducts = () => {
+        console.log(evaluationResults)
         if (!showResults && selectedProducts.length > 0) {
             return (
                 <div className="mt-4 hidden sm:block">
