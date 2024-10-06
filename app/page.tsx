@@ -8,7 +8,9 @@ export default function Introduction() {
             <div className="pb-80 pt-8 sm:pb-80 sm:pt-24">
                 <div className="relative mx-auto max-w-7xl px-4 sm:static sm:px-6">
                     <Title />
-                    <ImageGrid />
+                    <div className="flex justify-center sm:block">
+                        <ImageGrid />
+                    </div>
                 </div>
             </div>
         </div>
