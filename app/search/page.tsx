@@ -118,8 +118,8 @@ export default function Home() {
         return null;
     };
     return (
-        <div className="sm:p-4">
-            <div className="sm:mx-auto sm:py-4 sm:px-10 sm:space-x-10 lg:space-x-40 sm:flex sm:justify-center">
+        <div className="sm:p-4 max-w-7xl mx-auto">
+            <div className=" sm:py-4 sm:px-10 sm:space-x-10 lg:space-x-40 sm:flex sm:justify-center">
                 <div className="font-semibold justify-center flex-auto">
                     <div className="hidden sm:blockpl-4 mx-auto font-normal text-2xl">Søk og velg produkter</div>
                     <div className="my-4 px-4 max-w-4xl">
