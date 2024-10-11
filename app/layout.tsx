@@ -9,8 +9,8 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "UP Orakel",
-  description: "Forstå hva du spiser",
+  title: "Matoppslaget",
+  description: "Forstå det du spiser",
 };
 
 export default function RootLayout({
