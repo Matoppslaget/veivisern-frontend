@@ -11,7 +11,7 @@ export default function Team() {
             <div className="p-4 grid grid-cols-3">
                 <Image className="p-4 justify-self-end" src="/Anders profil.png" alt="Anders" width="520" height="520"></Image>
                 <Image className="p-4 justify-self-start" src="/Sander profil.png" alt="Sander" width="520" height="520"></Image>
-                <Image className="p-4 justify-self-start" src="" alt="Francesca" width="520" height="520"></Image>
+                <Image className="p-4 justify-self-start" src="/Francesca profil.png" alt="Francesca" width="520" height="520"></Image>
             </div >
             <div className="p-4">
                 <p className="text-md p-1 text-center">Teamet som har laget Matoppslaget er Anders, Sander og Francesca. </p>
