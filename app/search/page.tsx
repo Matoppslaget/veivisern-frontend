@@ -54,7 +54,7 @@ export default function Home() {
 
 
     const handleProductClick = (product: KassalappProduct) => {
-        if (!evaluationResults.some(p => p.id === product.id)) {
+        if (!evaluationResults.some(p => p.kassalappId === product.id)) {
             setProductsUnderEvaluation([...productsUnderEvaluation, product.id]);
             fetchProductEvaluation(product).then((res: EvaluatedProduct) => {
                 setProductsUnderEvaluation(productsUnderEvaluation.filter(id => id !== product.id));
@@ -90,7 +90,6 @@ export default function Home() {
     }, []);
 
     const renderSelectedProducts = () => {
-        console.log(evaluationResults)
         if (!showResults && selectedProducts.length > 0) {
             return (
                 <div className="mt-4 hidden sm:block">
@@ -143,7 +142,7 @@ export default function Home() {
                 </div>
                 <div className="flex justify-center">
                     {selectedProduct && (
-                        <ProductCard product={selectedProduct} isEvaluating={productsUnderEvaluation.includes(selectedProduct.id)} evaluatedProduct={evaluationResults.find((product) => product.id === selectedProduct?.id)} />
+                        <ProductCard product={selectedProduct} isEvaluating={productsUnderEvaluation.includes(selectedProduct.id)} evaluatedProduct={evaluationResults.find((product) => product.kassalappId === selectedProduct?.id)} />
                     )}
                 </div>
             </div>

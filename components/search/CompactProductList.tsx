@@ -11,29 +11,54 @@ interface CompactProductListProps {
 const CompactProductList: React.FC<CompactProductListProps> = ({ selectedProduct, selectedProducts, evaluationResults, onProductClick }) => {
 
     const getEvaluatedProduct = (product: KassalappProduct): EvaluatedProduct | null => {
-        return evaluationResults.find(e => e.id === product.id) || null;
+        return evaluationResults.find(e => e.kassalappId === product.id) || null;
     };
 
-
     const getProcessedStyling = (evaluatedProduct: EvaluatedProduct) => {
-        return (<span className={`border text-md font-normal px-2 rounded-xl  
-            ${evaluatedProduct.upAnswer === ProcessedClass.ULTRAPROCESSED ?
-                'border-red-600 bg-red-200' :
-                evaluatedProduct.upAnswer === ProcessedClass.PROCESSED ?
-                    'border-yellow-400 bg-yellow-200' :
-                    'border-green-600 bg-green-600 bg-opacity-50'}`}
-        >
-            {evaluatedProduct.upAnswer}
-        </span>)
-    }
+        let className = '';
+        let label = '';
+
+        switch (evaluatedProduct.processedClass) {
+            case ProcessedClass.ZERO:
+                className = ' bg-gray-200';
+                label = 'Prosesseseringsgrad: ikke funnet';
+                break;
+            case ProcessedClass.ONE:
+                className = 'border-green-600 bg-green-200';
+                label = 'Minimalt prosessert';
+                break;
+            case ProcessedClass.TWO:
+                className = 'border-green-600 bg-green-200';
+                label = 'Minimalt prosessert';
+                break;
+            case ProcessedClass.THREE:
+                className = 'border-orange-600 bg-orange-200';
+                label = 'Prosessert';
+                break;
+            case ProcessedClass.FOUR:
+                className = 'border-red-600 bg-red-200';
+                label = 'Ultraprosessert';
+                break;
+            default:
+                className = ' bg-gray-200';
+                label = 'Ukjent prosesseringsgrad';
+        }
+
+        return (
+            <span className={`border text-md font-normal px-2 rounded-xl ${className}`}>
+                {label}
+            </span>
+        );
+    };
+
 
     return (
         <>
             <ul className="bg-white rounded-xl mt-4 w-full shadow-lg flex-initial">
                 {selectedProducts.map((product, index) => {
                     const evaluatedProduct = getEvaluatedProduct(product)
-                    const displayProduct = evaluatedProduct || product
-                    const isSelected = selectedProduct && selectedProduct.id === displayProduct.id
+                    const displayProduct = evaluatedProduct
+                    const isSelected = selectedProduct && selectedProduct.id === displayProduct?.kassalappId
                     return (
                         <li key={index}
                             className={`even:bg-white odd:bg-gray-200 odd:bg-opacity-50 flex items-center py-2 px-2 hover:cursor-pointer hover:bg-green-700 hover:bg-opacity-20 ${isSelected ? 'rounded-md ring-green-700 ring-2 ring-inset p-0' : ''}`}
