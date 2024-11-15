@@ -29,8 +29,10 @@ export default function Home() {
     const debouncedFetchResults = useCallback(
         debounce(async (product: string) => {
             try {
-                const results = await fetchResults(product);
-                setProducts(results);
+                if (product.length >= 3) {
+                    const results = await fetchResults(product);
+                    setProducts(results);
+                }
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
@@ -142,7 +144,11 @@ export default function Home() {
                 </div>
                 <div className="flex justify-center">
                     {selectedProduct && (
-                        <ProductCard product={selectedProduct} isEvaluating={productsUnderEvaluation.includes(selectedProduct.id)} evaluatedProduct={evaluationResults.find((product) => product.kassalappId === selectedProduct?.id)} />
+                        <ProductCard 
+                            product={selectedProduct} 
+                            isEvaluating={productsUnderEvaluation.includes(selectedProduct.id)} 
+                            evaluatedProduct={evaluationResults.find(product => product.kassalappId === selectedProduct?.id)} 
+                        />
                     )}
                 </div>
             </div>

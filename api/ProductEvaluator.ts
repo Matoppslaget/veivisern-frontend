@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { EvaluatedProductResponse } from '@/types/ResponseTypes';
+import { EvaluatedProductResponse } from '@/api/response/ResponseTypes';
 import { KassalappProduct, EvaluatedProduct } from '@/types/ProductTypes';
 
 
