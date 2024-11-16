@@ -1,13 +1,11 @@
-import { EvaluatedProduct, KassalappProduct } from "../../types/ProductTypes"
+import { EvaluatedProduct, KassalappProduct } from '../../types/ProductTypes';
 
 export default interface KassalappResponse {
-    data: {
-        data: KassalappProduct[]
-    }
+  data: {
+    data: KassalappProduct[];
+  };
 }
 
 export interface EvaluatedProductResponse {
-    data: EvaluatedProduct
+  data: EvaluatedProduct;
 }
-
-
