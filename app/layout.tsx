@@ -1,6 +1,6 @@
 import Banner from '@/components/layout/Banner';
 import Footer from '@/components/layout/Footer';
-import NavBar from '@/components/layout/Navbar';
+import Header from '@/components/layout/Header';
 import { Analytics } from '@vercel/analytics/react';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
@@ -21,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} min-h-screen flex flex-col`}>
-        <NavBar />
+        <Header />
         <main className="flex-grow min-h-screen">
           <Banner />
           {children}

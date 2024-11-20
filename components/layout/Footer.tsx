@@ -1,6 +1,6 @@
-export default function Footer() {
+const Footer = () => {
   return (
-    <footer className="bg-gray-800 text-white py-2 sm:py-4">
+    <footer className="text-black py-2 sm:py-4">
       <div className="sm:flex sm:justify-between text-center sm:px-10">
         <p>&copy; 2024 Matoppslaget</p>
         <p>
@@ -14,4 +14,6 @@ export default function Footer() {
       </div>
     </footer>
   );
-}
+};
+
+export default Footer;

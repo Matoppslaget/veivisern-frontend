@@ -1,7 +1,7 @@
 import ImageGrid from '@/components/frontpage/ImageGrid';
 import Title from '@/components/frontpage/Title';
 
-export default function Introduction() {
+const Introduction = () => {
   return (
     <div className="sm:relative overflow-hidden bg-white">
       <div className="pb-80 pt-8 sm:pb-80 sm:pt-24">
@@ -14,4 +14,6 @@ export default function Introduction() {
       </div>
     </div>
   );
-}
+};
+
+export default Introduction;
