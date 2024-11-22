@@ -1,5 +1,3 @@
-import VeivisernButton from '../common/VeivisernButton';
-
 export default function Title() {
   return (
     <div className="mt-12 sm:mt-0">
@@ -10,12 +8,6 @@ export default function Title() {
         <p className="text-center sm:text-left text-gray-500 mt-2 sm:mt-4 text-sm sm:text-xl ">
           Endelig kan du få kontroll på hva du spiser
         </p>
-      </div>
-      <div className="flex justify-center sm:block">
-        <VeivisernButton
-          buttonText="Søk etter produkter"
-          buttonHref="/search"
-        />
       </div>
     </div>
   );

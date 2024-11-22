@@ -1,19 +1,11 @@
-import ImageGrid from '@/components/frontpage/ImageGrid';
 import Title from '@/components/frontpage/Title';
+import Search from '@/components/search/Search';
 
-const Introduction = () => {
+export default function Home() {
   return (
-    <div className="sm:relative overflow-hidden bg-white">
-      <div className="pb-80 pt-8 sm:pb-80 sm:pt-24">
-        <div className="relative mx-auto max-w-7xl px-4 sm:static sm:px-6">
-          <Title />
-          <div className="flex justify-center sm:block">
-            <ImageGrid />
-          </div>
-        </div>
-      </div>
+    <div className="flex flex-col items-center justify-center">
+      <Title />
+      <Search />
     </div>
   );
-};
-
-export default Introduction;
+}

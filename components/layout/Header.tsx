@@ -1,7 +1,7 @@
 import { classNames } from '@/utils/CommonFunctions';
 import { Disclosure } from '@headlessui/react';
 
-const Header = () => {
+export default function Header() {
   return (
     <Disclosure as="nav" className="sticky top-0 z-50">
       <div className="mx-auto px-6">
@@ -28,6 +28,4 @@ const Header = () => {
       </div>
     </Disclosure>
   );
-};
-
-export default Header;
+}

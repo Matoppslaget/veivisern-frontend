@@ -1,16 +1,16 @@
 'use client';
 
+import { fetchResults } from '@/api/KassalappApi';
+import { fetchProductEvaluation } from '@/api/ProductEvaluator';
 import { EvaluatedProduct, KassalappProduct } from '@/types/ProductTypes';
-import ProductCard from '@/components/search/ProductCard';
-import SearchBar from '@/components/search/SearchBar';
-import ShowProducts from '@/components/search/ShowProducts';
 import debounce from 'lodash.debounce';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { fetchResults } from '@/api/KassalappApi';
-import CompactProductList from '@/components/search/CompactProductList';
-import { fetchProductEvaluation } from '@/api/ProductEvaluator';
+import CompactProductList from './CompactProductList';
+import ShowProducts from './ShowProducts';
+import ProductCard from './ProductCard';
+import SearchBar from './SearchBar';
 
-export default function Home() {
+export default function Search() {
   // State variables
   const [query, setQuery] = useState('');
   const [products, setProducts] = useState<KassalappProduct[]>([]);
@@ -152,6 +152,8 @@ export default function Home() {
                 }
               }}
             />
+            {/* TODO: add search button */}
+            {/* TODO: move result rendering into separate component */}
             {renderSearchResults()}
             {renderSelectedProducts()}
           </div>

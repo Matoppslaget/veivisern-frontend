@@ -1,4 +1,3 @@
-import Banner from '@/components/layout/Banner';
 import Footer from '@/components/layout/Footer';
 import Header from '@/components/layout/Header';
 import { Analytics } from '@vercel/analytics/react';
@@ -22,9 +21,8 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${inter.className} min-h-screen flex flex-col`}>
         <Header />
-        <main className="flex-grow min-h-screen">
-          <Banner />
-          {children}
+        <main className="flex-grow">
+          <div className="container mx-auto px-4 py-8">{children}</div>
         </main>
         <Footer />
         <Analytics />

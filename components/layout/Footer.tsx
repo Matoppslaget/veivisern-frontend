@@ -1,7 +1,7 @@
-const Footer = () => {
+export default function Footer() {
   return (
     <footer className="text-black py-2 sm:py-4">
-      <div className="sm:flex sm:justify-between text-center sm:px-10">
+      <div className="sm:flex sm:justify-between text-center sm:px-6">
         <p>&copy; 2024 Matoppslaget</p>
         <p>
           <a
@@ -14,6 +14,4 @@ const Footer = () => {
       </div>
     </footer>
   );
-};
-
-export default Footer;
+}
