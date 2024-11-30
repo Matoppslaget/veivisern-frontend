@@ -5,18 +5,14 @@ import { fetchProductEvaluation } from '@/api/ProductEvaluator';
 import { EvaluatedProduct, KassalappProduct } from '@/types/ProductTypes';
 import debounce from 'lodash.debounce';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import CompactProductList from './CompactProductList';
 import ShowProducts from './ShowProducts';
 import ProductCard from './ProductCard';
 import SearchBar from './SearchBar';
+import { Button } from '@headlessui/react';
 
 export default function Search() {
-  // State variables
   const [query, setQuery] = useState('');
   const [products, setProducts] = useState<KassalappProduct[]>([]);
-  const [selectedProducts, setSelectedProducts] = useState<KassalappProduct[]>(
-    [],
-  );
   const [selectedProduct, setSelectedProduct] = useState<
     KassalappProduct | undefined
   >(undefined);
@@ -28,7 +24,6 @@ export default function Search() {
   >([]);
   const [showResults, setShowResults] = useState(false);
 
-  // References for click-outside detection
   const searchInputRef = useRef<HTMLInputElement>(null);
   const searchDivRef = useRef<HTMLDivElement>(null);
   const resultsRef = useRef<HTMLDivElement>(null);
@@ -75,12 +70,6 @@ export default function Search() {
       });
     }
     setShowResults(false);
-    setSelectedProducts((prevSelectedProducts) => {
-      if (!prevSelectedProducts.some((p) => p.id === product.id)) {
-        return [...prevSelectedProducts, product];
-      }
-      return prevSelectedProducts;
-    });
     setSelectedProduct(product);
   };
 
@@ -102,27 +91,10 @@ export default function Search() {
     };
   }, []);
 
-  const renderSelectedProducts = () => {
-    if (!showResults && selectedProducts.length > 0) {
-      return (
-        <div className="mt-4 hidden sm:block">
-          <span className="">Valgte produkter:</span>
-          <CompactProductList
-            selectedProduct={selectedProduct}
-            selectedProducts={selectedProducts}
-            evaluationResults={evaluationResults}
-            onProductClick={handleProductClick}
-          />
-        </div>
-      );
-    }
-    return null;
-  };
-
   const renderSearchResults = () => {
     if (showResults && query.length > 0) {
       return (
-        <div className="max-w-4xl" ref={resultsRef}>
+        <div className="max-w-4xl justify-center" ref={resultsRef}>
           <ShowProducts products={products} handleClick={handleProductClick} />
         </div>
       );
@@ -131,46 +103,37 @@ export default function Search() {
   };
 
   return (
-    <div className="sm:p-4 max-w-7xl mx-auto">
-      <div className=" sm:py-4 sm:px-10 sm:space-x-10 lg:space-x-40 sm:flex sm:justify-center">
-        <div className="font-semibold justify-center flex-auto">
-          <div className="hidden sm:blockpl-4 mx-auto font-normal text-2xl">
-            Søk og velg produkter
-          </div>
-          <div className="my-4 px-4 max-w-4xl">
-            <SearchBar
-              query={query}
-              setQuery={setQuery}
-              searchInputRef={searchInputRef}
-              searchDivRef={searchDivRef}
-              onInputChange={handleInputChange}
-              onFocus={() => {
-                if (query.length > 0) {
-                  setShowResults(true);
-                } else {
-                  setShowResults(false);
-                }
-              }}
-            />
-            {/* TODO: add search button */}
-            {/* TODO: move result rendering into separate component */}
-            {renderSearchResults()}
-            {renderSelectedProducts()}
-          </div>
-        </div>
-        <div className="flex justify-center">
-          {selectedProduct && (
-            <ProductCard
-              product={selectedProduct}
-              isEvaluating={productsUnderEvaluation.includes(
-                selectedProduct.id,
-              )}
-              evaluatedProduct={evaluationResults.find(
-                (product) => product.kassalappId === selectedProduct?.id,
-              )}
-            />
-          )}
-        </div>
+    <div className="w-full sm:py-4 sm:px-10 sm:space-x-10 lg:space-x-40 sm:justify-center">
+      <div className="font-semibold justify-center">
+        <form className="flex justify-center gap-2 mb-4">
+          <SearchBar
+            query={query}
+            setQuery={setQuery}
+            searchInputRef={searchInputRef}
+            searchDivRef={searchDivRef}
+            onInputChange={handleInputChange}
+            onFocus={() => {
+              if (query.length > 0) {
+                setShowResults(true);
+              } else {
+                setShowResults(false);
+              }
+            }}
+          />
+          <Button>Søk</Button>
+        </form>
+        {renderSearchResults()}
+      </div>
+      <div className="flex justify-center">
+        {selectedProduct && (
+          <ProductCard
+            product={selectedProduct}
+            isEvaluating={productsUnderEvaluation.includes(selectedProduct.id)}
+            evaluatedProduct={evaluationResults.find(
+              (product) => product.kassalappId === selectedProduct?.id,
+            )}
+          />
+        )}
       </div>
     </div>
   );

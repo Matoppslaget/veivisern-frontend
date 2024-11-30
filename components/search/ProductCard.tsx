@@ -59,7 +59,7 @@ export default function ProductCard({
   };
 
   return (
-    <div className="mx-6 flex justify-center w-full ">
+    <div className="flex justify-center">
       <div className="">
         <span className="flow-root my-3 text-center text-2xl">
           {' '}
