@@ -2,15 +2,15 @@ import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import Image from 'next/image';
 import { KassalappProduct } from '@/types/ProductTypes';
 
-interface ShowProductsProps {
+interface ShowSearchResultsProps {
   products: KassalappProduct[];
   handleClick: (product: KassalappProduct) => void;
 }
 
-const ShowProducts: React.FC<ShowProductsProps> = ({
+const ShowSearchResults: React.FC<ShowSearchResultsProps> = ({
   products,
   handleClick,
-}: ShowProductsProps) => {
+}: ShowSearchResultsProps) => {
   return products.length > 0 ? (
     <div className="rounded-xl shadow-sm  p-1 pt-1 space-y-1 border-t-0 border 50 w-full">
       {products.map((product, index) => (
@@ -46,4 +46,4 @@ const ShowProducts: React.FC<ShowProductsProps> = ({
   );
 };
 
-export default ShowProducts;
+export default ShowSearchResults;

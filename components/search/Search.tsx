@@ -5,8 +5,8 @@ import { fetchProductEvaluation } from '@/api/ProductEvaluator';
 import { EvaluatedProduct, KassalappProduct } from '@/types/ProductTypes';
 import debounce from 'lodash.debounce';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import ShowProducts from './ShowProducts';
-import ProductCard from './ProductCard';
+import ShowSearchResults from './ShowSearchResults';
+import ProductCard from '../ProductCard';
 import SearchBar from './SearchBar';
 import { Button } from '@headlessui/react';
 
@@ -95,7 +95,7 @@ export default function Search() {
     if (showResults && query.length > 0) {
       return (
         <div className="max-w-4xl justify-center" ref={resultsRef}>
-          <ShowProducts products={products} handleClick={handleProductClick} />
+          <ShowSearchResults products={products} handleClick={handleProductClick} />
         </div>
       );
     }

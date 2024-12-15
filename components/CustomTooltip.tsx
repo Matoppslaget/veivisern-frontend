@@ -1,12 +1,13 @@
 import { QuestionMarkCircleIcon } from '@heroicons/react/24/outline';
-import { Tooltip, Typography } from '../common/MaterialTailwind';
+import { Tooltip, Typography } from './utils/MaterialTailwind';
 import { NovaClass } from '@/types/ProductTypes';
 
-interface VeivisernTooltipProps {
+
+interface CustomTooltipProps {
   novaClass: NovaClass;
 }
 
-export default function VeivisernTooltip({ novaClass }: VeivisernTooltipProps) {
+export default function CustomTooltip({ novaClass }: CustomTooltipProps) {
   let titleText;
   let detailText;
 

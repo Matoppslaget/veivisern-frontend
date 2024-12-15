@@ -3,10 +3,10 @@ import {
   KassalappProduct,
   NovaIngredient,
   ProcessedClass,
-} from '../../types/ProductTypes';
+} from '../types/ProductTypes';
 import Image from 'next/image';
 import { Spinner } from '@material-tailwind/react';
-import VeivisernTooltip from './VeivisernTooltip';
+import CustomTooltip from './CustomTooltip';
 
 interface ProductCardProps {
   product: KassalappProduct;
@@ -14,6 +14,8 @@ interface ProductCardProps {
   evaluatedProduct?: EvaluatedProduct;
 }
 
+// TODO: Rewrite to Modal
+ 
 export default function ProductCard({
   product,
   isEvaluating,
@@ -90,7 +92,7 @@ export default function ProductCard({
         {evaluatedProduct && (
           <div className="flow-root my-6 ">
             {!evaluatedProduct.ingredients ||
-            evaluatedProduct.ingredients.length === 0 ? (
+              evaluatedProduct.ingredients.length === 0 ? (
               <div className="py-2">
                 <div className="text-2xl">Ingredienser ikke tilgjengelig</div>
                 <span> Produsenten har ikke oppgitt noen ingredienser.</span>
@@ -109,22 +111,21 @@ export default function ProductCard({
                           <div
                             className={`px-2 py-1 text-md
                               ${novaIngredient.novaClass > 2 ? 'rounded-lg' : 'bg-gray-100 bg-opacity-50'}  
-                              ${
-                                novaIngredient.novaClass === 4
-                                  ? 'bg-red-600 hover:border-red-500 text-gray-50'
-                                  : novaIngredient.novaClass === 3
-                                    ? 'bg-yellow-400 hover:border-yellow-500'
-                                    : ''
+                              ${novaIngredient.novaClass === 4
+                                ? 'bg-red-600 hover:border-red-500 text-gray-50'
+                                : novaIngredient.novaClass === 3
+                                  ? 'bg-yellow-400 hover:border-yellow-500'
+                                  : ''
                               }`}
                           >
                             {novaIngredient.ingredientName}
                           </div>
                           {(novaIngredient.novaClass === 4 ||
                             novaIngredient.novaClass === 3) && (
-                            <VeivisernTooltip
-                              novaClass={novaIngredient.novaClass}
-                            ></VeivisernTooltip>
-                          )}
+                              <CustomTooltip
+                                novaClass={novaIngredient.novaClass}
+                              ></CustomTooltip>
+                            )}
                         </div>
                       ),
                     )}

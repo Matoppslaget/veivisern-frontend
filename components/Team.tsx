@@ -1,6 +1,6 @@
 import Image from 'next/image';
-import mailtoHref from '../common/MailToLink';
-import VeivisernButton from '../common/VeivisernButton';
+import mailtoHref from './MailToLink';
+import PrimaryLink from './PrimaryLink';
 
 export default function Team() {
   return (
@@ -51,7 +51,7 @@ export default function Team() {
         </p>
       </div>
       <div className="flex justify-center">
-        <VeivisernButton
+        <PrimaryLink
           buttonText="Gi tilbakemelding"
           buttonHref={mailtoHref}
         />
