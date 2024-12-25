@@ -6,8 +6,8 @@ import { MagnifyingGlassIcon, XMarkIcon } from '@heroicons/react/24/outline'; //
 interface SearchBarProps {
   query: string;
   setQuery: React.Dispatch<React.SetStateAction<string>>;
-  searchInputRef: React.RefObject<HTMLInputElement>;
-  searchDivRef: React.RefObject<HTMLDivElement>;
+  searchInputRef: React.RefObject<HTMLInputElement | null>;
+  searchDivRef: React.RefObject<HTMLDivElement | null>;
   onInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onFocus: () => void;
 }
