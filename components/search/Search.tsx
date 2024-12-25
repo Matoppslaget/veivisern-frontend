@@ -33,7 +33,7 @@ export default function Search() {
       try {
         if (product.length >= 3) {
           const results = await fetchResults(product);
-          setProducts(results);
+          setProducts(results.slice(0, 2));
         }
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -94,8 +94,12 @@ export default function Search() {
   const renderSearchResults = () => {
     if (showResults && query.length > 0) {
       return (
-        <div className="max-w-4xl justify-center" ref={resultsRef}>
-          <ShowSearchResults products={products} handleClick={handleProductClick} />
+        // TODO: Add button below all search results
+        <div ref={resultsRef}>
+          <ShowSearchResults
+            products={products}
+            handleClick={handleProductClick}
+          />
         </div>
       );
     }
@@ -103,27 +107,25 @@ export default function Search() {
   };
 
   return (
-    <div className="w-full sm:py-4 sm:px-10 sm:space-x-10 lg:space-x-40 sm:justify-center">
-      <div className="font-semibold justify-center">
-        <form className="flex justify-center gap-2 mb-4">
-          <SearchBar
-            query={query}
-            setQuery={setQuery}
-            searchInputRef={searchInputRef}
-            searchDivRef={searchDivRef}
-            onInputChange={handleInputChange}
-            onFocus={() => {
-              if (query.length > 0) {
-                setShowResults(true);
-              } else {
-                setShowResults(false);
-              }
-            }}
-          />
-          <Button>Søk</Button>
-        </form>
-        {renderSearchResults()}
-      </div>
+    <div className="flex-col items-center font-semibold px-24">
+      <form className="flex justify-center gap-2 mb-4">
+        <SearchBar
+          query={query}
+          setQuery={setQuery}
+          searchInputRef={searchInputRef}
+          searchDivRef={searchDivRef}
+          onInputChange={handleInputChange}
+          onFocus={() => {
+            if (query.length > 0) {
+              setShowResults(true);
+            } else {
+              setShowResults(false);
+            }
+          }}
+        />
+        <Button>Søk</Button>
+      </form>
+      {renderSearchResults()}
       <div className="flex justify-center">
         {selectedProduct && (
           <ProductCard
