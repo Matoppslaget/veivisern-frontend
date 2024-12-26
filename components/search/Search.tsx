@@ -22,6 +22,12 @@ export default function Search() {
     EvaluatedProduct[]
   >([]);
   const [showResults, setShowResults] = useState(false);
+  const [isModalOpen, setModalOpen] = useState(false);
+
+  const toggleModal = () => {
+    setModalOpen(!isModalOpen);
+  };
+
 
   const searchInputRef = useRef<HTMLInputElement>(null);
   const searchFormRef = useRef<HTMLFormElement>(null);
@@ -70,6 +76,7 @@ export default function Search() {
     }
     setShowResults(false);
     setSelectedProduct(product);
+    setModalOpen(true);
   };
 
   const handleClickOutside = (event: MouseEvent) => {
@@ -128,6 +135,8 @@ export default function Search() {
           evaluatedProduct={evaluationResults.find(
             (product) => product.kassalappId === selectedProduct?.id,
           )}
+          isModalOpen={isModalOpen}
+          toggleModal={toggleModal}
         />
       )}
     </div>
