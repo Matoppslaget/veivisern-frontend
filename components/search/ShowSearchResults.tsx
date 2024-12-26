@@ -5,14 +5,19 @@ import ThumbnailImage from '../ThumbnailImage';
 interface ShowSearchResultsProps {
   products: KassalappProduct[];
   handleClick: (product: KassalappProduct) => void;
+  ref: React.RefObject<HTMLDivElement | null>;
 }
 
 const ShowSearchResults: React.FC<ShowSearchResultsProps> = ({
   products,
   handleClick,
+  ref,
 }: ShowSearchResultsProps) => {
   return (
-    <div className="rounded-xl shadow-sm p-1 pt-1 space-y-1 border-t-0 border-2 border-red-500">
+    <div
+      className="rounded-xl w-full shadow-sm p-1 space-y-1 border-t-0 border-2"
+      ref={ref}
+    >
       {products.length > 0 ? (
         products.map((product, index) => (
           <div

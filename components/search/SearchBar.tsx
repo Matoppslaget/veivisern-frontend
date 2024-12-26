@@ -46,15 +46,14 @@ export default function SearchBar({
 
   return (
     <div
-      className={`p-1.5 pl-2 pr-2 bg-white rounded-xl shadow-sm flex justify-between space-x-2 border ${isFocused ? 'ring-2 ring-green-700' : ''}`}
+      className={`p-1.5 pl-2 pr-2 w-full min-w-10 bg-white rounded-xl shadow-sm flex justify-between space-x-2 border ${isFocused ? 'ring-2 ring-green-700' : ''}`}
       ref={searchDivRef}
-      style={{ width: 'max-content', minWidth: '30rem' }} // Adjust as needed
     >
       <MagnifyingGlassIcon className="text-gray-500 w-8 h-8" />
       <input
         placeholder=""
         type="search"
-        className="hide-cancel-button w-full sm:w-96 lg:w-[40rem] rounded-md text-gray-900 ring-inset ring-gray-300 placeholder:text-gray-400 focus:outline-none sm:text-sm sm:leading-6"
+        className="hide-cancel-button w-full rounded-md text-gray-900 ring-inset ring-gray-300 placeholder:text-gray-400 focus:outline-none sm:text-sm sm:leading-6"
         value={query}
         onChange={onInputChange}
         onFocus={handleFocus}

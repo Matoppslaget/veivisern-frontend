@@ -95,48 +95,42 @@ export default function Search() {
     if (showResults && query.length > 0) {
       return (
         // TODO: Add button below all search results
-        <div ref={resultsRef}>
-          <ShowSearchResults
-            products={products}
-            handleClick={handleProductClick}
-          />
-        </div>
+        <ShowSearchResults
+          products={products}
+          handleClick={handleProductClick}
+          ref={resultsRef}
+        />
       );
     }
     return null;
   };
 
   return (
-    <div className="flex-col items-center font-semibold px-24">
-      <form className="flex justify-center gap-2 mb-4">
-        <SearchBar
-          query={query}
-          setQuery={setQuery}
-          searchInputRef={searchInputRef}
-          searchDivRef={searchDivRef}
-          onInputChange={handleInputChange}
-          onFocus={() => {
-            if (query.length > 0) {
-              setShowResults(true);
-            } else {
-              setShowResults(false);
-            }
-          }}
-        />
-        <Button>Søk</Button>
-      </form>
+    <div className="flex flex-col items-center">
+      <SearchBar
+        query={query}
+        setQuery={setQuery}
+        searchInputRef={searchInputRef}
+        searchDivRef={searchDivRef}
+        onInputChange={handleInputChange}
+        onFocus={() => {
+          if (query.length > 0) {
+            setShowResults(true);
+          } else {
+            setShowResults(false);
+          }
+        }}
+      />
       {renderSearchResults()}
-      <div className="flex justify-center">
-        {selectedProduct && (
-          <ProductCard
-            product={selectedProduct}
-            isEvaluating={productsUnderEvaluation.includes(selectedProduct.id)}
-            evaluatedProduct={evaluationResults.find(
-              (product) => product.kassalappId === selectedProduct?.id,
-            )}
-          />
-        )}
-      </div>
+      {selectedProduct && (
+        <ProductCard
+          product={selectedProduct}
+          isEvaluating={productsUnderEvaluation.includes(selectedProduct.id)}
+          evaluatedProduct={evaluationResults.find(
+            (product) => product.kassalappId === selectedProduct?.id,
+          )}
+        />
+      )}
     </div>
   );
 }
