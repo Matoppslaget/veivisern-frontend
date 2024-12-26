@@ -8,7 +8,6 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import ShowSearchResults from './ShowSearchResults';
 import ProductCard from '../ProductCard';
 import SearchBar from './SearchBar';
-import { Button } from '@headlessui/react';
 
 export default function Search() {
   const [query, setQuery] = useState('');
@@ -25,7 +24,7 @@ export default function Search() {
   const [showResults, setShowResults] = useState(false);
 
   const searchInputRef = useRef<HTMLInputElement>(null);
-  const searchDivRef = useRef<HTMLDivElement>(null);
+  const searchFormRef = useRef<HTMLFormElement>(null);
   const resultsRef = useRef<HTMLDivElement>(null);
 
   const debouncedFetchResults = useCallback(
@@ -75,8 +74,8 @@ export default function Search() {
 
   const handleClickOutside = (event: MouseEvent) => {
     if (
-      searchDivRef.current &&
-      !searchDivRef.current.contains(event.target as Node) &&
+      searchFormRef.current &&
+      !searchFormRef.current.contains(event.target as Node) &&
       resultsRef.current &&
       !resultsRef.current.contains(event.target as Node)
     ) {
@@ -106,12 +105,12 @@ export default function Search() {
   };
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center relative px-4 sm:px-4 max-w-[600px] mx-auto w-auto">
       <SearchBar
         query={query}
         setQuery={setQuery}
         searchInputRef={searchInputRef}
-        searchDivRef={searchDivRef}
+        searchFormRef={searchFormRef}
         onInputChange={handleInputChange}
         onFocus={() => {
           if (query.length > 0) {

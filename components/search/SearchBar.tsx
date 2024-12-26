@@ -7,7 +7,7 @@ interface SearchBarProps {
   query: string;
   setQuery: React.Dispatch<React.SetStateAction<string>>;
   searchInputRef: React.RefObject<HTMLInputElement | null>;
-  searchDivRef: React.RefObject<HTMLDivElement | null>;
+  searchFormRef: React.RefObject<HTMLFormElement | null>;
   onInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onFocus: () => void;
 }
@@ -16,7 +16,7 @@ export default function SearchBar({
   query,
   setQuery,
   searchInputRef,
-  searchDivRef,
+  searchFormRef,
   onInputChange,
   onFocus,
 }: SearchBarProps) {
@@ -45,9 +45,9 @@ export default function SearchBar({
   }, [query]);
 
   return (
-    <div
+    <form
       className={`p-1.5 pl-2 pr-2 w-full min-w-10 bg-white rounded-xl shadow-sm flex justify-between space-x-2 border ${isFocused ? 'ring-2 ring-green-700' : ''}`}
-      ref={searchDivRef}
+      ref={searchFormRef}
     >
       <MagnifyingGlassIcon className="text-gray-500 w-8 h-8" />
       <input
@@ -69,6 +69,6 @@ export default function SearchBar({
           />
         )}
       </span>
-    </div>
+    </form>
   );
 }
