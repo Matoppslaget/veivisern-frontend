@@ -38,7 +38,7 @@ export default function Search() {
       try {
         if (product.length >= 3) {
           const results = await fetchResults(product);
-          setProducts(results.slice(0, 2));
+          setProducts(results);
         }
       } catch (error) {
         console.error('Error fetching data:', error);
