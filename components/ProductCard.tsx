@@ -7,13 +7,7 @@ import {
 import Image from 'next/image';
 import { Spinner } from '@material-tailwind/react';
 import CustomTooltip from './CustomTooltip';
-import { useState } from 'react';
-import {
-  Dialog,
-  DialogBody,
-  DialogHeader,
-  DialogFooter,
-} from '@material-tailwind/react';
+import { Dialog, DialogBody, DialogHeader } from '@material-tailwind/react';
 import { XMarkIcon } from '@heroicons/react/24/outline'; // Ensure you have the XIcon imported
 
 interface ProductCardProps {
@@ -31,7 +25,6 @@ export default function ProductCard({
   isModalOpen,
   toggleModal,
 }: ProductCardProps) {
-
   const getProcessedStyling = (evaluatedProduct: EvaluatedProduct) => {
     let className = '';
     let label = '';
@@ -151,7 +144,6 @@ export default function ProductCard({
           )
         )}
       </DialogBody>
-      {/* <DialogFooter></DialogFooter> */}
     </Dialog>
   );
 }
