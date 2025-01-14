@@ -13,7 +13,12 @@ export const fetchResults = async (
       params: { search: product, size: 20 },
       headers: { Authorization: `Bearer ${apiKey}` },
     });
-    return response.data.data;
+
+    const filteredProducts = response.data.data.filter(
+      (item) => item.ingredients
+    );
+
+    return filteredProducts;
   } catch (error) {
     console.error('Error fetching data:', error);
     throw error;

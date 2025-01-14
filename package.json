@@ -42,5 +42,6 @@
   "overrides": {
     "@types/react": "19.0.2",
     "@types/react-dom": "19.0.2"
-  }
+  },
+  "proxy": "https://www.matoppslaget.no"
 }

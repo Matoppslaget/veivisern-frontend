@@ -17,6 +17,7 @@ export const fetchProductEvaluation = async (
     );
     return response.data;
   } catch (error) {
+    console.log('Error fetching for product:', product.name);
     console.error('Error fetching data:', error);
     throw error;
   }
