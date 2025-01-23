@@ -30,9 +30,21 @@ export default function Search() {
         if (product.length >= 3) {
           const results = await fetchResults(product);
           setProducts(results.slice(0, 15));
-          const evalResults = await Promise.all(
-            results.map((product) => fetchProductEvaluation(product)),
-          );
+
+          results.forEach(async (product) => {
+            try {
+              const evalResult = await fetchProductEvaluation(product);
+              setEvalResults((prevEvalResults) => {
+                // Prevent duplicate entries by filtering out existing results
+                const filteredResults = prevEvalResults.filter(
+                  (p) => p.kassalappId !== product.id,
+                );
+                return [...filteredResults, evalResult];
+              });
+            } catch (error) {
+              console.error(`Error evaluating product ${product.id}:`, error);
+            }
+          });
         }
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -104,6 +116,7 @@ export default function Search() {
       return (
         <ShowSearchResults
           products={products}
+          evalResults={evalResults}
           handleProductClick={handleProductClick}
           handleShowAllResults={handleShowAllResults}
           ref={resultsRef}
@@ -145,7 +158,7 @@ export default function Search() {
       </div>
 
       {showAllResults && (
-        <div className="p-2 w-full mt-4 grid grid-cols-2 gap-4 border-2 border-red-500">
+        <div className="relative p-2 w-full mt-4 grid grid-cols-2 gap-4 border-2 border-red-500">
           {products.map((product, index) => (
             <article
               key={index}
@@ -165,7 +178,7 @@ export default function Search() {
               <section className="my-auto pl-2 sm:pl-8 font-normal sm:font-semibold rounded-md">
                 {product.name}
               </section>
-              <section className="my-auto pl-2 sm:pl-8 font-normal sm:font-semibold rounded-md">
+              <section className="my-auto pl-2 sm:pl-8 font-thin sm:font-semibold rounded-md">
                 {
                   evalResults.find((p) => p.kassalappId === product.id)
                     ?.processedClass
