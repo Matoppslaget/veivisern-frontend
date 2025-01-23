@@ -22,7 +22,9 @@ export default function Header({
         <div className="relative flex h-14 items-center">
           {showSearch && (
             <div className="flex-1 flex items-center">
-              <div className="text-3xl h-10 w-auto"> 🦉 MATOPPSLAGET </div>
+              <a href="/">
+                <div className="text-3xl h-10 w-auto"> 🦉 MATOPPSLAGET </div>
+              </a>
               <Search
                 debouncedFetchResults={debouncedFetchResults}
                 products={products}
