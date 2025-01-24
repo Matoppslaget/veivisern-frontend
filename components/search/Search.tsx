@@ -4,7 +4,7 @@ import { fetchProductEvaluation } from '@/api/ProductEvaluator';
 import { EvaluatedProduct, KassalappProduct } from '@/types/ProductTypes';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import ShowSearchResults from './ShowSearchResults';
-import SearchProductCard from './SearchProductCard';
+import ProductModal from '../ProductModal';
 import SearchBar from './SearchBar';
 
 interface SearchProps {
@@ -120,7 +120,7 @@ export default function Search({
         />
         {renderSearchResults()}
         {selectedProduct && (
-          <SearchProductCard
+          <ProductModal
             product={selectedProduct}
             isEvaluating={productsUnderEval.includes(selectedProduct.id)}
             evaluatedProduct={evalResults.find(

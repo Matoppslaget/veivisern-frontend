@@ -3,13 +3,13 @@ import ProductCard from './ProductCard';
 
 interface ProductResultsProps {
   products: KassalappProduct[];
-  handleProductClick: (product: KassalappProduct) => void;
+  handleShowResults: (product: KassalappProduct) => void;
   evalResults: EvaluatedProduct[];
 }
 
 export default function ProductResults({
   products,
-  handleProductClick,
+  handleShowResults,
   evalResults,
 }: ProductResultsProps) {
   return (
@@ -19,7 +19,7 @@ export default function ProductResults({
           key={product.id}
           product={product}
           index={index}
-          handleProductClick={handleProductClick}
+          handleShowResults={handleShowResults}
           evalResults={evalResults}
         />
       ))}

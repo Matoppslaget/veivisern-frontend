@@ -35,7 +35,7 @@ export default function Home() {
     [],
   );
 
-  const handleProductClick = (product: KassalappProduct) => {
+  const handleShowResults = (product: KassalappProduct) => {
     if (!evalResults.some((p) => p.kassalappId === product.id)) {
       setProductsUnderEval([...productsUnderEval, product.id]);
       fetchProductEvaluation(product).then((res: EvaluatedProduct) => {
@@ -72,7 +72,7 @@ export default function Home() {
           <ProductResults
             products={products}
             evalResults={evalResults}
-            handleProductClick={handleProductClick}
+            handleShowResults={handleShowResults}
           />
         )}
       </main>

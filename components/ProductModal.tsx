@@ -3,10 +3,10 @@ import {
   KassalappProduct,
   NovaIngredient,
   ProcessedClass,
-} from '../../types/ProductTypes';
+} from '../types/ProductTypes';
 import Image from 'next/image';
 import { Spinner } from '@material-tailwind/react';
-import CustomTooltip from '../CustomTooltip';
+import CustomTooltip from './CustomTooltip';
 import { Dialog, DialogBody, DialogHeader } from '@material-tailwind/react';
 import { XMarkIcon } from '@heroicons/react/24/outline'; // Ensure you have the XIcon imported
 
@@ -18,7 +18,7 @@ interface SearchProductCardProps {
   toggleModal: () => void;
 }
 
-export default function SearchProductCard({
+export default function ProductModal({
   product,
   isEvaluating,
   evaluatedProduct,
