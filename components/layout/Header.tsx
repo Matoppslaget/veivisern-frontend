@@ -1,12 +1,12 @@
 import { classNames } from '@/utils/CommonFunctions';
 import { Disclosure } from '@headlessui/react';
 import Search from '../search/Search';
-import { KassalappProduct } from '@/types/ProductTypes';
+import { Product } from '@/types/ProductTypes';
 
 interface HeaderProps {
   showSearch: boolean;
   debouncedFetchResults: (product: string) => void;
-  products: KassalappProduct[];
+  products: Product[];
   setShowAllResults: (show: boolean) => void;
 }
 

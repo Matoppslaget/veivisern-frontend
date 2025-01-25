@@ -1,18 +1,16 @@
-import { EvaluatedProduct, KassalappProduct } from '@/types/ProductTypes';
+import { Product } from '@/types/ProductTypes';
 import Image from 'next/image';
 
 interface ProductCardProps {
-  product: KassalappProduct;
+  product: Product;
   index: number;
-  handleShowResults: (product: KassalappProduct) => void;
-  evalResults: EvaluatedProduct[];
+  handleShowResults: (product: Product) => void;
 }
 
 export default function ProductCard({
   product,
   index,
   handleShowResults,
-  evalResults,
 }: ProductCardProps) {
   return (
     <article
@@ -34,7 +32,7 @@ export default function ProductCard({
         {product.name}
       </section>
       <section className="my-auto pl-2 sm:pl-8 font-normal sm:font-semibold rounded-md">
-        {evalResults.find((p) => p.kassalappId === product.id)?.processedClass}
+        {product.processedClass ? `Processed class: ${product.processedClass}` : ''}
       </section>
     </article>
   );

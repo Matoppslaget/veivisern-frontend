@@ -3,48 +3,50 @@
 import { useCallback, useState } from 'react';
 import Title from '@/components/layout/Title';
 import Search from '@/components/search/Search';
-import { EvaluatedProduct, KassalappProduct } from '@/types/ProductTypes';
+import { Product } from '@/types/ProductTypes';
 import Header from '@/components/layout/Header';
-import { fetchProductEvaluation } from '@/api/ProductEvaluator';
-import { fetchResults } from '@/api/KassalappApi';
+import { getProcessingInfo } from '@/api/ProductEvaluator';
+import { getKassalappProducts } from '@/api/KassalappApi';
 import debounce from 'lodash.debounce';
 import ProductResults from '@/components/ProductResults';
 
 export default function Home() {
   //const padding = typeof screen !== 'undefined' ? screen.width * 0.05 : 0;
   const [showWelcome, setShowWelcome] = useState(true);
-  const [products, setProducts] = useState<KassalappProduct[]>([]);
-  const [productsUnderEval, setProductsUnderEval] = useState<number[]>([]);
-  const [evalResults, setEvalResults] = useState<EvaluatedProduct[]>([]);
+  const [products, setProducts] = useState<Product[]>([]);
 
   const debouncedFetchResults = useCallback(
-    debounce(async (product: string) => {
+    debounce(async (queryString: string) => {
       try {
-        if (product.length >= 3) {
-          const results = await fetchResults(product);
-          setProducts(results.slice(0, 15));
-          const evalResults = await Promise.all(
-            results.map((product) => fetchProductEvaluation(product)),
-          );
-          setEvalResults(evalResults);
+        if (queryString.length >= 3) {
+          const products = await getKassalappProducts(queryString);
+          const limitedProducts = products.slice(0, 15);
+          setProducts(limitedProducts);
+          limitedProducts.forEach(async (product) => {
+            try {
+              const productWithEvaluation = await getProcessingInfo(product);
+
+              setProducts((prevProducts) =>
+                prevProducts.map((p) =>
+                  p.id === productWithEvaluation.id ? productWithEvaluation : p,
+                ),
+              );
+            } catch (error) {
+              console.error(
+                `Error fetching processing info for product ${product.id}:`,
+                error,
+              );
+            }
+          });
         }
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error('Error fetching products:', error);
       }
-    }, 400),
-    [],
+    }, 300), // Adjust debounce time as needed
+    [getKassalappProducts, getProcessingInfo, setProducts],
   );
 
-  const handleShowResults = (product: KassalappProduct) => {
-    if (!evalResults.some((p) => p.kassalappId === product.id)) {
-      setProductsUnderEval([...productsUnderEval, product.id]);
-      fetchProductEvaluation(product).then((res: EvaluatedProduct) => {
-        setProductsUnderEval(
-          productsUnderEval.filter((id) => id !== product.id),
-        );
-        setEvalResults((prevEvalResults) => [...prevEvalResults, res]);
-      });
-    }
+  const handleShowResults = (product: Product) => {
     setShowWelcome(false);
     //setSelectedProduct(product);
     //setModalOpen(true);
@@ -71,7 +73,6 @@ export default function Home() {
         ) : (
           <ProductResults
             products={products}
-            evalResults={evalResults}
             handleShowResults={handleShowResults}
           />
         )}

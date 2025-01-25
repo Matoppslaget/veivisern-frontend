@@ -1,6 +1,5 @@
 import {
-  EvaluatedProduct,
-  KassalappProduct,
+  Product,
   NovaIngredient,
   ProcessedClass,
 } from '../types/ProductTypes';
@@ -11,50 +10,46 @@ import { Dialog, DialogBody, DialogHeader } from '@material-tailwind/react';
 import { XMarkIcon } from '@heroicons/react/24/outline'; // Ensure you have the XIcon imported
 
 interface SearchProductCardProps {
-  product: KassalappProduct;
-  isEvaluating: boolean;
-  evaluatedProduct?: EvaluatedProduct;
+  product: Product;
   isModalOpen: boolean;
   toggleModal: () => void;
 }
 
 export default function ProductModal({
   product,
-  isEvaluating,
-  evaluatedProduct,
   isModalOpen,
   toggleModal,
 }: SearchProductCardProps) {
-  const getProcessedStyling = (evaluatedProduct: EvaluatedProduct) => {
-    let className = '';
+  const getProcessedStyling = (product: Product) => {
+    let styling = '';
     let label = '';
 
-    switch (evaluatedProduct.processedClass) {
+    switch (product.processedClass) {
       case ProcessedClass.ZERO:
-        className = ' bg-gray-200';
+        styling = ' bg-gray-200';
         label = 'Prosesseseringsgrad: ikke funnet';
         break;
       case ProcessedClass.ONE:
       case ProcessedClass.TWO:
-        className = 'border-green-600 bg-green-200';
+        styling = 'border-green-600 border-2 bg-green-200';
         label = 'Minimalt prosessert';
         break;
       case ProcessedClass.THREE:
-        className = 'border-orange-600 bg-orange-200';
+        styling = 'border-orange-600 border-2 bg-orange-200';
         label = 'Prosessert';
         break;
       case ProcessedClass.FOUR:
-        className = 'border-red-600 bg-red-200';
+        styling = 'border-red-600 border-2 bg-red-200';
         label = 'Ultraprosessert';
         break;
       default:
-        className = ' bg-gray-200';
+        styling = ' bg-gray-200';
         label = 'Ukjent prosesseringsgrad';
     }
 
     return (
       <span
-        className={`border text-md font-normal px-2 rounded-xl ${className}`}
+        className={`border text-md font-normal px-2 rounded-xl ${styling}`}
       >
         {label}
       </span>
@@ -62,23 +57,14 @@ export default function ProductModal({
   };
 
   return (
-    <Dialog
-      open={isModalOpen}
-      handler={toggleModal}
-      placeholder={undefined}
-    >
-      <DialogHeader
-        className="flex justify-end"
-        placeholder={undefined}
-      >
+    <Dialog open={isModalOpen} handler={toggleModal} placeholder={undefined}>
+      <DialogHeader className="flex justify-end" placeholder={undefined}>
         <XMarkIcon
           className="my-auto text-gray-500 w-6 h-6 cursor-pointer hover:text-black"
           onClick={toggleModal}
         />
       </DialogHeader>
-      <DialogBody
-        placeholder={undefined}
-      >
+      <DialogBody placeholder={undefined}>
         <span className="flow-root text-center text-2xl">{product.name}</span>
         <div className="flow-root my-2 mx-auto box-border h-48 w-48">
           <Image
@@ -90,21 +76,19 @@ export default function ProductModal({
             height={20}
           />
         </div>
-        {isEvaluating ? (
+        {!product.processedClass ? (
           <div className="flex justify-center space-x-3 my-4 p-2 text-center italic font-semibold text-gray-500">
-            <Spinner
-            />{' '}
-            <span>Henter produktdetaljer...</span>
+            <Spinner /> <span>Henter produktdetaljer...</span>
           </div>
         ) : (
-          evaluatedProduct && (
+          product.processedClass && (
             <>
               <div className="my-4 text-center text-xl font-semibold">
-                {getProcessedStyling(evaluatedProduct)}
+                {getProcessedStyling(product)}
               </div>
               <div>
-                {!evaluatedProduct.ingredients ||
-                evaluatedProduct.ingredients.length === 0 ? (
+                {!product.ingredients ||
+                product.ingredients.length === 0 ? (
                   <div className="py-2">
                     <div className="text-2xl">
                       Ingredienser ikke tilgjengelig
@@ -115,7 +99,7 @@ export default function ProductModal({
                   <div className="grid">
                     <div className="pl-4 p-2 text-lg">Ingredienser: </div>
                     <div className="max-h-80 overflow-auto grid shadow-[inset_0_-24px_10px_-10px_rgba(0,0,0,0.06)]">
-                      {evaluatedProduct.ingredients.map(
+                      {(product.novaIngredients ?? []).map(
                         (novaIngredient: NovaIngredient) => (
                           <div
                             className="p-1 flex"

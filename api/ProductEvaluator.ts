@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { EvaluatedProductResponse } from '@/api/response/ResponseTypes';
-import { KassalappProduct, EvaluatedProduct } from '@/types/ProductTypes';
+import { ProcessingInfoResponse } from '@/api/response/ResponseTypes';
+import { Product } from '@/types/ProductTypes';
 
 const env = process.env.NEXT_PUBLIC_DEVELOPMENT_ENVIRONMENT;
 const ProductEvaluationEndpoint =
@@ -8,14 +8,14 @@ const ProductEvaluationEndpoint =
     ? 'https://veivisern-backend-igvu.onrender.com/products/kassalapp_id/'
     : 'http://localhost:8000/products/kassalapp_id/';
 
-export const fetchProductEvaluation = async (
-  product: KassalappProduct,
-): Promise<EvaluatedProduct> => {
+export const getProcessingInfo = async (product: Product): Promise<Product> => {
   try {
-    const response: EvaluatedProductResponse = await axios.get(
+    const response: ProcessingInfoResponse = await axios.get(
       `${ProductEvaluationEndpoint}${product.id}`,
     );
-    return response.data;
+    product.novaIngredients = response.data.ingredients;
+    product.processedClass = response.data.processedClass;
+    return product;
   } catch (error) {
     console.log('Error fetching for product:', product.name);
     console.error('Error fetching data:', error);

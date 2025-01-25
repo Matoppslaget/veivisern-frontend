@@ -1,14 +1,13 @@
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
-import { KassalappProduct } from '@/types/ProductTypes';
+import { Product } from '@/types/ProductTypes';
 import ThumbnailImage from '../ThumbnailImage';
 
 interface ShowSearchResultsProps {
-  products: KassalappProduct[];
-  handleProductClick: (product: KassalappProduct) => void;
+  products: Product[];
+  handleProductClick: (product: Product) => void;
   handleShowAllResults: () => void;
-  ref: React.RefObject<HTMLDivElement | null>;
+  ref: React.RefObject<HTMLDivElement>;
 }
-
 const ShowSearchResults: React.FC<ShowSearchResultsProps> = ({
   products,
   handleProductClick,
@@ -28,10 +27,10 @@ const ShowSearchResults: React.FC<ShowSearchResultsProps> = ({
               className="rounded-md flex justify-stretch border border-gray-300 border-opacity-70 hover:cursor-pointer hover:bg-green-700 hover:bg-opacity-20"
               onClick={() => handleProductClick(product)}
             >
-            <ThumbnailImage imageSrc={product.image ? product.image : ''} />
-            <div className="my-auto pl-2 sm:pl-8 w-full font-normal sm:font-semibold rounded-md ">
-              {product.name}
-            </div>
+              <ThumbnailImage imageSrc={product.image ? product.image : ''} />
+              <div className="my-auto pl-2 sm:pl-8 w-full font-normal sm:font-semibold rounded-md ">
+                {product.name}
+              </div>
               <div className="w-6/12 h-20 flex items-center justify-center hover:cursor-pointer">
                 <div className="hidden sm:block">Se detaljer</div>
                 <ArrowRightIcon className="w-6 h-6 mx-2" />
