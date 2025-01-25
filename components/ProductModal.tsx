@@ -66,14 +66,10 @@ export default function ProductModal({
       open={isModalOpen}
       handler={toggleModal}
       placeholder={undefined}
-      onPointerEnterCapture={undefined}
-      onPointerLeaveCapture={undefined}
     >
       <DialogHeader
         className="flex justify-end"
         placeholder={undefined}
-        onPointerEnterCapture={undefined}
-        onPointerLeaveCapture={undefined}
       >
         <XMarkIcon
           className="my-auto text-gray-500 w-6 h-6 cursor-pointer hover:text-black"
@@ -82,8 +78,6 @@ export default function ProductModal({
       </DialogHeader>
       <DialogBody
         placeholder={undefined}
-        onPointerEnterCapture={undefined}
-        onPointerLeaveCapture={undefined}
       >
         <span className="flow-root text-center text-2xl">{product.name}</span>
         <div className="flow-root my-2 mx-auto box-border h-48 w-48">
@@ -99,8 +93,6 @@ export default function ProductModal({
         {isEvaluating ? (
           <div className="flex justify-center space-x-3 my-4 p-2 text-center italic font-semibold text-gray-500">
             <Spinner
-              onPointerEnterCapture={undefined}
-              onPointerLeaveCapture={undefined}
             />{' '}
             <span>Henter produktdetaljer...</span>
           </div>
