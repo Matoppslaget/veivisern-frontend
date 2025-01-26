@@ -5,6 +5,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import ShowSearchResults from './ShowSearchResults';
 import ProductModal from '../ProductModal';
 import SearchBar from './SearchBar';
+import PrimaryButton from '../PrimaryButton';
 
 interface SearchProps {
   debouncedFetchResults: (product: string) => void;
@@ -77,18 +78,6 @@ export default function Search({
     };
   }, []);
 
-  const renderSearchResults = () => {
-    return (
-      <ShowSearchResults
-        query={query}
-        products={products}
-        handleProductClick={handleProductClick}
-        handleShowAllResults={handleShowAllResults}
-        ref={resultsRef}
-      />
-    );
-  };
-
   return (
     <>
       <div className="flex flex-col items-center relative px-2 sm:px-4 max-w-[600px] mx-auto w-auto">
@@ -106,7 +95,15 @@ export default function Search({
             }
           }}
         />
-        {showResults && query.length > 0 && renderSearchResults()}
+        {showResults && query.length > 0 && (
+          <ShowSearchResults
+            query={query}
+            products={products}
+            handleProductClick={handleProductClick}
+            handleShowAllResults={handleShowAllResults}
+            ref={resultsRef}
+          />
+        )}
         {selectedProduct && (
           <ProductModal
             product={selectedProduct}
@@ -116,14 +113,12 @@ export default function Search({
         )}
       </div>
       {showResults && products.length > 0 && (
-        <div className="p-1 bg-white flex justify-center sticky bottom-0">
-          <button
-            className="p-3 w-full text-white bg-lime-700 rounded-md hover:bg-lime-600 "
+        <div className="max-w-[580px] mx-auto p-1 bg-white flex justify-center sticky bottom-0">
+          <PrimaryButton
+            buttonText="Vis alle resultater"
             onClick={handleShowAllResults}
             ref={showAllResultsRef}
-          >
-            Vis alle resultater
-          </button>
+          />
         </div>
       )}
     </>
