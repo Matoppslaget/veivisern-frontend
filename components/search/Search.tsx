@@ -1,6 +1,5 @@
 'use client';
 
-import { getProcessingInfo } from '@/api/ProductEvaluator';
 import { Product } from '@/types/ProductTypes';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import ShowSearchResults from './ShowSearchResults';
@@ -20,12 +19,12 @@ export default function Search({
 }: SearchProps) {
   const [query, setQuery] = useState('');
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-  const [productsUnderEval, setProductsUnderEval] = useState<number[]>([]);
   const [showResults, setShowResults] = useState(false);
   const [isModalOpen, setModalOpen] = useState(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
   const searchFormRef = useRef<HTMLFormElement>(null);
   const resultsRef = useRef<HTMLDivElement>(null);
+  const showAllResultsRef = useRef<HTMLButtonElement>(null);
 
   const toggleModal = () => {
     setModalOpen(!isModalOpen);
@@ -63,7 +62,9 @@ export default function Search({
       searchFormRef.current &&
       !searchFormRef.current.contains(event.target as Node) &&
       resultsRef.current &&
-      !resultsRef.current.contains(event.target as Node)
+      !resultsRef.current.contains(event.target as Node) &&
+      showAllResultsRef.current &&
+      !showAllResultsRef.current.contains(event.target as Node)
     ) {
       setShowResults(false);
     }
@@ -77,22 +78,20 @@ export default function Search({
   }, []);
 
   const renderSearchResults = () => {
-    if (showResults && query.length > 0) {
-      return (
-        <ShowSearchResults
-          products={products}
-          handleProductClick={handleProductClick}
-          handleShowAllResults={handleShowAllResults}
-          ref={resultsRef}
-        />
-      );
-    }
-    return null;
+    return (
+      <ShowSearchResults
+        query={query}
+        products={products}
+        handleProductClick={handleProductClick}
+        handleShowAllResults={handleShowAllResults}
+        ref={resultsRef}
+      />
+    );
   };
 
   return (
     <>
-      <div className="flex flex-col items-center relative px-4 sm:px-4 max-w-[600px] mx-auto w-auto">
+      <div className="flex flex-col items-center relative px-2 sm:px-4 max-w-[600px] mx-auto w-auto">
         <SearchBar
           query={query}
           setQuery={setQuery}
@@ -107,16 +106,26 @@ export default function Search({
             }
           }}
         />
-        {renderSearchResults()}
+        {showResults && query.length > 0 && renderSearchResults()}
         {selectedProduct && (
           <ProductModal
             product={selectedProduct}
-            isEvaluating={productsUnderEval.includes(selectedProduct.id)}
             isModalOpen={isModalOpen}
             toggleModal={toggleModal}
           />
         )}
       </div>
+      {showResults && products.length > 0 && (
+        <div className="p-1 bg-white flex justify-center sticky bottom-0">
+          <button
+            className="p-3 w-full text-white bg-lime-700 rounded-md hover:bg-lime-600 "
+            onClick={handleShowAllResults}
+            ref={showAllResultsRef}
+          >
+            Vis alle resultater
+          </button>
+        </div>
+      )}
     </>
   );
 }

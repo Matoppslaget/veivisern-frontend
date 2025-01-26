@@ -1,13 +1,10 @@
-import {
-  Product,
-  NovaIngredient,
-  ProcessedClass,
-} from '../types/ProductTypes';
+import { Product, NovaIngredient, ProcessedClass } from '../types/ProductTypes';
 import Image from 'next/image';
 import { Spinner } from '@material-tailwind/react';
 import CustomTooltip from './CustomTooltip';
 import { Dialog, DialogBody, DialogHeader } from '@material-tailwind/react';
 import { XMarkIcon } from '@heroicons/react/24/outline'; // Ensure you have the XIcon imported
+import React from 'react';
 
 interface SearchProductCardProps {
   product: Product;
@@ -48,16 +45,19 @@ export default function ProductModal({
     }
 
     return (
-      <span
-        className={`border text-md font-normal px-2 rounded-xl ${styling}`}
-      >
+      <span className={`border text-md font-normal px-2 rounded-xl ${styling}`}>
         {label}
       </span>
     );
   };
 
   return (
-    <Dialog open={isModalOpen} handler={toggleModal} placeholder={undefined}>
+    <Dialog
+      size="xs"
+      open={isModalOpen}
+      handler={toggleModal}
+      placeholder={undefined}
+    >
       <DialogHeader className="flex justify-end" placeholder={undefined}>
         <XMarkIcon
           className="my-auto text-gray-500 w-6 h-6 cursor-pointer hover:text-black"
@@ -87,8 +87,7 @@ export default function ProductModal({
                 {getProcessedStyling(product)}
               </div>
               <div>
-                {!product.ingredients ||
-                product.ingredients.length === 0 ? (
+                {!product.ingredients || product.ingredients.length === 0 ? (
                   <div className="py-2">
                     <div className="text-2xl">
                       Ingredienser ikke tilgjengelig
