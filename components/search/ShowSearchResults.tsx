@@ -14,14 +14,14 @@ const ShowSearchResults: React.FC<ShowSearchResultsProps> = ({
   query,
   products,
   handleProductClick,
-  handleShowAllResults,
   ref,
 }: ShowSearchResultsProps) => {
   return (
     // TODO: Add a spinner while loading
     <>
+      {/* TODO: Make height dynamic */}
       <div
-        className="rounded-xl w-full shadow-sm p-1 border-t-0 border-2 flex flex-col h-full"
+        className={`rounded-xl w-full shadow-sm p-1 border-t-0 border-2 flex flex-col max-h-[428px] sm:max-h-full`}
         ref={ref}
       >
         {products.length > 0 ? (
@@ -49,7 +49,7 @@ const ShowSearchResults: React.FC<ShowSearchResultsProps> = ({
           </>
         ) : (
           <div className="p-2">
-            Fant ingen resultater for <span className='italic'>{query}</span>
+            Fant ingen resultater for <span className="italic">{query}</span>
           </div>
         )}
       </div>
