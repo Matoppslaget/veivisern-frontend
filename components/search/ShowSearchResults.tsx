@@ -1,28 +1,34 @@
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import { Product } from '@/types/ProductTypes';
 import ThumbnailImage from '../ThumbnailImage';
+import PrimaryButton from '../PrimaryButton';
 
 interface ShowSearchResultsProps {
   query: string;
   products: Product[];
   handleProductClick: (product: Product) => void;
   handleShowAllResults: () => void;
-  ref: React.RefObject<HTMLDivElement>;
+  resultsTableRef: React.RefObject<HTMLDivElement>;
+  showResults: boolean;
+  showResultsButtonRef: React.RefObject<HTMLButtonElement>;
 }
 
 const ShowSearchResults: React.FC<ShowSearchResultsProps> = ({
   query,
   products,
   handleProductClick,
-  ref,
+  handleShowAllResults,
+  resultsTableRef,
+  showResults,
+  showResultsButtonRef,
 }: ShowSearchResultsProps) => {
   return (
     // TODO: Add a spinner while loading
-    <>
+    <div className="rounded-xl border-t-0 border">
       {/* TODO: Make height dynamic */}
       <div
-        className={`rounded-xl w-full shadow-sm p-1 border-t-0 border-2 flex flex-col max-h-[428px] sm:max-h-full`}
-        ref={ref}
+        className={` w-full shadow-sm p-1  flex flex-col max-h-[428px] sm:max-h-[428px]`}
+        ref={resultsTableRef}
       >
         {products.length > 0 ? (
           <>
@@ -30,7 +36,7 @@ const ShowSearchResults: React.FC<ShowSearchResultsProps> = ({
               {products.map((product, index) => (
                 <div
                   key={index}
-                  className="rounded-md flex justify-stretch border border-gray-300 border-opacity-70 hover:cursor-pointer hover:bg-green-700 hover:bg-opacity-20"
+                  className="flex justify-stretch border-b-2 border-gray-300 border-opacity-70 hover:cursor-pointer hover:bg-green-700 hover:bg-opacity-20"
                   onClick={() => handleProductClick(product)}
                 >
                   <ThumbnailImage
@@ -53,7 +59,16 @@ const ShowSearchResults: React.FC<ShowSearchResultsProps> = ({
           </div>
         )}
       </div>
-    </>
+      {showResults && products.length > 0 && (
+        <div className="w-full mx-auto p-1 pt-0 bg-white  rounded-xl flex justify-center sticky bottom-0">
+          <PrimaryButton
+            buttonText="Vis alle resultater"
+            onClick={handleShowAllResults}
+            ref={showResultsButtonRef}
+          />
+        </div>
+      )}
+    </div>
   );
 };
 

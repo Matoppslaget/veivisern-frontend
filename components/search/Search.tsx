@@ -25,7 +25,7 @@ export default function Search({
   const searchInputRef = useRef<HTMLInputElement>(null);
   const searchFormRef = useRef<HTMLFormElement>(null);
   const resultsRef = useRef<HTMLDivElement>(null);
-  const showAllResultsRef = useRef<HTMLButtonElement>(null);
+  const showAllResultsButtonRef = useRef<HTMLButtonElement>(null);
 
   const toggleModal = () => {
     setModalOpen(!isModalOpen);
@@ -64,8 +64,8 @@ export default function Search({
       !searchFormRef.current.contains(event.target as Node) &&
       resultsRef.current &&
       !resultsRef.current.contains(event.target as Node) &&
-      showAllResultsRef.current &&
-      !showAllResultsRef.current.contains(event.target as Node)
+      showAllResultsButtonRef.current &&
+      !showAllResultsButtonRef.current.contains(event.target as Node)
     ) {
       setShowResults(false);
     }
@@ -101,7 +101,9 @@ export default function Search({
             products={products}
             handleProductClick={handleProductClick}
             handleShowAllResults={handleShowAllResults}
-            ref={resultsRef}
+            resultsTableRef={resultsRef}
+            showResults={showResults}
+            showResultsButtonRef={showAllResultsButtonRef}
           />
         )}
         {selectedProduct && (
@@ -112,15 +114,6 @@ export default function Search({
           />
         )}
       </div>
-      {showResults && products.length > 0 && (
-        <div className="max-w-[580px] mx-auto p-1 bg-white flex justify-center sticky bottom-0">
-          <PrimaryButton
-            buttonText="Vis alle resultater"
-            onClick={handleShowAllResults}
-            ref={showAllResultsRef}
-          />
-        </div>
-      )}
     </>
   );
 }
