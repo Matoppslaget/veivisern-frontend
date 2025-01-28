@@ -2,6 +2,8 @@ import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import { Product } from '@/types/ProductTypes';
 import ThumbnailImage from '../ThumbnailImage';
 import PrimaryButton from '../PrimaryButton';
+import { useWindowDimensions } from '@/utils/CommonFunctions';
+import { useEffect } from 'react';
 
 interface ShowSearchResultsProps {
   query: string;
@@ -22,21 +24,45 @@ const ShowSearchResults: React.FC<ShowSearchResultsProps> = ({
   showResults,
   showResultsButtonRef,
 }: ShowSearchResultsProps) => {
+  const { height, width } = useWindowDimensions();
+
+  let tableTopOffset = 428;
+  console.log('in UseEffect: ', `${resultsTableRef.current}`);
+  if (resultsTableRef.current) {
+    tableTopOffset = resultsTableRef.current.getBoundingClientRect().top;
+  }
+  let showResultsButtonOffset = 55;
+  if (showResultsButtonRef.current) {
+    showResultsButtonOffset =
+      showResultsButtonRef.current.getBoundingClientRect().height ;
+    console.log('in Button: ', `${showResultsButtonOffset}`);
+  }
+
+  console.log('Height: ', `${height}`);
+  console.log('tableTopOffset: ', `${tableTopOffset}`);
+
+  console.log('Test height: ', 66);
   return (
     // TODO: Add a spinner while loading
     <div className="rounded-xl border-t-0 border">
       {/* TODO: Make height dynamic */}
       <div
-        className={` w-full shadow-sm p-1  flex flex-col max-h-[428px] sm:max-h-[428px]`}
+        className={`w-full shadow-sm pt-0.5 flex flex-col`}
+        style={{
+          maxHeight:
+            window.innerWidth >= 640
+              ? `${height - tableTopOffset - showResultsButtonOffset - 140}px` // Desktop
+              : `${height - tableTopOffset - showResultsButtonOffset-5}px`, // Mobile
+        }}
         ref={resultsTableRef}
       >
         {products.length > 0 ? (
           <>
-            <div className="flex-1 overflow-y-auto space-y-1">
+            <div className="flex-1 overflow-y-auto space-y-0">
               {products.map((product, index) => (
                 <div
                   key={index}
-                  className="flex justify-stretch border-b-2 border-gray-300 border-opacity-70 hover:cursor-pointer hover:bg-green-700 hover:bg-opacity-20"
+                  className="pl-2 flex justify-stretch border-b-2 border-gray-300 border-opacity-70 hover:cursor-pointer hover:bg-green-700 hover:bg-opacity-20"
                   onClick={() => handleProductClick(product)}
                 >
                   <ThumbnailImage
