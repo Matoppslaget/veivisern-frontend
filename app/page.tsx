@@ -8,7 +8,7 @@ import Header from '@/components/layout/Header';
 import { getProcessingInfo } from '@/api/ProductEvaluator';
 import { getKassalappProducts } from '@/api/KassalappApi';
 import debounce from 'lodash.debounce';
-import ProductResults from '@/components/ProductResults';
+import ProductGrid from '@/components/ProductGrid';
 
 export default function Home() {
   //const padding = typeof screen !== 'undefined' ? screen.width * 0.05 : 0;
@@ -56,6 +56,7 @@ export default function Home() {
     <div>
       <Header
         showSearch={!showWelcome}
+        showLogo={!showWelcome}
         debouncedFetchResults={debouncedFetchResults}
         products={products}
         setShowAllResults={setShowWelcome}
@@ -71,7 +72,7 @@ export default function Home() {
             />
           </>
         ) : (
-          <ProductResults
+          <ProductGrid
             products={products}
             handleShowResults={handleShowResults}
           />

@@ -2,29 +2,47 @@ import { classNames } from '@/utils/CommonFunctions';
 import { Disclosure } from '@headlessui/react';
 import Search from '../search/Search';
 import { Product } from '@/types/ProductTypes';
+import Link from 'next/link';
 
 interface HeaderProps {
+  showLogo: boolean;
   showSearch: boolean;
   debouncedFetchResults: (product: string) => void;
   products: Product[];
   setShowAllResults: (show: boolean) => void;
+  // resetToWelcome: () => void;
 }
 
 export default function Header({
   showSearch,
+  showLogo,
   debouncedFetchResults,
   products,
   setShowAllResults,
+  // resetToWelcome,
 }: HeaderProps) {
   return (
-    <Disclosure as="nav" className="sticky top-0 z-50">
+    <Disclosure as="nav">
       <div className="mx-auto px-6">
         <div className="relative flex h-14 items-center">
+          {showLogo && (
+            <div className="flex-1 flex items-center">
+              <Link
+                href="/"
+                onClick={(e) => {
+                  e.preventDefault();
+                  // resetToWelcome();
+                }}
+              >
+                <div className="text-center font-bold text-gray-900 text-3xl h-10 w-auto">
+                  <span className="hidden md:inline">🦉 MATOPPSLAGET</span>
+                  <span className="md:hidden">🦉</span>
+                </div>
+              </Link>
+            </div>
+          )}
           {showSearch && (
             <div className="flex-1 flex items-center">
-              <a href="/">
-                <div className="text-3xl h-10 w-auto"> 🦉 MATOPPSLAGET </div>
-              </a>
               <Search
                 debouncedFetchResults={debouncedFetchResults}
                 products={products}
@@ -32,7 +50,7 @@ export default function Header({
               />
             </div>
           )}
-          <div className="ml-auto">
+          <div className="flex-1 flex items-end justify-end">
             <a
               key={'about-us'}
               href={'/about'}
