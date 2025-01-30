@@ -1,10 +1,11 @@
 import { Product, NovaIngredient, ProcessedClass } from '../types/ProductTypes';
 import Image from 'next/image';
 import { Spinner } from '@material-tailwind/react';
-import IngredientTooltip from './CustomTooltip';
+import IngredientTooltip from './IngredientTooltip';
 import { Dialog, DialogBody, DialogHeader } from '@material-tailwind/react';
-import { XMarkIcon } from '@heroicons/react/24/outline'; // Ensure you have the XIcon imported
+import { XMarkIcon } from '@heroicons/react/24/outline';
 import React from 'react';
+import ProcessedLabel from './ProcessedLabel';
 
 interface SearchProductCardProps {
   product: Product;
@@ -17,40 +18,6 @@ export default function ProductModal({
   isModalOpen,
   toggleModal,
 }: SearchProductCardProps) {
-  const getProcessedStyling = (product: Product) => {
-    let styling = '';
-    let label = '';
-
-    switch (product.processedClass) {
-      case ProcessedClass.ZERO:
-        styling = ' bg-gray-200';
-        label = 'Prosesseseringsgrad: ikke funnet';
-        break;
-      case ProcessedClass.ONE:
-      case ProcessedClass.TWO:
-        styling = 'border-green-600 border-2 bg-green-200';
-        label = 'Renvare';
-        break;
-      case ProcessedClass.THREE:
-        styling = 'border-orange-600 border-2 bg-orange-200';
-        label = 'Prosessert';
-        break;
-      case ProcessedClass.FOUR:
-        styling = 'border-red-600 border-2 bg-red-200';
-        label = 'Ultraprosessert';
-        break;
-      default:
-        styling = ' bg-gray-200';
-        label = 'Ukjent prosesseringsgrad';
-    }
-
-    return (
-      <span className={`text-xl sm:text-2xl font-normal px-2 rounded-lg ${styling}`}>
-        {label}
-      </span>
-    );
-  };
-
   return (
     <Dialog
       size="xs"
@@ -89,9 +56,9 @@ export default function ProductModal({
           product.processedClass && (
             <>
               <div className="text-center">
-                {getProcessedStyling(product)}
+                <ProcessedLabel processedClass={product.processedClass} />
               </div>
-              <hr className='my-6 sm:my-10'></hr>
+              <hr className="my-6 sm:my-10"></hr>
               <div>
                 {!product.ingredients || product.ingredients.length === 0 ? (
                   <div className="py-2">
@@ -113,7 +80,7 @@ export default function ProductModal({
                             <div
                               className={`px-2 py-1 text-sm sm:text-md
                                     ${
-                                      novaIngredient.novaClass > 2
+                                      novaIngredient.novaClass > 3
                                         ? 'rounded-lg'
                                         : 'bg-gray-100 bg-opacity-50'
                                     }  
