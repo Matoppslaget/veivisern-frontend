@@ -2,7 +2,11 @@ import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import { Product } from '@/types/ProductTypes';
 import ThumbnailImage from '../../components/ThumbnailImage';
 import PrimaryButton from '../../components/PrimaryButton';
-import { useWindowDimensions } from '@/utils/CommonFunctions';
+import {
+  cleanedProductName,
+  productSubtitle,
+  useWindowDimensions,
+} from '@/utils/CommonFunctions';
 import ProcessedLabel from '../../components/ProcessedLabel';
 
 interface ShowSearchResultsProps {
@@ -35,6 +39,7 @@ export default function ShowSearchResults({
     showResultsButtonOffset =
       showResultsButtonRef.current.getBoundingClientRect().height;
   }
+
   return (
     // TODO: Add a spinner while loading
     <div className="absolute top-full left-0 right-0 bg-background bg-white shadow-lg z-50 rounded-xl border-t-0 border">
@@ -60,19 +65,23 @@ export default function ShowSearchResults({
                   <ThumbnailImage
                     imageSrc={product.image ? product.image : ''}
                   />
-                  <div className="flex flex-col w-6/12">
-                    <div className="my-auto pl-2 sm:pl-8 w-full font-normal sm:font-semibold rounded-md ">
-                      {product.name}
+                  <div className="pl-2 sm:pl-8 flex flex-col w-full py-2">
+                    <div className=" font-normal ">
+                      {cleanedProductName(product)}
                     </div>
-                    <div>
+                    <div className="text-gray-600 text-xs ">
+                      {productSubtitle(product)}
+                    </div>
+                    <div className=" mb-0">
                       {product.processedClass && (
                         <ProcessedLabel
                           processedClass={product.processedClass}
+                          size="sm"
                         />
                       )}
                     </div>
                   </div>
-                  <div className="w-6/12 h-20 flex items-center justify-center hover:cursor-pointer">
+                  <div className="w-3/12 sm:w-6/12 h-20 flex items-center justify-center hover:cursor-pointer">
                     <div className="hidden sm:block">Se detaljer</div>
                     <ArrowRightIcon className="w-6 h-6 mx-2" />
                   </div>

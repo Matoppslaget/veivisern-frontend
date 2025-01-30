@@ -2,10 +2,12 @@ import { ProcessedClass } from '@/types/ProductTypes';
 
 interface ProcessedStylingProps {
   processedClass: ProcessedClass;
+  size?: string;
 }
 
 export default function getProcessedStyling({
   processedClass,
+  size = 'lg',
 }: ProcessedStylingProps) {
   let styling = '';
   let label = '';
@@ -31,7 +33,7 @@ export default function getProcessedStyling({
 
   return (
     <span
-      className={`text-sm sm:text-2xl font-normal px-2 rounded-lg ${styling}`}
+      className={`text-${size} sm:text-${size == 'lg' ? '2xl' : 'md'} font-normal px-2 rounded-lg ${styling}`}
     >
       {label}
     </span>

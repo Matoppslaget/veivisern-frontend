@@ -6,6 +6,7 @@ import { Dialog, DialogBody, DialogHeader } from '@material-tailwind/react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import React from 'react';
 import ProcessedLabel from './ProcessedLabel';
+import { cleanedProductName, productSubtitle } from '@/utils/CommonFunctions';
 
 interface SearchProductCardProps {
   product: Product;
@@ -36,8 +37,12 @@ export default function ProductModal({
         className="max-h-screen overflow-y-auto"
       >
         <span className="flow-root text-center text-lg sm:text-2xl">
-          {product.name}
+          {cleanedProductName(product)}
         </span>
+        <span className="flow-root text-center text-sm sm:text-lg">
+          {productSubtitle(product)}
+        </span>
+
         <div className="my-4 sm:my-8 border-0 flow-root mx-auto box-border h-36 w-36 sm:h-72 sm:w-72">
           <Image
             className="h-full w-full object-contain"
