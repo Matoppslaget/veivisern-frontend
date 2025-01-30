@@ -3,7 +3,6 @@ import { Product } from '@/types/ProductTypes';
 import ThumbnailImage from '../ThumbnailImage';
 import PrimaryButton from '../PrimaryButton';
 import { useWindowDimensions } from '@/utils/CommonFunctions';
-import { useEffect } from 'react';
 
 interface ShowSearchResultsProps {
   query: string;
@@ -37,7 +36,7 @@ const ShowSearchResults: React.FC<ShowSearchResultsProps> = ({
   }
   return (
     // TODO: Add a spinner while loading
-    <div className="rounded-xl border-t-0 border">
+    <div className="absolute top-full left-0 right-0 bg-background bg-white shadow-lg z-50 rounded-xl border-t-0 border">
       <div
         className={`w-full shadow-sm pt-0.5 flex flex-col`}
         style={{

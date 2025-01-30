@@ -5,21 +5,14 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import ShowSearchResults from './ShowSearchResults';
 import ProductModal from '../ProductModal';
 import SearchBar from './SearchBar';
-import PrimaryButton from '../PrimaryButton';
+import debounce from 'lodash.debounce';
+import { getKassalappProducts } from '@/api/KassalappApi';
+import { getProcessingInfo } from '@/api/ProductEvaluator';
 
-interface SearchProps {
-  debouncedFetchResults: (product: string) => void;
-  products: Product[];
-  setShowAllResults: (show: boolean) => void;
-}
-
-export default function Search({
-  debouncedFetchResults,
-  products,
-  setShowAllResults,
-}: SearchProps) {
+export default function Search(): JSX.Element {
   const [query, setQuery] = useState('');
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [products, setProducts] = useState<Product[]>([]);
   const [showResults, setShowResults] = useState(false);
   const [isModalOpen, setModalOpen] = useState(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
@@ -31,10 +24,41 @@ export default function Search({
     setModalOpen(!isModalOpen);
   };
 
+  const debouncedFetchResults = useCallback(
+    debounce(async (queryString: string) => {
+      try {
+        if (queryString.length >= 3) {
+          const products = await getKassalappProducts(queryString);
+          const limitedProducts = products.slice(0, 15);
+          setProducts(limitedProducts);
+          limitedProducts.forEach(async (product) => {
+            try {
+              const productWithEvaluation = await getProcessingInfo(product);
+
+              setProducts((prevProducts) =>
+                prevProducts.map((p) =>
+                  p.id === productWithEvaluation.id ? productWithEvaluation : p,
+                ),
+              );
+            } catch (error) {
+              console.error(
+                `Error fetching processing info for product ${product.id}:`,
+                error,
+              );
+            }
+          });
+        }
+      } catch (error) {
+        console.error('Error fetching products:', error);
+      }
+    }, 300), // Adjust debounce time as needed
+    [getKassalappProducts, getProcessingInfo, setProducts],
+  );
+
   const handleShowAllResults = () => {
     setSelectedProduct(null);
     setShowResults(false);
-    setShowAllResults(false);
+    //setShowAllResults(false);
     console.log('Show all results');
   };
 
@@ -43,10 +67,10 @@ export default function Search({
       const value = event.target.value;
       setQuery(value);
       debouncedFetchResults(value);
-      if (value.length > 0) {
-        setShowResults(true);
-      } else {
-        setShowResults(false);
+      setShowResults(value.length > 0);
+      const main = document.querySelector('main');
+      if (main) {
+        main.style.overflow = value.length > 0 ? 'hidden' : '';
       }
     },
     [debouncedFetchResults],

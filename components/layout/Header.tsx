@@ -1,55 +1,27 @@
 import { classNames } from '@/utils/CommonFunctions';
 import { Disclosure } from '@headlessui/react';
-import Search from '../search/Search';
-import { Product } from '@/types/ProductTypes';
-import Link from 'next/link';
 
 interface HeaderProps {
-  showLogo: boolean;
-  showSearch: boolean;
-  debouncedFetchResults: (product: string) => void;
-  products: Product[];
-  setShowAllResults: (show: boolean) => void;
-  // resetToWelcome: () => void;
+  showLogo?: boolean;
+  Search?: JSX.Element;
 }
 
-export default function Header({
-  showSearch,
-  showLogo,
-  debouncedFetchResults,
-  products,
-  setShowAllResults,
-  // resetToWelcome,
-}: HeaderProps) {
+export default function Header({ showLogo = true, Search }: HeaderProps) {
   return (
     <Disclosure as="nav">
       <div className="mx-auto px-6">
         <div className="relative flex h-14 items-center">
           {showLogo && (
             <div className="flex-1 flex items-center">
-              <Link
-                href="/"
-                onClick={(e) => {
-                  e.preventDefault();
-                  // resetToWelcome();
-                }}
-              >
+              <a href="/">
                 <div className="text-center font-bold text-gray-900 text-3xl h-10 w-auto">
                   <span className="hidden md:inline">🦉 MATOPPSLAGET</span>
                   <span className="md:hidden">🦉</span>
                 </div>
-              </Link>
+              </a>
             </div>
           )}
-          {showSearch && (
-            <div className="flex-1 flex items-center">
-              <Search
-                debouncedFetchResults={debouncedFetchResults}
-                products={products}
-                setShowAllResults={setShowAllResults}
-              />
-            </div>
-          )}
+          {Search && Search}
           <div className="flex-1 flex items-end justify-end">
             <a
               key={'about-us'}
