@@ -1,7 +1,7 @@
 import { Product, NovaIngredient, ProcessedClass } from '../types/ProductTypes';
 import Image from 'next/image';
 import { Spinner } from '@material-tailwind/react';
-import CustomTooltip from './CustomTooltip';
+import IngredientTooltip from './CustomTooltip';
 import { Dialog, DialogBody, DialogHeader } from '@material-tailwind/react';
 import { XMarkIcon } from '@heroicons/react/24/outline'; // Ensure you have the XIcon imported
 import React from 'react';
@@ -29,7 +29,7 @@ export default function ProductModal({
       case ProcessedClass.ONE:
       case ProcessedClass.TWO:
         styling = 'border-green-600 border-2 bg-green-200';
-        label = 'Minimalt prosessert';
+        label = 'Renvare';
         break;
       case ProcessedClass.THREE:
         styling = 'border-orange-600 border-2 bg-orange-200';
@@ -45,7 +45,7 @@ export default function ProductModal({
     }
 
     return (
-      <span className={`border text-md font-normal px-2 rounded-xl ${styling}`}>
+      <span className={`text-xl sm:text-2xl font-normal px-2 rounded-lg ${styling}`}>
         {label}
       </span>
     );
@@ -60,20 +60,25 @@ export default function ProductModal({
     >
       <DialogHeader className="flex justify-end" placeholder={undefined}>
         <XMarkIcon
-          className="my-auto text-gray-500 w-6 h-6 cursor-pointer hover:text-black"
+          className="text-gray-500 w-6 h-6 cursor-pointer hover:text-black"
           onClick={toggleModal}
         />
       </DialogHeader>
-      <DialogBody placeholder={undefined}>
-        <span className="flow-root text-center text-2xl">{product.name}</span>
-        <div className="flow-root my-2 mx-auto box-border h-48 w-48">
+      <DialogBody
+        placeholder={undefined}
+        className="max-h-screen overflow-y-auto"
+      >
+        <span className="flow-root text-center text-lg sm:text-2xl">
+          {product.name}
+        </span>
+        <div className="my-4 sm:my-8 border-0 flow-root mx-auto box-border h-36 w-36 sm:h-72 sm:w-72">
           <Image
             className="h-full w-full object-contain"
             sizes="(max-width: 768px) 100vw, 33vw"
             src={product.image ? product.image : ''}
             alt={product.name}
-            width={20}
-            height={20}
+            width={1}
+            height={1}
           />
         </div>
         {!product.processedClass ? (
@@ -83,9 +88,10 @@ export default function ProductModal({
         ) : (
           product.processedClass && (
             <>
-              <div className="my-4 text-center text-xl font-semibold">
+              <div className="text-center">
                 {getProcessedStyling(product)}
               </div>
+              <hr className='my-6 sm:my-10'></hr>
               <div>
                 {!product.ingredients || product.ingredients.length === 0 ? (
                   <div className="py-2">
@@ -96,8 +102,8 @@ export default function ProductModal({
                   </div>
                 ) : (
                   <div className="grid">
-                    <div className="pl-4 p-2 text-lg">Ingredienser: </div>
-                    <div className="max-h-80 overflow-auto grid shadow-[inset_0_-24px_10px_-10px_rgba(0,0,0,0.06)]">
+                    <div className="p-2 text-md sm:text-xl">Ingredienser: </div>
+                    <div className="max-h-40 sm:max-h-60 md:max-h-80 overflow-auto grid shadow-[inset_0_-24px_10px_-10px_rgba(0,0,0,0.06)]">
                       {(product.novaIngredients ?? []).map(
                         (novaIngredient: NovaIngredient) => (
                           <div
@@ -105,7 +111,7 @@ export default function ProductModal({
                             key={novaIngredient.ingredientName}
                           >
                             <div
-                              className={`px-2 py-1 text-md
+                              className={`px-2 py-1 text-sm sm:text-md
                                     ${
                                       novaIngredient.novaClass > 2
                                         ? 'rounded-lg'
@@ -114,18 +120,13 @@ export default function ProductModal({
                                     ${
                                       novaIngredient.novaClass === 4
                                         ? 'bg-red-600 hover:border-red-500 text-gray-50'
-                                        : novaIngredient.novaClass === 3
-                                          ? 'bg-yellow-400 hover:border-yellow-500'
-                                          : ''
+                                        : ''
                                     }`}
                             >
                               {novaIngredient.ingredientName}
                             </div>
-                            {(novaIngredient.novaClass === 4 ||
-                              novaIngredient.novaClass === 3) && (
-                              <CustomTooltip
-                                novaClass={novaIngredient.novaClass}
-                              />
+                            {novaIngredient.novaClass === 4 && (
+                              <IngredientTooltip />
                             )}
                           </div>
                         ),
