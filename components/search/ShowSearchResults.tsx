@@ -3,6 +3,7 @@ import { Product } from '@/types/ProductTypes';
 import ThumbnailImage from '../ThumbnailImage';
 import PrimaryButton from '../PrimaryButton';
 import { useWindowDimensions } from '@/utils/CommonFunctions';
+import ProcessedLabel from '../ProcessedLabel';
 
 interface ShowSearchResultsProps {
   query: string;
@@ -59,8 +60,15 @@ export default function ShowSearchResults({
                   <ThumbnailImage
                     imageSrc={product.image ? product.image : ''}
                   />
-                  <div className="my-auto pl-2 sm:pl-8 w-full font-normal sm:font-semibold rounded-md ">
-                    {product.name}
+                  <div className='flex flex-col w-6/12'>
+                    <div className="my-auto pl-2 sm:pl-8 w-full font-normal sm:font-semibold rounded-md ">
+                      {product.name}
+                    </div>
+                    <div>
+                      {product.processedClass && (
+                        <ProcessedLabel processedClass={product.processedClass} />
+                      )}
+                    </div>
                   </div>
                   <div className="w-6/12 h-20 flex items-center justify-center hover:cursor-pointer">
                     <div className="hidden sm:block">Se detaljer</div>
