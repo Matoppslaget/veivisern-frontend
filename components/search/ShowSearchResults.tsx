@@ -27,32 +27,24 @@ const ShowSearchResults: React.FC<ShowSearchResultsProps> = ({
   const { height, width } = useWindowDimensions();
 
   let tableTopOffset = 428;
-  console.log('in UseEffect: ', `${resultsTableRef.current}`);
   if (resultsTableRef.current) {
     tableTopOffset = resultsTableRef.current.getBoundingClientRect().top;
   }
   let showResultsButtonOffset = 55;
   if (showResultsButtonRef.current) {
     showResultsButtonOffset =
-      showResultsButtonRef.current.getBoundingClientRect().height ;
-    console.log('in Button: ', `${showResultsButtonOffset}`);
+      showResultsButtonRef.current.getBoundingClientRect().height;
   }
-
-  console.log('Height: ', `${height}`);
-  console.log('tableTopOffset: ', `${tableTopOffset}`);
-
-  console.log('Test height: ', 66);
   return (
     // TODO: Add a spinner while loading
     <div className="rounded-xl border-t-0 border">
-      {/* TODO: Make height dynamic */}
       <div
         className={`w-full shadow-sm pt-0.5 flex flex-col`}
         style={{
           maxHeight:
             window.innerWidth >= 640
               ? `${height - tableTopOffset - showResultsButtonOffset - 140}px` // Desktop
-              : `${height - tableTopOffset - showResultsButtonOffset-5}px`, // Mobile
+              : `${height - tableTopOffset - showResultsButtonOffset - 5}px`, // Mobile
         }}
         ref={resultsTableRef}
       >
