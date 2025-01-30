@@ -1,9 +1,9 @@
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import { Product } from '@/types/ProductTypes';
-import ThumbnailImage from '../ThumbnailImage';
-import PrimaryButton from '../PrimaryButton';
+import ThumbnailImage from '../../components/ThumbnailImage';
+import PrimaryButton from '../../components/PrimaryButton';
 import { useWindowDimensions } from '@/utils/CommonFunctions';
-import ProcessedLabel from '../ProcessedLabel';
+import ProcessedLabel from '../../components/ProcessedLabel';
 
 interface ShowSearchResultsProps {
   query: string;
@@ -60,13 +60,15 @@ export default function ShowSearchResults({
                   <ThumbnailImage
                     imageSrc={product.image ? product.image : ''}
                   />
-                  <div className='flex flex-col w-6/12'>
+                  <div className="flex flex-col w-6/12">
                     <div className="my-auto pl-2 sm:pl-8 w-full font-normal sm:font-semibold rounded-md ">
                       {product.name}
                     </div>
                     <div>
                       {product.processedClass && (
-                        <ProcessedLabel processedClass={product.processedClass} />
+                        <ProcessedLabel
+                          processedClass={product.processedClass}
+                        />
                       )}
                     </div>
                   </div>
