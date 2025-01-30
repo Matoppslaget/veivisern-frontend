@@ -14,7 +14,7 @@ export default function Header({ showLogo = true, Search }: HeaderProps) {
           {showLogo && (
             <div className="flex-1 flex items-center">
               <a href="/">
-                <div className="text-center font-bold text-gray-900 text-3xl h-10 w-auto">
+                <div className="text-center text-gray-900 text-3xl h-10 w-auto">
                   <span className="hidden md:inline">🦉 MATOPPSLAGET</span>
                   <span className="md:hidden">🦉</span>
                 </div>

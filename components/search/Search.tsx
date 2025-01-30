@@ -8,8 +8,10 @@ import SearchBar from './SearchBar';
 import debounce from 'lodash.debounce';
 import { getKassalappProducts } from '@/api/KassalappApi';
 import { getProcessingInfo } from '@/api/ProductEvaluator';
+import { useRouter } from 'next/navigation';
 
 export default function Search(): JSX.Element {
+  const router = useRouter();
   const [query, setQuery] = useState('');
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [products, setProducts] = useState<Product[]>([]);
@@ -58,8 +60,7 @@ export default function Search(): JSX.Element {
   const handleShowAllResults = () => {
     setSelectedProduct(null);
     setShowResults(false);
-    //setShowAllResults(false);
-    console.log('Show all results');
+    router.push('/search');
   };
 
   const handleInputChange = useCallback(

@@ -14,7 +14,7 @@ interface ShowSearchResultsProps {
   showResultsButtonRef: React.RefObject<HTMLButtonElement>;
 }
 
-const ShowSearchResults: React.FC<ShowSearchResultsProps> = ({
+export default function ShowSearchResults({
   query,
   products,
   handleProductClick,
@@ -22,8 +22,8 @@ const ShowSearchResults: React.FC<ShowSearchResultsProps> = ({
   resultsTableRef,
   showResults,
   showResultsButtonRef,
-}: ShowSearchResultsProps) => {
-  const { height, width } = useWindowDimensions();
+}: ShowSearchResultsProps): JSX.Element {
+  const { height } = useWindowDimensions();
 
   let tableTopOffset = 428;
   if (resultsTableRef.current) {
@@ -87,6 +87,4 @@ const ShowSearchResults: React.FC<ShowSearchResultsProps> = ({
       )}
     </div>
   );
-};
-
-export default ShowSearchResults;
+}

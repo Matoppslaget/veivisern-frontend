@@ -2,8 +2,8 @@ import { QuestionMarkCircleIcon } from '@heroicons/react/24/outline';
 import { Tooltip, Typography } from './utils/MaterialTailwind';
 
 export default function IngredientTooltip() {
-  let titleText = 'Ultraprosessert ingrediens';
-  let detailText =
+  const titleText = 'Ultraprosessert ingrediens';
+  const detailText =
     'Denne ingrediensen faller under kategori 4 av Nova-klassifiseringen';
 
   return (
