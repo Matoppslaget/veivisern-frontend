@@ -1,15 +1,13 @@
+import { useSearchContext } from '@/context/SearchContext';
 import { classNames } from '@/utils/CommonFunctions';
 import { Disclosure } from '@headlessui/react';
 
 interface HeaderProps {
   showLogo?: boolean;
-  SearchComponent?: JSX.Element;
 }
 
-export default function Header({
-  showLogo = true,
-  SearchComponent: Search,
-}: HeaderProps) {
+export default function Header({ showLogo = true }: HeaderProps) {
+  const { SearchComponent } = useSearchContext();
   return (
     <Disclosure as="nav">
       <div className="mx-auto px-6">
@@ -24,7 +22,7 @@ export default function Header({
               </a>
             </div>
           )}
-          {Search && Search}
+          {!!SearchComponent}
           <div className="flex-1 flex items-end justify-end">
             <a
               key={'about-us'}

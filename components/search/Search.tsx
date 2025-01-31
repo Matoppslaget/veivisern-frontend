@@ -9,18 +9,25 @@ import debounce from 'lodash.debounce';
 import { getKassalappProducts } from '@/api/KassalappApi';
 import { getProcessingInfo } from '@/api/ProductEvaluator';
 import { useRouter } from 'next/navigation';
+import { useSearchContext } from '@/context/SearchContext';
+import SearchComponent from '@/components/search/Search';
 
 export default function Search(): JSX.Element {
   const router = useRouter();
+  const { setSearchComponent, products, setProducts } = useSearchContext();
   const [query, setQuery] = useState('');
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-  const [products, setProducts] = useState<Product[]>([]);
+  // const [products, setProducts] = useState<Product[]>([]);
   const [showResults, setShowResults] = useState(false);
   const [isModalOpen, setModalOpen] = useState(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
   const searchFormRef = useRef<HTMLFormElement>(null);
   const resultsRef = useRef<HTMLDivElement>(null);
   const showAllResultsButtonRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    setSearchComponent(<SearchComponent />);
+  }, [setSearchComponent]);
 
   const toggleModal = () => {
     setModalOpen(!isModalOpen);
@@ -37,8 +44,8 @@ export default function Search(): JSX.Element {
             try {
               const productWithEvaluation = await getProcessingInfo(product);
 
-              setProducts((prevProducts) =>
-                prevProducts.map((p) =>
+              setProducts((prevProducts: Product[]) =>
+                prevProducts.map((p: Product) =>
                   p.id === productWithEvaluation.id ? productWithEvaluation : p,
                 ),
               );
@@ -60,6 +67,7 @@ export default function Search(): JSX.Element {
   const handleShowAllResults = () => {
     setSelectedProduct(null);
     setShowResults(false);
+    setProducts(products);
     router.push('/search');
   };
 

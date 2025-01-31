@@ -3,6 +3,7 @@ import { Analytics } from '@vercel/analytics/react';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
+import { SearchProvider } from '@/context/SearchContext';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -19,7 +20,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} min-h-screen flex flex-col`}>
-        <main className="flex-grow">{children}</main>
+        <main className="flex-grow">
+          <SearchProvider>{children}</SearchProvider>
+        </main>
         <Footer />
         <Analytics />
       </body>

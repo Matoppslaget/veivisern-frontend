@@ -5,14 +5,13 @@ import ProductGrid from '@/components/ProductGrid';
 import { Product } from '@/types/ProductTypes';
 
 interface SearchProps {
-  Search: JSX.Element;
   products: Product[];
 }
 
-export default function Search({ Search, products }: SearchProps) {
+export default function Search({ products }: SearchProps) {
   return (
     <div>
-      <Header SearchComponent={Search} />
+      <Header />
       <ProductGrid products={products} />
     </div>
   );
