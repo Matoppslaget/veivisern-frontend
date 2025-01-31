@@ -12,7 +12,7 @@ interface SearchProps {
 export default function Search({ Search, products }: SearchProps) {
   return (
     <div>
-      <Header Search={Search} />
+      <Header SearchComponent={Search} />
       <ProductGrid products={products} />
     </div>
   );

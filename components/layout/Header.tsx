@@ -3,10 +3,13 @@ import { Disclosure } from '@headlessui/react';
 
 interface HeaderProps {
   showLogo?: boolean;
-  Search?: JSX.Element;
+  SearchComponent?: JSX.Element;
 }
 
-export default function Header({ showLogo = true, Search }: HeaderProps) {
+export default function Header({
+  showLogo = true,
+  SearchComponent: Search,
+}: HeaderProps) {
   return (
     <Disclosure as="nav">
       <div className="mx-auto px-6">
