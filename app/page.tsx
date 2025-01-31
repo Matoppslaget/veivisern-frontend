@@ -1,7 +1,7 @@
 'use client';
 
 import Title from '@/components/layout/Title';
-import Search from '@/app/search/page';
+import Search from '@/components/search/Search';
 import Header from '@/components/layout/Header';
 
 export default function Home() {
