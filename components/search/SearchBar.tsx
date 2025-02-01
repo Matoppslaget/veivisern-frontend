@@ -6,6 +6,7 @@ import { MagnifyingGlassIcon, XMarkIcon } from '@heroicons/react/24/outline'; //
 interface SearchBarProps {
   query: string;
   setQuery: React.Dispatch<React.SetStateAction<string>>;
+  handleShowResults: () => void;
   searchInputRef: React.RefObject<HTMLInputElement | null>;
   searchFormRef: React.RefObject<HTMLFormElement | null>;
   onInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -15,6 +16,7 @@ interface SearchBarProps {
 export default function SearchBar({
   query,
   setQuery,
+  handleShowResults,
   searchInputRef,
   searchFormRef,
   onInputChange,
@@ -48,6 +50,10 @@ export default function SearchBar({
     <form
       className={`p-1.5 pl-2 pr-2 w-full min-w-10 bg-white rounded-xl shadow-sm flex justify-between space-x-2 border ${isFocused ? 'ring-2 ring-green-700' : ''}`}
       ref={searchFormRef}
+      onSubmit={(e) => {
+        e.preventDefault();
+        handleShowResults();
+      }}
     >
       <MagnifyingGlassIcon className="text-gray-500 w-8 h-8" />
       <input

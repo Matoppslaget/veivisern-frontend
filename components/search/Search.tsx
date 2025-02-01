@@ -68,7 +68,7 @@ export default function Search(): JSX.Element {
     setSelectedProduct(null);
     setShowResults(false);
     setProducts(products);
-    router.push('/search');
+    router.push(`/search?q=${encodeURIComponent(query)}`);
   };
 
   const handleInputChange = useCallback(
@@ -117,6 +117,7 @@ export default function Search(): JSX.Element {
         <SearchBar
           query={query}
           setQuery={setQuery}
+          handleShowResults={handleShowAllResults}
           searchInputRef={searchInputRef}
           searchFormRef={searchFormRef}
           onInputChange={handleInputChange}
