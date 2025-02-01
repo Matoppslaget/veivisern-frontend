@@ -4,8 +4,6 @@ import { createContext, useContext, useState, ReactNode } from 'react';
 import { Product } from '@/types/ProductTypes';
 
 interface SearchContextType {
-  SearchComponent: JSX.Element | null;
-  setSearchComponent: (component: JSX.Element) => void;
   products: Product[];
   setProducts: (products: Product[]) => void;
 }
@@ -13,15 +11,10 @@ interface SearchContextType {
 const SearchContext = createContext<SearchContextType | null>(null);
 
 export const SearchProvider = ({ children }: { children: ReactNode }) => {
-  const [SearchComponent, setSearchComponent] = useState<JSX.Element | null>(
-    null,
-  );
   const [products, setProducts] = useState<Product[]>([]);
 
   return (
-    <SearchContext.Provider
-      value={{ SearchComponent, setSearchComponent, products, setProducts }}
-    >
+    <SearchContext.Provider value={{ products, setProducts }}>
       {children}
     </SearchContext.Provider>
   );

@@ -1,4 +1,4 @@
-import { Product, NovaIngredient, ProcessedClass } from '../types/ProductTypes';
+import { Product, NovaIngredient } from '../types/ProductTypes';
 import Image from 'next/image';
 import { Spinner } from '@material-tailwind/react';
 import IngredientTooltip from './IngredientTooltip';

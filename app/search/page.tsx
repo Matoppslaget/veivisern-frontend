@@ -2,13 +2,10 @@
 
 import Header from '@/components/layout/Header';
 import ProductGrid from '@/components/ProductGrid';
-import { Product } from '@/types/ProductTypes';
+import { useSearchContext } from '@/context/SearchContext';
 
-interface SearchProps {
-  products: Product[];
-}
-
-export default function Search({ products }: SearchProps) {
+export default function Search() {
+  const { products } = useSearchContext();
   return (
     <div>
       <Header />

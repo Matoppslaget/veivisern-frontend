@@ -8,26 +8,22 @@ import SearchBar from './SearchBar';
 import debounce from 'lodash.debounce';
 import { getKassalappProducts } from '@/api/KassalappApi';
 import { getProcessingInfo } from '@/api/ProductEvaluator';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useSearchContext } from '@/context/SearchContext';
-import SearchComponent from '@/components/search/Search';
 
 export default function Search(): JSX.Element {
   const router = useRouter();
-  const { setSearchComponent, products, setProducts } = useSearchContext();
-  const [query, setQuery] = useState('');
+  const { products, setProducts } = useSearchContext();
+  const searchParams = useSearchParams();
+  const initialQuery = searchParams.get('q') || '';
+  const [query, setQuery] = useState(initialQuery);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-  // const [products, setProducts] = useState<Product[]>([]);
   const [showResults, setShowResults] = useState(false);
   const [isModalOpen, setModalOpen] = useState(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
   const searchFormRef = useRef<HTMLFormElement>(null);
   const resultsRef = useRef<HTMLDivElement>(null);
   const showAllResultsButtonRef = useRef<HTMLButtonElement>(null);
-
-  useEffect(() => {
-    setSearchComponent(<SearchComponent />);
-  }, [setSearchComponent]);
 
   const toggleModal = () => {
     setModalOpen(!isModalOpen);

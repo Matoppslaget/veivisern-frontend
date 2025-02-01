@@ -1,13 +1,15 @@
-import { useSearchContext } from '@/context/SearchContext';
 import { classNames } from '@/utils/CommonFunctions';
 import { Disclosure } from '@headlessui/react';
+import { usePathname } from 'next/navigation';
+import Search from '../search/Search';
 
 interface HeaderProps {
   showLogo?: boolean;
 }
 
 export default function Header({ showLogo = true }: HeaderProps) {
-  const { SearchComponent } = useSearchContext();
+  const isSearchPage = usePathname() === '/search';
+
   return (
     <Disclosure as="nav">
       <div className="mx-auto px-6">
@@ -22,7 +24,7 @@ export default function Header({ showLogo = true }: HeaderProps) {
               </a>
             </div>
           )}
-          {!!SearchComponent}
+          {isSearchPage && <Search />}
           <div className="flex-1 flex items-end justify-end">
             <a
               key={'about-us'}
