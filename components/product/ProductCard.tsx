@@ -1,6 +1,10 @@
+'use client';
+
 import { Product } from '@/types/ProductTypes';
 import Image from 'next/image';
 import ProcessedLabel from '../ProcessedLabel';
+import { useState } from 'react';
+import ProductModal from './ProductModal';
 
 interface ProductCardProps {
   product: Product;
@@ -8,31 +12,53 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ product, index }: ProductCardProps) {
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [isModalOpen, setModalOpen] = useState(false);
+
+  const toggleModal = () => {
+    setModalOpen(!isModalOpen);
+  };
+
+  const handleProductClick = (product: Product) => {
+    setSelectedProduct(product);
+    setModalOpen(true);
+  };
+
   return (
-    <article
-      key={index}
-      className="border-2 flex-col items-center space-y-6 rounded-md border-gray-300 border-opacity-70 hover:cursor-pointer hover:bg-green-700 hover:bg-opacity-20 max-w-lg w-full"
-    >
-      <section className="mx-auto mt-1 w-36 h-36 flex items-center justify-center rounded-lg">
-        <Image
-          className="h-full w-full object-contain"
-          sizes="(max-width: 768px) 100vw, 33vw"
-          src={product.image ? product.image : ''}
-          alt={product.name || 'Product image'}
-          width={24}
-          height={24}
+    <>
+      <article
+        key={index}
+        className="border-2 flex-col items-center space-y-6 rounded-md border-gray-300 border-opacity-70 hover:cursor-pointer hover:bg-green-700 hover:bg-opacity-20 max-w-lg w-full"
+        onClick={() => handleProductClick(product)}
+      >
+        <section className="mx-auto mt-1 w-36 h-36 flex items-center justify-center rounded-lg">
+          <Image
+            className="h-full w-full object-contain"
+            sizes="(max-width: 768px) 100vw, 33vw"
+            src={product.image ? product.image : ''}
+            alt={product.name || 'Product image'}
+            width={24}
+            height={24}
+          />
+        </section>
+        <section className="my-auto pl-2 sm:pl-8 font-normal sm:font-semibold rounded-md">
+          {product.name}
+        </section>
+        <section className="my-auto pl-2 sm:pl-8 font-normal sm:font-semibold rounded-md">
+          {product.processedClass ? (
+            <ProcessedLabel processedClass={product.processedClass} />
+          ) : (
+            ''
+          )}
+        </section>
+      </article>
+      {selectedProduct && (
+        <ProductModal
+          product={selectedProduct}
+          isModalOpen={isModalOpen}
+          toggleModal={toggleModal}
         />
-      </section>
-      <section className="my-auto pl-2 sm:pl-8 font-normal sm:font-semibold rounded-md">
-        {product.name}
-      </section>
-      <section className="my-auto pl-2 sm:pl-8 font-normal sm:font-semibold rounded-md">
-        {product.processedClass ? (
-          <ProcessedLabel processedClass={product.processedClass} />
-        ) : (
-          ''
-        )}
-      </section>
-    </article>
+      )}
+    </>
   );
 }
