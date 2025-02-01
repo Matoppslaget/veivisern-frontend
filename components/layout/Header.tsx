@@ -13,7 +13,7 @@ export default function Header({ showLogo = true }: HeaderProps) {
   return (
     <Disclosure as="nav">
       <div className="mx-auto px-6">
-        <div className="relative flex h-14 items-center">
+        <div className="relative flex h-14 items-center grid grid-cols-4">
           {showLogo && (
             <div className="flex-1 flex items-center">
               <a href="/">
@@ -24,8 +24,12 @@ export default function Header({ showLogo = true }: HeaderProps) {
               </a>
             </div>
           )}
-          {isSearchPage && <Search />}
-          <div className="flex-1 flex items-end justify-end">
+          {isSearchPage && (
+            <div className="col-start-2 col-end-4">
+              <Search />
+            </div>
+          )}
+          <div className="flex-1 flex items-end justify-end col-start-4">
             <a
               key={'about-us'}
               href={'/about'}

@@ -109,7 +109,7 @@ export default function Search(): JSX.Element {
 
   return (
     <>
-      <div className="flex flex-col items-center relative px-2 sm:px-4 max-w-[600px] mx-auto w-auto">
+      <div className="flex flex-col items-center relative px-2 sm:px-4 max-w-[40rem] mx-auto w-auto">
         <SearchBar
           query={query}
           setQuery={setQuery}

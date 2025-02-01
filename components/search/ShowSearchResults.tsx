@@ -69,7 +69,7 @@ export default function ShowSearchResults({
                     <div className=" font-normal ">
                       {cleanedProductName(product)}
                     </div>
-                    <div className="text-gray-600 text-xs ">
+                    <div className="text-gray-600 text-xs">
                       {productSubtitle(product)}
                     </div>
                     <div className=" mb-0">
