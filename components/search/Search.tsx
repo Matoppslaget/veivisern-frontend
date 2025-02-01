@@ -3,7 +3,7 @@
 import { Product } from '@/types/ProductTypes';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import ShowSearchResults from './ShowSearchResults';
-import ProductModal from '../ProductModal';
+import ProductModal from '../product/ProductModal';
 import SearchBar from './SearchBar';
 import debounce from 'lodash.debounce';
 import { getKassalappProducts } from '@/api/KassalappApi';

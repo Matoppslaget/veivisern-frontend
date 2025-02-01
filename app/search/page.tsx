@@ -1,7 +1,7 @@
 'use client';
 
 import Header from '@/components/layout/Header';
-import ProductGrid from '@/components/ProductGrid';
+import ProductGrid from '@/components/product/ProductGrid';
 import { useSearchContext } from '@/context/SearchContext';
 
 export default function Search() {

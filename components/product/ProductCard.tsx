@@ -1,6 +1,6 @@
 import { Product } from '@/types/ProductTypes';
 import Image from 'next/image';
-import ProcessedLabel from './ProcessedLabel';
+import ProcessedLabel from '../ProcessedLabel';
 
 interface ProductCardProps {
   product: Product;
@@ -11,11 +11,11 @@ export default function ProductCard({ product, index }: ProductCardProps) {
   return (
     <article
       key={index}
-      className="border-2 flex-col items-center space-y-6 rounded-md border-gray-300 border-opacity-70 hover:cursor-pointer hover:bg-green-700 hover:bg-opacity-20"
+      className="border-2 flex-col items-center space-y-6 rounded-md border-gray-300 border-opacity-70 hover:cursor-pointer hover:bg-green-700 hover:bg-opacity-20 max-w-lg w-full"
     >
-      <section className="mx-auto mt-1 w-36 h-36 flex items-center justify-center rounded-lg ">
+      <section className="mx-auto mt-1 w-36 h-36 flex items-center justify-center rounded-lg">
         <Image
-          className="h-full w-full object-contain "
+          className="h-full w-full object-contain"
           sizes="(max-width: 768px) 100vw, 33vw"
           src={product.image ? product.image : ''}
           alt={product.name || 'Product image'}

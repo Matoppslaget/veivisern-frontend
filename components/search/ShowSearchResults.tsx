@@ -82,7 +82,6 @@ export default function ShowSearchResults({
                     </div>
                   </div>
                   <div className="w-3/12 sm:w-6/12 h-20 flex items-center justify-center hover:cursor-pointer">
-                    <div className="hidden sm:block">Se detaljer</div>
                     <ArrowRightIcon className="w-6 h-6 mx-2" />
                   </div>
                 </div>
