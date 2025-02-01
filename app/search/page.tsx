@@ -2,10 +2,10 @@
 
 import Header from '@/components/layout/Header';
 import ProductGrid from '@/components/product/ProductGrid';
-import { useSearchContext } from '@/context/SearchContext';
+import { useProductsContext } from '@/context/ProductsContext';
 
 export default function Search() {
-  const { products } = useSearchContext();
+  const { products } = useProductsContext();
   return (
     <div>
       <Header />

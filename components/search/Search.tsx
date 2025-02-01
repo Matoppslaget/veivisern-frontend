@@ -9,11 +9,11 @@ import debounce from 'lodash.debounce';
 import { getKassalappProducts } from '@/api/KassalappApi';
 import { getProcessingInfo } from '@/api/ProductEvaluator';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useSearchContext } from '@/context/SearchContext';
+import { useProductsContext } from '@/context/ProductsContext';
 
 export default function Search(): JSX.Element {
   const router = useRouter();
-  const { products, setProducts } = useSearchContext();
+  const { products, setProducts } = useProductsContext();
   const searchParams = useSearchParams();
   const initialQuery = searchParams.get('q') || '';
   const [query, setQuery] = useState(initialQuery);
