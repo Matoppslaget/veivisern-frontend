@@ -34,11 +34,10 @@ export function cleanedProductName(product: Product): string {
   if (!product.name) {
     return '';
   }
-  // Remove any non-alphanumeric characters except spaces
-  let cleanedName = product.name.replace(/[^a-zA-Z0-9\s]/g, '');
+
 
   // Remove numbers followed by 'g' or 'x' or 'pk'
-  cleanedName = cleanedName.replace(/\d+g/g, '');
+  let cleanedName = product.name.replace(/\s\d+g/g, '');
   cleanedName = cleanedName.replace(/\d+x/g, '');
   cleanedName = cleanedName.replace(/\d+pk/g, '');
 
@@ -55,6 +54,12 @@ export function productSubtitle(product: Product): string {
     return '';
   }
   const cleanedName = cleanedProductName(product);
-  const cleanedNameRegex = new RegExp(cleanedName, 'i');
-  return product.name.replace(cleanedNameRegex, '').trim();
+  const wordsToRemove = cleanedName.split(/\s+/); // Split cleanedName into words
+  const subTitle = product.name
+    .split(/\s+/) // Split product.name into words
+    .filter((word) => !wordsToRemove.includes(word)) // Remove words present in cleanedName
+    .join(' ') // Reconstruct the subtitle
+    .trim();
+
+  return subTitle;
 }
