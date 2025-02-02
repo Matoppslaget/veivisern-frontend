@@ -9,7 +9,7 @@ export default function Home() {
     <div>
       <Header showLogo={false} />
       <main>
-        <Title />
+        <Title style="mt-6 sm:mt-0" />
         <Search />
       </main>
     </div>

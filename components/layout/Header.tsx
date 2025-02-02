@@ -2,6 +2,7 @@ import { classNames } from '@/utils/CommonFunctions';
 import { Disclosure } from '@headlessui/react';
 import { usePathname } from 'next/navigation';
 import Search from '../search/Search';
+import Title from './Title';
 
 interface HeaderProps {
   showLogo?: boolean;
@@ -17,10 +18,10 @@ export default function Header({ showLogo = true }: HeaderProps) {
           {showLogo && (
             <div className="flex-1 flex items-center">
               <a href="/">
-                <div className="text-center text-gray-900 text-3xl h-10 w-auto">
-                  <span className="hidden md:inline">🦉 MATOPPSLAGET</span>
-                  <span className="md:hidden">🦉</span>
-                </div>
+                <Title
+                  style="text-center text-gray-900 text-3xl h-10 w-auto"
+                  isLogo={true}
+                />
               </a>
             </div>
           )}
