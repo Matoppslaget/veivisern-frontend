@@ -12,8 +12,8 @@ export default function Header({ showLogo = true }: HeaderProps) {
 
   return (
     <Disclosure as="nav">
-      <div className="mx-auto px-6">
-        <div className="relative flex h-14 items-center grid grid-cols-4">
+      <div className="mx-auto px-3 sm:px-6">
+        <div className="relative h-14 items-center grid grid-cols-6 sm:grid-cols-4">
           {showLogo && (
             <div className="flex-1 flex items-center">
               <a href="/">
@@ -25,17 +25,17 @@ export default function Header({ showLogo = true }: HeaderProps) {
             </div>
           )}
           {isSearchPage && (
-            <div className="col-start-2 col-end-4">
+            <div className="col-start-2 col-span-4 sm:col-span-2">
               <Search />
             </div>
           )}
-          <div className="flex-1 flex items-end justify-end col-start-4">
+          <div className="flex-1 flex items-end justify-end col-start-6 sm:col-start-4">
             <a
               key={'about-us'}
               href={'/about'}
               className={classNames(
                 'text-gray-black hover:bg-lime-700 hover:text-white',
-                'rounded-md px-2 py-2.5 flex text-sm font-medium items-center',
+                'rounded-md mx-auto py-2.5 flex text-sm font-medium items-center',
               )}
             >
               Om oss
