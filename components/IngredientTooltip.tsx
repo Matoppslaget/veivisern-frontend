@@ -1,25 +1,10 @@
 import { QuestionMarkCircleIcon } from '@heroicons/react/24/outline';
-import { Tooltip, Typography } from '../common/MaterialTailwind';
-import { NovaClass } from '@/types/ProductTypes';
+import { Tooltip, Typography } from './utils/MaterialTailwind';
 
-interface VeivisernTooltipProps {
-  novaClass: NovaClass;
-}
-
-export default function VeivisernTooltip({ novaClass }: VeivisernTooltipProps) {
-  let titleText;
-  let detailText;
-
-  if (novaClass === NovaClass.THREE) {
-    titleText = 'Prosessert ingrediens';
-    detailText =
-      'Denne ingrediensen faller under kategori 3 av Nova-klassifiseringen';
-  } else {
-    // (novaClass === NovaClass.FOUR)
-    titleText = 'Ultraprosessert ingrediens';
-    detailText =
-      'Denne ingrediensen faller under kategori 4 av Nova-klassifiseringen';
-  }
+export default function IngredientTooltip() {
+  const titleText = 'Ultraprosessert ingrediens';
+  const detailText =
+    'Denne ingrediensen faller under kategori 4 av Nova-klassifiseringen';
 
   return (
     <span>
