@@ -3,9 +3,16 @@ import { MagnifyingGlassIcon, XMarkIcon } from '@heroicons/react/24/outline'; //
 
 interface SearchBarProps {
   query: string;
+<<<<<<< Updated upstream
   setQuery: React.Dispatch<React.SetStateAction<string>>;
   searchInputRef: React.RefObject<HTMLInputElement>;
   searchDivRef: React.RefObject<HTMLDivElement>;
+=======
+  handleClear: () => void;
+  handleShowResults: () => void;
+  searchInputRef: React.RefObject<HTMLInputElement>;
+  searchFormRef: React.RefObject<HTMLFormElement>;
+>>>>>>> Stashed changes
   onInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onFocus: () => void;
 }
