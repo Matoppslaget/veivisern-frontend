@@ -13,7 +13,7 @@ import { useProductsContext } from '@/context/ProductsContext';
 
 export default function Search(): JSX.Element {
   const router = useRouter();
-  const { products, setProducts } = useProductsContext();
+  const { setProducts, searchResults, setSearchResults } = useProductsContext();
   const searchParams = useSearchParams();
   const initialQuery = searchParams.get('q') || '';
   const [query, setQuery] = useState(initialQuery);
@@ -35,12 +35,12 @@ export default function Search(): JSX.Element {
         if (queryString.length >= 3) {
           const products = await getKassalappProducts(queryString);
           const limitedProducts = products.slice(0, 15);
-          setProducts(limitedProducts);
+          setSearchResults(limitedProducts);
           limitedProducts.forEach(async (product) => {
             try {
               const productWithEvaluation = await getProcessingInfo(product);
 
-              setProducts((prevProducts: Product[]) =>
+              setSearchResults((prevProducts: Product[]) =>
                 prevProducts.map((p: Product) =>
                   p.id === productWithEvaluation.id ? productWithEvaluation : p,
                 ),
@@ -60,10 +60,11 @@ export default function Search(): JSX.Element {
     [getKassalappProducts, getProcessingInfo, setProducts],
   );
 
-  const handleShowAllResults = () => {
+  const handleShowAllResults = async () => {
     setSelectedProduct(null);
     setShowResults(false);
-    setProducts(products);
+    setProducts(searchResults);
+    console.log(searchInputRef.current);
     router.push(`/search?q=${encodeURIComponent(query)}`);
   };
 
@@ -100,6 +101,11 @@ export default function Search(): JSX.Element {
     }
   };
 
+  const handleClearSearchQuery = () => {
+    setSearchResults([]);
+    setQuery('');
+  };
+
   useEffect(() => {
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
@@ -112,7 +118,7 @@ export default function Search(): JSX.Element {
       <div className="flex flex-col items-center relative px-2 sm:px-4 max-w-[40rem] mx-auto w-auto">
         <SearchBar
           query={query}
-          setQuery={setQuery}
+          handleClear={handleClearSearchQuery}
           handleShowResults={handleShowAllResults}
           searchInputRef={searchInputRef}
           searchFormRef={searchFormRef}
@@ -128,7 +134,7 @@ export default function Search(): JSX.Element {
         {showResults && query.length > 0 && (
           <ShowSearchResults
             query={query}
-            products={products}
+            products={searchResults}
             handleProductClick={handleProductClick}
             handleShowAllResults={handleShowAllResults}
             resultsTableRef={resultsRef}

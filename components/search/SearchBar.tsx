@@ -2,10 +2,11 @@
 
 import { useEffect, useState } from 'react';
 import { MagnifyingGlassIcon, XMarkIcon } from '@heroicons/react/24/outline'; // Ensure you have the XIcon imported
+import { useProductsContext } from '@/context/ProductsContext';
 
 interface SearchBarProps {
   query: string;
-  setQuery: React.Dispatch<React.SetStateAction<string>>;
+  handleClear: () => void;
   handleShowResults: () => void;
   searchInputRef: React.RefObject<HTMLInputElement | null>;
   searchFormRef: React.RefObject<HTMLFormElement | null>;
@@ -15,7 +16,7 @@ interface SearchBarProps {
 
 export default function SearchBar({
   query,
-  setQuery,
+  handleClear,
   handleShowResults,
   searchInputRef,
   searchFormRef,
@@ -23,6 +24,7 @@ export default function SearchBar({
   onFocus,
 }: SearchBarProps) {
   const [isFocused, setIsFocused] = useState(false);
+  const { products, searchResults } = useProductsContext();
 
   const handleFocus = () => {
     setIsFocused(true);
@@ -33,13 +35,9 @@ export default function SearchBar({
   };
 
   const focusInput = () => {
-    if (searchInputRef.current) {
+    if (searchInputRef.current && products !== searchResults) {
       searchInputRef.current.focus();
     }
-  };
-
-  const handleClear = () => {
-    setQuery('');
   };
 
   useEffect(() => {

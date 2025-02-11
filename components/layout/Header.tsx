@@ -36,7 +36,7 @@ export default function Header({ showLogo = true }: HeaderProps) {
               href={'/about'}
               className={classNames(
                 'text-gray-black hover:bg-lime-700 hover:text-white',
-                'rounded-md pr-2 sm:pr-4 py-2.5 flex text-sm font-medium items-center',
+                'rounded-md px-1 py-2 flex text-sm font-medium items-center',
               )}
             >
               Om oss
