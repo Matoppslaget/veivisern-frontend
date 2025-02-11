@@ -1,6 +1,6 @@
-export interface KassalappProduct {
-  id: number;
-  name: string;
+export interface Product {
+  id: number; // kassalappId
+  name: string; // productName
   brand?: string;
   vendor?: string;
   ean?: string;
@@ -12,12 +12,7 @@ export interface KassalappProduct {
   currentUnitPrice?: number;
   weight?: number;
   weightUnit?: string;
-}
-
-export interface EvaluatedProduct {
-  kassalappId: number;
-  productName: string;
-  ingredients?: NovaIngredient[];
+  novaIngredients?: NovaIngredient[];
   processedClass?: ProcessedClass;
 }
 
@@ -34,7 +29,6 @@ export interface NovaIngredient {
 }
 
 export enum ProcessedClass {
-  ZERO = 0,
   ONE = 1,
   TWO = 2,
   THREE = 3,

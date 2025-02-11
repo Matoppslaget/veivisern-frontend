@@ -1,17 +1,17 @@
-import ImageGrid from '@/components/frontpage/ImageGrid';
-import Title from '@/components/frontpage/Title';
+'use client';
 
-export default function Introduction() {
+import Title from '@/components/layout/Title';
+import Search from '@/components/search/Search';
+import Header from '@/components/layout/Header';
+
+export default function Home() {
   return (
-    <div className="sm:relative overflow-hidden bg-white">
-      <div className="pb-80 pt-8 sm:pb-80 sm:pt-24">
-        <div className="relative mx-auto max-w-7xl px-4 sm:static sm:px-6">
-          <Title />
-          <div className="flex justify-center sm:block">
-            <ImageGrid />
-          </div>
-        </div>
-      </div>
+    <div>
+      <Header showLogo={false} />
+      <main>
+        <Title style="mt-6 sm:mt-0" />
+        <Search />
+      </main>
     </div>
   );
 }

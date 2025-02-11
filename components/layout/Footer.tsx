@@ -1,8 +1,8 @@
 export default function Footer() {
   return (
-    <footer className="bg-gray-800 text-white py-2 sm:py-4">
-      <div className="sm:flex sm:justify-between text-center sm:px-10">
-        <p>&copy; 2024 Matoppslaget</p>
+    <footer className="text-black py-2 sm:py-4 border-t border-gray-200">
+      <div className="sm:flex sm:justify-between text-center sm:px-6">
+        <p>&copy; 2025 Matoppslaget</p>
         <p>
           <a
             href="mailto:hallo@matoppslaget.no"

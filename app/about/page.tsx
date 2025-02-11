@@ -1,8 +1,12 @@
-import Team from '@/components/about/Team';
+'use client';
 
-export default function Home() {
+import Header from '@/components/layout/Header';
+import Team from '@/components/Team';
+
+export default function About() {
   return (
     <div className="pb-8">
+      <Header />
       <Team />
     </div>
   );

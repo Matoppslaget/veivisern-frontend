@@ -25,6 +25,10 @@ const config: Config = withMT({
       lime: colors.lime,
     },
     extend: {
+      screens: {
+        sm: '680px',
+        md: '880px',
+      },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic':

@@ -1,11 +1,26 @@
-import { EvaluatedProduct, KassalappProduct } from '../../types/ProductTypes';
+import {
+  NovaIngredient,
+  ProcessedClass,
+  Product,
+} from '../../types/ProductTypes';
 
 export default interface KassalappResponse {
   data: {
-    data: KassalappProduct[];
+    data: Product[];
   };
 }
 
-export interface EvaluatedProductResponse {
-  data: EvaluatedProduct;
+export interface ProcessingInfoResponse {
+  data: {
+    id: number;
+    productName: string;
+    kassalappId: number;
+    ingredients: NovaIngredient[];
+    processedClass: ProcessedClass;
+    categories?: {
+      id: number;
+      depth: number;
+      name: string;
+    };
+  };
 }

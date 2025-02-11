@@ -1,12 +1,12 @@
-interface VeivisernButtonProps {
+interface PrimaryLinkProps {
   buttonText: string;
   buttonHref: string;
 }
 
-export default function VeivisernButton({
+export default function PrimaryLink({
   buttonText,
   buttonHref,
-}: VeivisernButtonProps) {
+}: PrimaryLinkProps) {
   return (
     <a
       href={buttonHref}

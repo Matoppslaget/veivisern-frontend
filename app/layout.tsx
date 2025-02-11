@@ -1,10 +1,9 @@
-import Banner from '@/components/layout/Banner';
 import Footer from '@/components/layout/Footer';
-import NavBar from '@/components/layout/Navbar';
 import { Analytics } from '@vercel/analytics/react';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
+import { ProductsProvider } from '@/context/ProductsContext';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -21,10 +20,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} min-h-screen flex flex-col`}>
-        <NavBar />
-        <main className="flex-grow min-h-screen">
-          <Banner />
-          {children}
+        <main className="flex-grow">
+          <ProductsProvider>{children}</ProductsProvider>
         </main>
         <Footer />
         <Analytics />

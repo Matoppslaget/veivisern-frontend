@@ -1,31 +1,30 @@
-import React, { useEffect, useState } from 'react';
+'use client';
+
+import { useEffect, useState } from 'react';
 import { MagnifyingGlassIcon, XMarkIcon } from '@heroicons/react/24/outline'; // Ensure you have the XIcon imported
+import { useProductsContext } from '@/context/ProductsContext';
 
 interface SearchBarProps {
   query: string;
-<<<<<<< Updated upstream
-  setQuery: React.Dispatch<React.SetStateAction<string>>;
-  searchInputRef: React.RefObject<HTMLInputElement>;
-  searchDivRef: React.RefObject<HTMLDivElement>;
-=======
   handleClear: () => void;
   handleShowResults: () => void;
   searchInputRef: React.RefObject<HTMLInputElement>;
   searchFormRef: React.RefObject<HTMLFormElement>;
->>>>>>> Stashed changes
   onInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onFocus: () => void;
 }
 
-const SearchBar: React.FC<SearchBarProps> = ({
+export default function SearchBar({
   query,
-  setQuery,
+  handleClear,
+  handleShowResults,
   searchInputRef,
-  searchDivRef,
+  searchFormRef,
   onInputChange,
   onFocus,
-}) => {
+}: SearchBarProps) {
   const [isFocused, setIsFocused] = useState(false);
+  const { products, searchResults } = useProductsContext();
 
   const handleFocus = () => {
     setIsFocused(true);
@@ -36,13 +35,9 @@ const SearchBar: React.FC<SearchBarProps> = ({
   };
 
   const focusInput = () => {
-    if (searchInputRef.current) {
+    if (searchInputRef.current && products !== searchResults) {
       searchInputRef.current.focus();
     }
-  };
-
-  const handleClear = () => {
-    setQuery('');
   };
 
   useEffect(() => {
@@ -50,15 +45,19 @@ const SearchBar: React.FC<SearchBarProps> = ({
   }, [query]);
 
   return (
-    <div
-      className={`p-1.5 pl-2 pr-4 bg-white rounded-xl shadow-sm flex justify-between space-x-2 border ${isFocused ? 'ring-2 ring-green-700' : ''}`}
-      ref={searchDivRef}
+    <form
+      className={`p-1.5 pl-2 pr-2 w-full min-w-10 bg-white rounded-xl shadow-sm flex justify-between space-x-2 border ${isFocused ? 'ring-2 ring-green-700' : ''}`}
+      ref={searchFormRef}
+      onSubmit={(e) => {
+        e.preventDefault();
+        handleShowResults();
+      }}
     >
       <MagnifyingGlassIcon className="text-gray-500 w-8 h-8" />
       <input
-        placeholder="Søk"
+        placeholder=""
         type="search"
-        className="hide-cancel-button w-full rounded-md pr-20 text-gray-900 ring-inset ring-gray-300 placeholder:text-gray-400 focus:outline-none sm:text-sm sm:leading-6"
+        className="hide-cancel-button w-full rounded-md text-gray-900 ring-inset ring-gray-300 placeholder:text-gray-400 focus:outline-none sm:text-sm sm:leading-6"
         value={query}
         onChange={onInputChange}
         onFocus={handleFocus}
@@ -66,14 +65,14 @@ const SearchBar: React.FC<SearchBarProps> = ({
         ref={searchInputRef}
         style={{ WebkitAppearance: 'none' }}
       />
-      {query.length > 0 && (
-        <XMarkIcon
-          className="my-auto text-gray-500 w-6 h-6 cursor-pointer hover:text-black"
-          onClick={handleClear}
-        />
-      )}
-    </div>
+      <span className="w-6 flex justify-center">
+        {query.length > 0 && (
+          <XMarkIcon
+            className="my-auto text-gray-500 w-6 h-6 cursor-pointer hover:text-black"
+            onClick={handleClear}
+          />
+        )}
+      </span>
+    </form>
   );
-};
-
-export default SearchBar;
+}

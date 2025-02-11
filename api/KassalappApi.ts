@@ -1,19 +1,24 @@
 import axios from 'axios';
-import { KassalappProduct } from '@/types/ProductTypes';
+import { Product } from '@/types/ProductTypes';
 import KassalappResponse from '@/api/response/ResponseTypes';
 
 const apiKey = process.env.NEXT_PUBLIC_KASSALAPP_API_KEY;
 const KassalappEndpoint = 'https://kassal.app/api/v1/products';
 
-export const fetchResults = async (
+export const getKassalappProducts = async (
   product: string,
-): Promise<KassalappProduct[]> => {
+): Promise<Product[]> => {
   try {
     const response: KassalappResponse = await axios.get(KassalappEndpoint, {
-      params: { search: product },
+      params: { search: product, size: 20 },
       headers: { Authorization: `Bearer ${apiKey}` },
     });
-    return response.data.data;
+
+    const filteredProducts = response.data.data.filter(
+      (item) => item.ingredients,
+    );
+
+    return filteredProducts;
   } catch (error) {
     console.error('Error fetching data:', error);
     throw error;

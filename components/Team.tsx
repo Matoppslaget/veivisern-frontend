@@ -1,30 +1,30 @@
 import Image from 'next/image';
-import mailtoHref from '../common/MailToLink';
-import VeivisernButton from '../common/VeivisernButton';
+import mailtoHref from './MailToLink';
+import PrimaryLink from './PrimaryLink';
 
 export default function Team() {
   return (
-    <div>
+    <div className="p-4 max-w-[80rem] mx-auto">
       <div className="p-4 flex justify-center">
         <h1 className="text-3xl">Teamet bak</h1>
       </div>
-      <div className="p-4 grid grid-cols-3">
+      <div className="p-4 grid grid-cols-3 gap-5">
         <Image
-          className="p-4 justify-self-start"
+          className="justify-self-start"
           src="/Francesca profil.png"
           alt="Francesca"
           width="520"
           height="520"
         ></Image>
         <Image
-          className="p-4 justify-self-start"
+          className="justify-self-start"
           src="/Sander profil.png"
           alt="Sander"
           width="520"
           height="520"
         ></Image>
         <Image
-          className="p-4 justify-self-end"
+          className="justify-self-end"
           src="/Anders profil.png"
           alt="Anders"
           width="520"
@@ -51,10 +51,7 @@ export default function Team() {
         </p>
       </div>
       <div className="flex justify-center">
-        <VeivisernButton
-          buttonText="Gi tilbakemelding"
-          buttonHref={mailtoHref}
-        />
+        <PrimaryLink buttonText="Gi tilbakemelding" buttonHref={mailtoHref} />
       </div>
     </div>
   );
