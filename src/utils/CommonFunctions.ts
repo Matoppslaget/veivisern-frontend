@@ -1,5 +1,5 @@
-import { Product } from '@/types/ProductTypes';
 import { useState, useEffect } from 'react';
+import { Product } from '../types/ProductTypes';
 
 export const classNames = (...classes: string[]) => {
   return classes.filter(Boolean).join(' ');
@@ -34,7 +34,6 @@ export function cleanedProductName(product: Product): string {
   if (!product.name) {
     return '';
   }
-
 
   // Remove numbers followed by 'g' or 'x' or 'pk'
   let cleanedName = product.name.replace(/\s\d+g/g, '');

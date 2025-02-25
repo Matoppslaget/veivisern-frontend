@@ -1,6 +1,5 @@
 'use client';
 
-import { Product } from '@/types/ProductTypes';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import ShowSearchResults from './ShowSearchResults';
 import ProductModal from '../product/ProductModal';
@@ -10,6 +9,7 @@ import { getKassalappProducts } from '@/api/KassalappApi';
 import { getProcessingInfo } from '@/api/ProductEvaluator';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useProductsContext } from '@/context/ProductsContext';
+import { Product } from '@/src/types/ProductTypes';
 
 export default function Search(): JSX.Element {
   const router = useRouter();

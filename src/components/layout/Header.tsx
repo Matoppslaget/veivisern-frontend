@@ -1,8 +1,8 @@
-import { classNames } from '@/utils/CommonFunctions';
 import { Disclosure } from '@headlessui/react';
 import { usePathname } from 'next/navigation';
 import Search from '../search/Search';
 import Title from './Title';
+import { classNames } from '@/src/utils/CommonFunctions';
 
 interface HeaderProps {
   showLogo?: boolean;

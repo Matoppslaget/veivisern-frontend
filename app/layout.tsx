@@ -1,4 +1,4 @@
-import Footer from '@/components/layout/Footer';
+import Footer from '@/src/components/layout/Footer';
 import { Analytics } from '@vercel/analytics/react';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';

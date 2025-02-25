@@ -1,8 +1,8 @@
 'use client';
 
-import Title from '@/components/layout/Title';
-import Search from '@/components/search/Search';
-import Header from '@/components/layout/Header';
+import Title from '@/src/components/layout/Title';
+import Search from '@/src/components/search/Search';
+import Header from '@/src/components/layout/Header';
 import { Suspense } from 'react';
 
 export default function Home() {
