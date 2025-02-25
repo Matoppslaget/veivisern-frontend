@@ -1,7 +1,7 @@
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
-import ThumbnailImage from '../ThumbnailImage';
-import PrimaryButton from '../PrimaryButton';
-import ProcessedLabel from '../ProcessedLabel';
+import ThumbnailImage from '../../components/ThumbnailImage';
+import PrimaryButton from '../../components/PrimaryButton';
+import ProcessedLabel from '../../components/ProcessedLabel';
 import { Product } from '@/src/types/ProductTypes';
 import {
   cleanedProductName,

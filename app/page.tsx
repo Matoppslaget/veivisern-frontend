@@ -1,7 +1,7 @@
 'use client';
 
 import Title from '@/src/components/layout/Title';
-import Search from '@/src/components/search/Search';
+import Search from '@/src/features/search/Search';
 import Header from '@/src/components/layout/Header';
 import { Suspense } from 'react';
 
