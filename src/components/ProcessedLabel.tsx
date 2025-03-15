@@ -1,4 +1,4 @@
-import { ProcessedClass } from '@/types/ProductTypes';
+import { ProcessedClass } from '../types/ProductTypes';
 
 interface ProcessedStylingProps {
   processedClass: ProcessedClass;

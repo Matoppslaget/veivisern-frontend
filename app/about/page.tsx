@@ -1,7 +1,7 @@
 'use client';
 
-import Header from '@/components/layout/Header';
-import Team from '@/components/Team';
+import Header from '@/src/components/layout/Header';
+import Team from '@/src/components/Team';
 
 export default function About() {
   return (

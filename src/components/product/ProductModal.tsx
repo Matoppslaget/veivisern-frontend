@@ -1,4 +1,3 @@
-import { Product, NovaIngredient } from '../../types/ProductTypes';
 import Image from 'next/image';
 import { Spinner } from '@material-tailwind/react';
 import IngredientTooltip from '../IngredientTooltip';
@@ -6,7 +5,11 @@ import { Dialog, DialogBody, DialogHeader } from '@material-tailwind/react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import React from 'react';
 import ProcessedLabel from '../ProcessedLabel';
-import { cleanedProductName, productSubtitle } from '@/utils/CommonFunctions';
+import { NovaIngredient, Product } from '@/src/types/ProductTypes';
+import {
+  cleanedProductName,
+  productSubtitle,
+} from '@/src/utils/CommonFunctions';
 
 interface SearchProductCardProps {
   product: Product;

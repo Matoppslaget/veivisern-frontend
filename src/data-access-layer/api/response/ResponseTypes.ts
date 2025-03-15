@@ -2,7 +2,7 @@ import {
   NovaIngredient,
   ProcessedClass,
   Product,
-} from '../../types/ProductTypes';
+} from '@/src/types/ProductTypes';
 
 export default interface KassalappResponse {
   data: {

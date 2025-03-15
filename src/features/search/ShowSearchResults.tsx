@@ -1,13 +1,13 @@
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
-import { Product } from '@/types/ProductTypes';
 import ThumbnailImage from '../../components/ThumbnailImage';
 import PrimaryButton from '../../components/PrimaryButton';
+import ProcessedLabel from '../../components/ProcessedLabel';
+import { Product } from '@/src/types/ProductTypes';
 import {
   cleanedProductName,
   productSubtitle,
   useWindowDimensions,
-} from '@/utils/CommonFunctions';
-import ProcessedLabel from '../../components/ProcessedLabel';
+} from '@/src/utils/CommonFunctions';
 
 interface ShowSearchResultsProps {
   query: string;
