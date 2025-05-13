@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { MagnifyingGlassIcon, XMarkIcon } from '@heroicons/react/24/outline'; // Ensure you have the XIcon imported
-import { useProductsContext } from '@/src/data-access-layer/ProductsContext';
+import { useProductsContext } from '@/context/ProductsContext';
 
 interface SearchBarProps {
   query: string;

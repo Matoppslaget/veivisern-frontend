@@ -1,14 +1,11 @@
 'use client';
 
+import { Product } from '@/types/ProductTypes';
 import Image from 'next/image';
 import ProcessedLabel from '../ProcessedLabel';
 import { useState } from 'react';
 import ProductModal from './ProductModal';
-import { Product } from '@/src/types/ProductTypes';
-import {
-  cleanedProductName,
-  productSubtitle,
-} from '@/src/utils/CommonFunctions';
+import { cleanedProductName, productSubtitle } from '@/utils/CommonFunctions';
 
 interface ProductCardProps {
   product: Product;

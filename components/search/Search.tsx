@@ -1,15 +1,15 @@
 'use client';
 
+import { Product } from '@/types/ProductTypes';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import ShowSearchResults from './ShowSearchResults';
-import ProductModal from '../../components/product/ProductModal';
+import ProductModal from '../product/ProductModal';
 import SearchBar from './SearchBar';
 import debounce from 'lodash.debounce';
-import { getKassalappProducts } from '@/src/data-access-layer/api/KassalappApi';
-import { getProcessingInfo } from '@/src/data-access-layer/api/ProductEvaluator';
+import { getKassalappProducts } from '@/api/KassalappApi';
+import { getProcessingInfo } from '@/api/ProductEvaluator';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useProductsContext } from '@/src/data-access-layer/ProductsContext';
-import { Product } from '@/src/types/ProductTypes';
+import { useProductsContext } from '@/context/ProductsContext';
 
 export default function Search(): JSX.Element {
   const router = useRouter();

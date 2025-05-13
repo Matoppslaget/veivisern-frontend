@@ -1,6 +1,5 @@
 'use client';
 
-import { Product } from '@/src/types/ProductTypes';
 import {
   createContext,
   useContext,
@@ -9,6 +8,7 @@ import {
   SetStateAction,
   Dispatch,
 } from 'react';
+import { Product } from '@/types/ProductTypes';
 
 interface ProductsContextType {
   products: Product[];

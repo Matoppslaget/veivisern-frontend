@@ -1,4 +1,4 @@
-import { Product } from '@/src/types/ProductTypes';
+import { Product } from '@/types/ProductTypes';
 import ProductCard from './ProductCard';
 
 interface ProductGridProps {

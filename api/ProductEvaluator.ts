@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ProcessingInfoResponse } from '@/src/data-access-layer/api/response/ResponseTypes';
+import { ProcessingInfoResponse } from '@/api/response/ResponseTypes';
 import { Product } from '@/types/ProductTypes';
 
 const env = process.env.NEXT_PUBLIC_DEVELOPMENT_ENVIRONMENT;
