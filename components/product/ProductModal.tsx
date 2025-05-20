@@ -36,7 +36,7 @@ export default function ProductModal({
         placeholder={undefined}
         className="max-h-screen overflow-y-auto"
       >
-        <span className="flow-root text-center text-lg sm:text-2xl">
+        <span className="flow-root text-center text-lg text-black font-bold sm:text-2xl">
           {cleanedProductName(product)}
         </span>
         <span className="flow-root text-center text-sm sm:text-lg">
@@ -74,7 +74,7 @@ export default function ProductModal({
                   </div>
                 ) : (
                   <div className="grid">
-                    <div className="p-2 text-md sm:text-xl">Ingredienser: </div>
+                    <div className="p-2 text-black text-md sm:text-xl">Ingredienser: </div>
                     <div className="max-h-40 sm:max-h-60 md:max-h-80 overflow-auto grid shadow-[inset_0_-24px_10px_-10px_rgba(0,0,0,0.06)]">
                       {(product.novaIngredients ?? []).map(
                         (novaIngredient: NovaIngredient) => (
@@ -83,15 +83,15 @@ export default function ProductModal({
                             key={novaIngredient.ingredientName}
                           >
                             <div
-                              className={`px-2 py-1 text-sm sm:text-md
+                              className={`px-2 py-1 text-black text-sm sm:text-md
                                     ${
                                       novaIngredient.novaClass > 3
                                         ? 'rounded-lg'
-                                        : 'bg-gray-100 bg-opacity-50'
+                                        : 'bg-gray-50 bg-opacity-50'
                                     }  
                                     ${
                                       novaIngredient.novaClass === 4
-                                        ? 'bg-red-600 hover:border-red-500 text-gray-50'
+                                        ? 'rounded-lg border-red-600 border-2 hover:border-red-500'
                                         : ''
                                     }`}
                             >

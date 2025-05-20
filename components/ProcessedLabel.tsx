@@ -15,15 +15,15 @@ export default function getProcessedStyling({
   switch (processedClass) {
     case ProcessedClass.ONE:
     case ProcessedClass.TWO:
-      styling = 'border-green-600 border-2 bg-green-200';
+      styling = 'text-green-700 text-lg font-bold';
       label = 'Renvare';
       break;
     case ProcessedClass.THREE:
-      styling = 'border-orange-600 border-2 bg-orange-200';
+      styling = 'text-orange-600 text-lg font-bold';
       label = 'Prosessert';
       break;
     case ProcessedClass.FOUR:
-      styling = 'border-red-600 border-2 bg-red-200';
+      styling = 'text-red-600 text-lg font-bold ';
       label = 'Ultraprosessert';
       break;
     default:
@@ -33,7 +33,7 @@ export default function getProcessedStyling({
 
   return (
     <span
-      className={`text-${size} sm:text-${size == 'lg' ? '2xl' : 'md'} font-normal px-2 rounded-lg ${styling}`}
+      className={`text-${size} sm:text-${size == 'lg' ? '2xl' : 'md'} rounded-lg ${styling}`}
     >
       {label}
     </span>
