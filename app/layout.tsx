@@ -19,6 +19,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        {/* Google AdSense verification meta tag */}
+        <meta name="google-adsense-account" content="ca-pub-7351661233741705"></meta>
+      </head>
       <body className={`${inter.className} min-h-screen flex flex-col`}>
         <main className="flex-grow">
           <ProductsProvider>{children}</ProductsProvider>
