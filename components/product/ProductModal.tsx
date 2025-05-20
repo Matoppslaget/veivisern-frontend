@@ -21,9 +21,10 @@ export default function ProductModal({
 }: SearchProductCardProps) {
   return (
     <Dialog
-      size="xs"
+      size="xl"
       open={isModalOpen}
       handler={toggleModal}
+      className="max-h-[90vh]"
       placeholder={undefined}
     >
       <DialogHeader className="flex justify-end" placeholder={undefined}>
