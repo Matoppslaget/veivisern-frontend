@@ -34,17 +34,24 @@ export default function Search(): JSX.Element {
       try {
         if (queryString.length >= 3) {
           const products = await getKassalappProducts(queryString);
-          const limitedProducts = products.slice(0, 15);
+          const limitedProducts = products.slice(0, 15); // TODO: paginate results
           setSearchResults(limitedProducts);
           limitedProducts.forEach(async (product) => {
             try {
               const productWithEvaluation = await getProcessingInfo(product);
 
-              setSearchResults((prevProducts: Product[]) =>
-                prevProducts.map((p: Product) =>
+              setSearchResults((prevProducts: Product[]) => {
+                const updated = prevProducts.map((p: Product) =>
                   p.id === productWithEvaluation.id ? productWithEvaluation : p,
-                ),
-              );
+                );
+              
+                // Sort by processedClass (lowest to highest), undefined goes to the end
+                return updated.sort((a, b) => {
+                  const aClass = a.processedClass ?? Infinity;
+                  const bClass = b.processedClass ?? Infinity;
+                  return aClass - bClass;
+                });
+              });
             } catch (error) {
               console.error(
                 `Error fetching processing info for product ${product.id}:`,
