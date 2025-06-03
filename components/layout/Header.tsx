@@ -14,6 +14,7 @@ export default function Header({ showLogo = true }: HeaderProps) {
   return (
     <Disclosure as="nav">
       <div className="mx-auto px-3 sm:px-6">
+        {/* Grid layout for desktop and mobile */}
         <div className="relative h-14 items-center grid grid-cols-6 sm:grid-cols-4">
           {showLogo && (
             <div className="flex-1 flex items-center">
@@ -25,11 +26,14 @@ export default function Header({ showLogo = true }: HeaderProps) {
               </a>
             </div>
           )}
+
+          {/* Search for desktop */}
           {isSearchPage && (
-            <div className="col-start-2 col-span-4 sm:col-span-2">
+            <div className="hidden sm:block sm:col-span-2 col-start-2">
               <Search />
             </div>
           )}
+
           <div className="flex-1 flex items-end justify-end col-start-6 sm:col-start-4">
             <a
               key={'about-us'}
@@ -43,6 +47,13 @@ export default function Header({ showLogo = true }: HeaderProps) {
             </a>
           </div>
         </div>
+
+        {/* Search for mobile */}
+        {isSearchPage && (
+          <div className="block sm:hidden">
+            <Search />
+          </div>
+        )}
       </div>
     </Disclosure>
   );
