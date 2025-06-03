@@ -10,7 +10,7 @@ export const getKassalappProducts = async (
 ): Promise<Product[]> => {
   try {
     const response: KassalappResponse = await axios.get(KassalappEndpoint, {
-      params: { search: product, size: 20 },
+      params: { search: product, size: 20, unique: 1 },
       headers: { Authorization: `Bearer ${apiKey}` },
     });
 

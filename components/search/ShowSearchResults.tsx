@@ -30,11 +30,11 @@ export default function ShowSearchResults({
 }: ShowSearchResultsProps): JSX.Element {
   const { height } = useWindowDimensions();
 
-  let tableTopOffset = 428;
+  let tableTopOffset = 210;
   if (resultsTableRef.current) {
     tableTopOffset = resultsTableRef.current.getBoundingClientRect().top;
   }
-  let showResultsButtonOffset = 55;
+  let showResultsButtonOffset = 48;
   if (showResultsButtonRef.current) {
     showResultsButtonOffset =
       showResultsButtonRef.current.getBoundingClientRect().height;
@@ -42,14 +42,14 @@ export default function ShowSearchResults({
 
   return (
     // TODO: Add a spinner while loading
-    <div className="absolute top-full left-0 right-0 bg-background bg-white shadow-lg z-50 rounded-xl border-t-0 border">
+    <div className="absolute top-full left-0 right-0 bg-white shadow-lg z-50 rounded-xl border-t-0 border">
       <div
         className={`w-full shadow-sm pt-0.5 flex flex-col`}
         style={{
           maxHeight:
             window.innerWidth >= 640
               ? `${height - tableTopOffset - showResultsButtonOffset - 140}px` // Desktop
-              : `${height - tableTopOffset - showResultsButtonOffset - 5}px`, // Mobile
+              : `${height - tableTopOffset - showResultsButtonOffset - 60}px`, // Mobile
         }}
         ref={resultsTableRef}
       >

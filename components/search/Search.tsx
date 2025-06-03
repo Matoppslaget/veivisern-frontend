@@ -137,7 +137,7 @@ export default function Search(): JSX.Element {
             }
           }}
         />
-        {showResults && query.length > 0 && (
+        {showResults && (
           <ShowSearchResults
             query={query}
             products={searchResults}
